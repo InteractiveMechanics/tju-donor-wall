@@ -1,0 +1,2 @@
+# ASSETS
+We can use this directory for all other assets, like images, videos, svgs, icon files, etc. To keep things clean, try to separate them into folders that make sense (e.g. put your icons in an `/assets/icons/` directory). Do not store working files like Adobe Photoshop or Illustrator files in GitHub.
