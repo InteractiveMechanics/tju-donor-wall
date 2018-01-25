@@ -1,0 +1,11 @@
+main {
+	position: relative;
+	width: 100%;
+	height: calc(100vh - 100px);
+	background: linear-gradient(45deg, rgba(30,38,85,1) 19%,rgba(86,155,202,1) 100%);
+}
+
+footer {
+	height: 100px;
+	background-color: white;
+}
