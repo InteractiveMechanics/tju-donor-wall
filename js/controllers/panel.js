@@ -15,6 +15,7 @@ Panel = (function() {
     	mc = new Hammer(circle[0]);
     	mc.on("tap press", function(ev) {
     		$('#panel').removeClass('hidden fadeOutLeft').addClass('animated slideInLeft');
+            $(this).addClass('active');
     	});
     }
 

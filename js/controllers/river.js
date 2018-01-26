@@ -6,7 +6,7 @@ River = (function() {
 
     
     var helloworld = function() {
-    	alert('hello, world!');
+    	console.log('hello, world!');
     }
 
 

@@ -1,0 +1,38 @@
+.logo-wrapper {
+	float: left;
+	height: 100px;
+	padding: 16px;
+	
+	img {
+		height: 100%;
+	}
+}
+
+.search-wrapper {
+	float: right;
+	display: flex;
+	align-items: center;
+
+	margin: 0px 55px 0px 0px;
+
+	height: 100px;
+
+
+}
+
+#search {
+	display: flex;
+
+	h5 {
+		color: $light_blue;
+		line-height: 1;
+	}
+
+	img {
+		margin-right: 10px;
+	}
+
+	&:hover {
+		text-decoration: none;
+	}
+}
