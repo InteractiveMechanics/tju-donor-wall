@@ -1,15 +1,67 @@
 #panel {
 	position: absolute;
     top: 0;
+    z-index: 5;
 
 	height: 100%;
-	padding: 50px 45px;
-
+	//width: 25%;
+	padding-bottom: 30px;
+	
 	background-color: white;
 
-	div {
-		margin-top: 30px;
-		margin-bottom: 30px;
+	h5 {
+		padding-top: 45px;
 	}
 
+	h1 {
+		padding: 50px 45px 0px 45px;
+	}
+
+	article {
+		width: 650px;
+
+		&:last-of-type {
+			overflow-x: hidden;
+			overflow-y: scroll;
+		}
+	}
+
+	section {
+		padding: 0px 0px 0px 45px;
+    	border-bottom: 1px solid $light_grey;
+
+    	
+    	div {
+    		margin-top: 30px;
+			margin-bottom: 30px;
+    	}
+	}
+
+}
+
+#panel section>div:last-of-type {
+	margin-bottom: 50px;
+}
+
+#gallery-wrapper{
+	background: white;
+	border-right: 1px solid $light_grey;
+}
+
+.gallery-item.active {
+	opacity: 0.75;
+}
+
+
+#relationships {
+	margin-bottom: 10px !important;
+	.slick-list {
+		padding: 0px;
+	}
+}
+
+.close {
+	position: absolute;
+    left: 1500px;
+    top: 25%;
 }

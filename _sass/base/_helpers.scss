@@ -28,3 +28,11 @@
 .hidden {
   display: none;
 }
+
+.no-border {
+  border-bottom: none !important;
+}
+
+.flex-container {
+  display: flex;
+}
