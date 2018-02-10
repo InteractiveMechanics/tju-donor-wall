@@ -1,0 +1,150 @@
+// includes inputs and buttons
+
+form {
+	padding: 0px 45px;
+	flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding-bottom: 105px;
+}
+
+
+label {
+	@extend h5;
+	display: block;
+}
+
+#search {
+
+	article {
+		overflow: hidden;
+	}
+
+	input {
+		height: 70px;
+
+		padding: 20px;
+
+		font-size: 24px;
+
+		border-color: $light_grey;
+		border-radius: 0px;
+	}
+
+	input[type="reset"] {
+		width: 40%;
+		margin-right: 25px;
+		color: white;
+		background: $beige;
+		line-height: 1;
+		border-color: $beige; 
+	}
+
+	input[type="submit"] {
+		width: calc(59% - 25px);
+		color: white; 
+		line-height: 1;
+		background: linear-gradient(to right, rgba(30,38,85,1) 43%,rgba(86,155,202,1) 100%); 
+	}
+}
+
+
+.donor-year-wrapper {
+	label {
+		display: block;
+	}
+
+	input {
+		width: 49.5%;
+	    display: inline;
+	    
+	    &:last-of-type {
+	    	position: relative;
+	    	left: -5px;
+
+	    	 //border-left: none;
+
+	    }
+	}
+}
+
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+	width: 100% !important;	
+}
+
+
+
+/*
+Make bootstrap-select work with bootstrap 4 see:
+https://github.com/silviomoreto/bootstrap-select/issues/1135
+*/
+.dropdown-toggle.btn-default {
+  color: $light_grey;
+  background-color: #fff;
+  border-color: $light_grey;
+}
+
+.bootstrap-select.show>.dropdown-menu>.dropdown-menu {
+  display: block;
+}
+
+.bootstrap-select > .dropdown-menu > .dropdown-menu li.hidden{
+  display:none;
+}
+
+.bootstrap-select > .dropdown-menu > .dropdown-menu li a{
+  display: block;
+  width: 100%;
+  padding: 3px 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: $light_grey;
+  text-align: inherit;
+  white-space: nowrap;
+  background: 0 0;
+  border: 0;
+}
+
+.dropdown-menu > li.active > a {
+  color: #fff !important;
+  background-color: $dark_grey !important;
+}
+
+.bootstrap-select .check-mark::after {
+  content: "✓";
+}
+
+.bootstrap-select button {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Make filled out selects be the same size as empty selects */
+.bootstrap-select.btn-group .dropdown-toggle .filter-option {
+  display: inline !important;
+
+  font-size: 24px;
+}
+
+.dropdown-toggle {
+	display: flex;
+    align-items: center;
+	height: 70px;
+
+	border-radius: 0px;
+}
+
+.dropdown-toggle::after {
+	border-top: 16px solid;
+    border-right: 8px solid transparent;
+    border-bottom: 0;
+    border-left: 8px solid transparent;
+}
+
+
+.dropup .dropdown-toggle::after {
+	border-right: 8px solid transparent;
+    border-bottom: 16px solid;
+    border-left: 8px solid transparent;
+}

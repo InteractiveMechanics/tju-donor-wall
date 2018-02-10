@@ -1,4 +1,4 @@
-#panel {
+#panel, #search {
 	position: absolute;
     top: 0;
     z-index: 5;
@@ -37,6 +37,10 @@
     	}
 	}
 
+}
+
+#search {
+	right: 0px;
 }
 
 #panel section>div:last-of-type {

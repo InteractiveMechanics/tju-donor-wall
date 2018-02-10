@@ -8,7 +8,7 @@
 	}
 }
 
-.search-wrapper {
+.search-btn-wrapper {
 	float: right;
 	display: flex;
 	align-items: center;
@@ -20,10 +20,13 @@
 
 }
 
-#search {
+#search-btn, #search-close {
 	display: flex;
+	align-items: center;
 
-	h5 {
+
+	h4 {
+		margin-bottom: 0px;
 		color: $light_blue;
 		line-height: 1;
 	}
@@ -32,7 +35,17 @@
 		margin-right: 10px;
 	}
 
+	svg {
+		margin-right: 10px;
+	}
+
 	&:hover {
 		text-decoration: none;
 	}
 }
+
+#search-close {
+	display: none;
+
+}
+

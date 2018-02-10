@@ -8,12 +8,15 @@
     <title>Thomas Jefferson University Donor Wall</title>
 
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
     <link href="./dist/css/main.css" rel="stylesheet">
     <link href="./dist/css/animate.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="js/lib/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="js/lib/slick/slick-theme.css">
     <link rel="stylesheet" type="text/css" href="js/lib/lightgallery/src/css/lightGallery.css">
     <link rel="stylesheet" type="text/css" href="js/lib/lightslider/dist/css/lightslider.css">
+    <link rel="stylesheet" type="text/css" href="js/lib/bootstrap_select/css/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="js/lib/keyboard/css/keyboard.min.css">
 
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -98,6 +101,44 @@
         </article>
         </div>
 
+        <div id="search" class="hidden">
+            <article>
+                 <h1>Search all donors</h1>
+                 <form class="flex-container">
+                    <div class="form-wrapper">
+                        <div class="form-group">
+                            <label for="donor-name">Name</label>
+                            <input type="text" class="form-control" id="donor-name" placeholder="All donors">
+                        </div>
+
+                         <div class="form-group donor-year-wrapper">
+                            <label for="donor-year">Years</label>
+                            <input type="text" class="form-control" id="donor-year" placeholder="1910">
+                            <input type="text" class="form-control" id="donor-year-max" placeholder="2010">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="donor-colleges">Colleges</label>
+                            <select class="selectpicker" id="donor-colleges">
+                                <option>All Colleges</option>
+                                <option>College 1</option>
+                                <option>College 2</option>
+                                <option>College 3</option>
+                                <option>College 4</option>
+                                <option>College 5</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input class="btn btn-primary" type="reset" value="Reset">
+                        <input class="btn btn-primary" type="submit" value="Submit">
+                    </div>
+
+
+                </form>
+            </article>
+        </div>
 
        
     </main>
@@ -110,25 +151,60 @@
         <div class="logo-wrapper">
             <img src="assets/logo@2x.jpg" id="TJU-logo">
         </div>
-        <div class="search-wrapper">
-            <button class="btn btn-link" id="search"><img src="assets/icons/icon-search.svg" alt="search"><h4>Search Donors</h4></button>
+        <div class="search-btn-wrapper">
+            
+            <button class="btn btn-link" id="search-btn">
+                <img src="assets/icons/icon-search.svg" alt="search">
+                <h4>Search Donors</h4>
+            </button>
+            
+            <button class="btn btn-link" id="search-close">
+                <svg version="1.1"
+                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+                     x="0px" y="0px" width="31.7px" height="31.7px" viewBox="0 0 31.7 31.7" style="enable-background:new 0 0 31.7 31.7;"
+                     xml:space="preserve">
+                <style type="text/css">
+                    .st0{fill:#569BCA;}
+                    .st1{fill:#FFFFFF;}
+                </style>
+                <defs>
+                </defs>
+                <g>
+                    <g>
+                        <g>
+                            <path class="st0" d="M15.9,0L15.9,0C7.1,0,0,7.1,0,15.9v0c0,8.8,7.1,15.9,15.9,15.9h0c8.8,0,15.9-7.1,15.9-15.9v0
+                                C31.7,7.1,24.6,0,15.9,0z"/>
+                        </g>
+                        <polygon class="st1" points="21.8,19.9 17.9,16 17.4,15.6 17.9,15.1 21.8,11.2 20.2,9.6 16.3,13.5 15.9,14 15.4,13.5 11.5,9.6 
+                            10,11.2 13.9,15.1 14.3,15.6 13.9,16 10,19.9 11.5,21.5 15.4,17.6 15.9,17.1 16.3,17.6 20.2,21.5       "/>
+                    </g>
+                </g>
+                </svg>
+                <h4>Close</h4>
+            </button>
         </div>
     </footer>
 
 
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://unpkg.com/popper.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="js/lib/slick/slick.min.js"></script>
+    <script src="js/lib/keyboard/js/jquery.keyboard.min.js"></script>
+    <!--<script src="js/lib/keyboard/js/jquery.keyboard.extension-all.min.js"></script> -->
     <script src="js/lib/lightGallery/src/js/lightgallery.js"></script>
     <script src="js/lib/lightslider/dist/js/lightslider.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
     <script src="js/lib/jquery.hammer.js"></script>
     <script src="js/lib/lottie.js"></script>
+    <script src="js/lib/bootstrap_select/js/bootstrap-select.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="js/controllers/utilities.js"></script>
     <script src="js/controllers/panel.js"></script>
     <script src="js/controllers/river.js"></script>
     <script src="js/controllers/animation.js"></script>
+    <script src="js/controllers/search.js"></script>
     <script src="js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
    
