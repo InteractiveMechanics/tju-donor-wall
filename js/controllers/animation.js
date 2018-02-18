@@ -1,4 +1,8 @@
 Animation = (function() {
+    var timeout = [];
+    var duration = 30000; //90000
+    var longduration = 900000;
+
 
 	 var init = function() {
         bindEvents();
@@ -7,6 +11,8 @@ Animation = (function() {
     
     var myAnimation = function() {
         console.log('i am working');
+
+        $('#instructions').html('');
 
         lottie.loadAnimation({
             container: document.getElementById('instructions'),
@@ -17,9 +23,20 @@ Animation = (function() {
         });
     }
 
+    var resetTimeout = function() {
+        if (timeout) {
+            $.each(timeout, function(index, value){
+                clearTimeout(value);
+                timeout.splice(index, 1);
+            });
+        }
+        timeout.push(setTimeout(myAnimation, duration));
+    }
+
 
     var bindEvents = function() {
-        $(document).on('click', '.give', myAnimation);
+        $(document).on('click tap drag', resetTimeout);
+        //$(document).on('click', '.give', myAnimation);
     }
 
 

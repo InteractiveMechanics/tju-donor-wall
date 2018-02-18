@@ -1,0 +1,24 @@
+{"nodes":[
+		{
+		  "id": 1,
+		  "name":"Sheeja Abaham, MD",
+		  "year":"1996",
+		  "giving": 10000
+		 },
+
+		 {
+		 "id": 2,	
+		 "name":"Samuel D. Gross, MD",
+		  "year":"1828",
+		  "giving": 5000
+		 },
+
+		 {
+		  "id": 3,	
+		  "name":"Meredith Grey, MD",
+		  "year":"2001",
+		  "giving": 10000
+
+		 }
+	]
+}

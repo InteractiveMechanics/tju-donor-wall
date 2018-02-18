@@ -148,3 +148,23 @@ https://github.com/silviomoreto/bootstrap-select/issues/1135
     border-bottom: 16px solid;
     border-left: 8px solid transparent;
 }
+
+#search-er {
+	background-color: $red;
+	border-radius: 6px;
+	height: 70px;
+	font-size: 22px; //22px
+	color: white;
+	//display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 35px;
+	p {
+		margin: 0px;
+		font-family: $MuseoSans-100;
+
+		span {
+			font-family: $MuseoSans-500;
+		}
+	}
+}

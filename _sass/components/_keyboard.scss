@@ -12,5 +12,47 @@ html .ui-button.ui-state-disabled:hover,
 html .ui-button.ui-state-disabled:active {
 	border: none;
 	background: #1e2655;
-	color: white;
+	color: #d6d7d8; //white
+}
+
+
+.ui-keyboard-button {
+	margin: 1px;
+}
+
+.ui-keyboard-button span{
+	font-family: $MuseoSans-100;
+	font-size: 14px;
+}
+
+.ui-keyboard-button[data-name="enter"] span,
+.ui-keyboard-button[data-name="accept"] span{
+	font-size: 10px;
+    position: relative;
+    top: -2px;
+}
+
+.ui-keyboard-button[data-name="enter"],
+.ui-keyboard-button[data-name="accept"] {
+	text-align: left;
+}
+
+.ui-keyboard-button[data-name="enter"] {
+	width: 59px;
+}
+
+.ui-keyboard-button[data-name="accept"] {
+	width: 54px;
+}
+
+.ui-keyboard-button[data-name="accept"][data-pos="4,1"] {
+	width: 74px;
+}
+
+
+.ui-corner-all, 
+.ui-corner-top, 
+.ui-corner-left, 
+.ui-corner-tl {
+	border-radius: 0px;
 }

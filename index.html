@@ -28,11 +28,11 @@
         <div id="instructions"></div>
         
         <div id="river">
-        <div class="circle lg" style="background-color: rgba(0,0,0, 0.5); background-image: url('assets/sample-images/sample-thumbnail@2x.jpg');">
+        <div class="circle donor large" style="background-color: rgba(0,0,0, 0.5); background-image: url('assets/sample-images/sample-thumbnail@2x.jpg');">
             <p>Sheeja Abraham, MD</p>
             <p>1996</p>
         </div>
-        <div id="testing" class="circle sm">
+        <div id="testing" class="circle donor sm">
             <p>Samuel D. Gross, MD</p>
             <p>1828</p>
         </div>
@@ -49,11 +49,11 @@
                 </section>
 
                 <section id="gallery-grid">
-                    <div class="gallery-item active"><img src="assets/sample-images/sample-image@2x.jpg"></div>
-                    <div class="gallery-item"><img src="https://picsum.photos/200/300"></div>
-                    <div class="gallery-item"><img src="https://picsum.photos/400/600"></div>
-                    <div class="gallery-item"><img src="https://picsum.photos/600/400"></div>
-                    <div class="gallery-item"><img src="https://picsum.photos/300/500"></div>
+                    <div class="gallery-item active" data-src="assets/sample-images/sample-image@2x.jpg"><img src="assets/sample-images/sample-image@2x.jpg"></div>
+                    <div class="gallery-item" data-src="https://picsum.photos/200/300"><img src="https://picsum.photos/200/300"></div>
+                    <div class="gallery-item" data-src="https://picsum.photos/400/600"><img src="https://picsum.photos/400/600"></div>
+                    <div class="gallery-item" data-src="https://picsum.photos/600/400"><img src="https://picsum.photos/600/400"></div>
+                    <div class="gallery-item" data-src="https://picsum.photos/300/500"><img src="https://picsum.photos/300/500"></div>
                 </section>
             </article>
 
@@ -101,8 +101,8 @@
         </article>
         </div>
 
-        <div id="search" class="hidden">
-            <article>
+        <div id="right-panel" class="hidden">
+            <article id="search" class="hidden">
                  <h1>Search all donors</h1>
                  <form class="flex-container">
                     <div class="form-wrapper">
@@ -128,16 +128,43 @@
                                 <option>College 5</option>
                             </select>
                         </div>
+
+                        <div id="search-er" class="hidden">
+                            <p><span>No results found.</span> Try broadening your search.</p>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <input class="btn btn-primary" type="reset" value="Reset">
-                        <input class="btn btn-primary" type="submit" value="Submit">
+                        <input class="btn btn-primary" id="reset" type="reset" value="Reset">
+                        <input class="btn btn-primary" id="submit" type="submit" value="Submit">
                     </div>
 
 
                 </form>
             </article>
+
+            <article id="give-panel" class="hidden">
+                <h1>Give Now</h1>
+                <section class="no-border">
+                    <div>
+                        <p>Aliquam egestas tellus ut consectetur finibus. Pellentesque id tempus lorem. Vivamus vitae enim nisl. Curabitur placerat quam nulla, quis finibus augue imperdiet vitae. Ut ac elit eu ante imperdiet efficitur facilisis vel metus. Nulla sed nibh et metus gravida pharetra vitae at ante. Sed lacinia eros eu erat ullamcorper blandit. In eu pellentesque odio, in eleifend mauris. Ut tristique turpis et dui egestas accumsan. Pellentesque tortor nibh, rutrum a blandit in, tincidunt in odio. Duis tincidunt velit velit, eleifend interdum sapien luctus gravida. In accumsan lorem sodales, rhoncus augue sit amet, suscipit massa. Fusce orci augue, finibus et est eu, tincidunt ornare enim. Nam ex velit, vestibulum id condimentum eget, blandit id odio. Quisque feugiat libero finibus eros pretium, non volutpat nibh pellentesque. Nulla facilisi.</p>
+                    </div>
+
+                    <div>
+                        <h5>Call</h5>
+                        <h2>(777) 888 - 999</h2>
+                    </div>
+
+                    <div>
+                        <h5>Email</h5>
+                        <h2>alumni@jefferson.edu</h2>
+                    </div>
+                </section>
+
+
+            </article>
+
+
         </div>
 
        
