@@ -9,7 +9,6 @@
 
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
-    <link href="./dist/css/main.css" rel="stylesheet">
     <link href="./dist/css/animate.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="js/lib/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="js/lib/slick/slick-theme.css">
@@ -17,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="js/lib/lightslider/dist/css/lightslider.css">
     <link rel="stylesheet" type="text/css" href="js/lib/bootstrap_select/css/bootstrap-select.min.css">
     <link rel="stylesheet" type="text/css" href="js/lib/keyboard/css/keyboard.min.css">
+    <link href="./dist/css/main.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -48,57 +48,83 @@
                 <section id="gallery-lg">
                 </section>
 
+                
                 <section id="gallery-grid">
                     <div class="gallery-item active" data-src="assets/sample-images/sample-image@2x.jpg"><img src="assets/sample-images/sample-image@2x.jpg"></div>
-                    <div class="gallery-item" data-src="https://picsum.photos/200/300"><img src="https://picsum.photos/200/300"></div>
+                    <div class="gallery-item" data-src="https://picsum.photos/300/400"><img src="https://picsum.photos/300/400"></div>
                     <div class="gallery-item" data-src="https://picsum.photos/400/600"><img src="https://picsum.photos/400/600"></div>
                     <div class="gallery-item" data-src="https://picsum.photos/600/400"><img src="https://picsum.photos/600/400"></div>
                     <div class="gallery-item" data-src="https://picsum.photos/300/500"><img src="https://picsum.photos/300/500"></div>
                 </section>
+
+                  <div style="display:none;" id="video2">
+                    <video class="lg-video-object lg-html5" muted preload="none">
+                        <source src="assets/sample-images/leds.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div id="video-controls" class="hidden">
+                    <button id="video-play" class="hidden"><img src="assets/icons/icon-video-play.svg"></button>
+                    <button id="video-pause"><img src="assets/icons/icon-video-pause.svg"></button>
+                    <button id="video-replay"><img src="assets/icons/icon-video-replay.svg"></button>
+                </div>
             </article>
 
 
             <article>
-            <h1>Sheeja Abraham, MD</h1>
-            <section>
-                <div>
-                    <h5>Giving Level</h5>
-                    <h2>$5,000</h2>
-                </div>
+                <h1>Sheeja Abraham, MD</h1>
+                <section>
+                    <div>
+                        <h5>Giving Level</h5>
+                        <h2>$5,000</h2>
+                    </div>
 
-                <div>
-                    <h5>Degree</h5>
-                    <h2>Lorem Ipsum Sit Dolor Amet</h2>
-                </div>
+                    <div>
+                        <h5>Degree</h5>
+                        <h2>Lorem Ipsum Sit Dolor Amet</h2>
+                    </div>
 
-                <div>
-                    <h5>College</h5>
-                    <h2>College of Medicine, 1996</h2>
-                </div>
-            </section>
+                    <div>
+                        <h5>College</h5>
+                        <h2>College of Medicine, 1996</h2>
+                    </div>
+                </section>
 
-            <section>
-                <h5>Relationships</h5>
-                
-                <div id="relationships">
-                    <div class="circle rel"></div>
-                    <div class="circle rel"></div>
-                    <div class="circle rel"></div>
-                    <div class="circle rel"></div>
+                <section>
+                    <h5>Relationships</h5>
+                    
+                    <div id="relationships">
+                        <div class="circle rel rel-lg" style="background-color: rgba(0,0,0, 0.5); background-image: url('assets/sample-images/sample-thumbnail@2x.jpg');">
+                            <p>Sheeja Abraham, MD</p>
+                            <p>1996</p>
+                        </div>
+                        <div class="circle rel">
+                            <p>Gregory House, MD</p>
+                            <p>1996</p>
+                        </div>
+                        <div class="circle rel">
+                            <p>Christina Yang, MD</p>
+                            <p>1996</p>
+                        </div>
+                        <div class="circle rel">
+                            <p>Meredith Grey, MD</p>
+                            <p>1996</p>
+                        </div>
 
-                </div>
-            </section>
+                    </div>
+                </section>
 
-            <section>
-                <h5>Biography</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta luctus mauris, lobortis tincidunt velit. Integer tempus, ligula ullamcorper suscipit interdum, magna justo dapibus ante, non luctus dolor felis et tortor. Pellentesque molestie dui id eros venenatis mattis. Nam venenatis dictum interdum. Etiam sed tempor felis, non aliquet leo. Donec sagittis, nisl eu varius varius, orci quam cursus sem, ut gravida dui dolor et orci. Proin imperdiet lectus magna, vel vulputate felis aliquet eget. Nulla tristique mauris sit amet urna placerat ullamcorper. Vivamus pulvinar, nisi sed placerat luctus, libero nunc iaculis sem, eu sollicitudin felis dolor nec sapien. Donec tristique eu ipsum sit amet suscipit. Morbi et metus dignissim, mollis velit ac, vestibulum quam. Vestibulum sagittis sapien dolor, non rhoncus ex viverra non. Donec ipsum enim, consequat nec condimentum sit amet, dapibus sit amet orci. Sed ante dolor, tristique id dolor et, convallis porta diam.</p>
-            </section>
+                <section>
+                    <h5>Biography</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta luctus mauris, lobortis tincidunt velit. Integer tempus, ligula ullamcorper suscipit interdum, magna justo dapibus ante, non luctus dolor felis et tortor. Pellentesque molestie dui id eros venenatis mattis. Nam venenatis dictum interdum. Etiam sed tempor felis, non aliquet leo. Donec sagittis, nisl eu varius varius, orci quam cursus sem, ut gravida dui dolor et orci. Proin imperdiet lectus magna, vel vulputate felis aliquet eget. Nulla tristique mauris sit amet urna placerat ullamcorper. Vivamus pulvinar, nisi sed placerat luctus, libero nunc iaculis sem, eu sollicitudin felis dolor nec sapien. Donec tristique eu ipsum sit amet suscipit. Morbi et metus dignissim, mollis velit ac, vestibulum quam. Vestibulum sagittis sapien dolor, non rhoncus ex viverra non. Donec ipsum enim, consequat nec condimentum sit amet, dapibus sit amet orci. Sed ante dolor, tristique id dolor et, convallis porta diam.</p>
+                </section>
 
-            <section class="no-border">
-                <h5>Gifted by</h5>
-                <h2>The Family of Simon Abraham</h2>
-            </section>
-        </article>
+                <section class="no-border">
+                    <h5>Gifted by</h5>
+                    <h2>The Family of Simon Abraham</h2>
+                </section>
+            </article>
+           
+        
         </div>
 
         <div id="right-panel" class="hidden">
@@ -163,15 +189,15 @@
 
 
             </article>
-
+         
 
         </div>
 
+        <div class="close">close</div>
        
     </main>
 
-    <div class="close">close</div>
-    
+   
 
 
     <footer>
@@ -222,6 +248,7 @@
     <!--<script src="js/lib/keyboard/js/jquery.keyboard.extension-all.min.js"></script> -->
     <script src="js/lib/lightGallery/src/js/lightgallery.js"></script>
     <script src="js/lib/lightslider/dist/js/lightslider.min.js"></script>
+    <script src="js/lib/lg-video/lg-video.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
     <script src="js/lib/jquery.hammer.js"></script>
     <script src="js/lib/lottie.js"></script>

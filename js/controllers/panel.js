@@ -65,7 +65,7 @@ Panel = (function() {
     var openPanel = function() {
         enableRelSlider();
         enableGallery();
-    	
+
 
         $('.donor').each( function() {
             var $this = $(this);
@@ -78,6 +78,7 @@ Panel = (function() {
                 $('#panel').removeClass('hidden fadeOutLeft').addClass('animated slideInLeft flex-container');
                 $(this).addClass('active');
                 $('main').addClass('close-panel');
+                Search.closeSearch();
 
             });
         });
@@ -87,7 +88,8 @@ Panel = (function() {
 
 
     var openGive = function() {
-        $('#right-panel').removeClass('hidden fadeOutRight').addClass('animated slideInRight flex-container');  
+        $('#right-panel').removeClass('hidden fadeOutRight').addClass('animated slideInRight flex-container'); 
+        $('#search').addClass('hidden'); 
         $('#give-panel').removeClass('hidden');
         $('#search-btn').addClass('animated fadeOut');
 
@@ -96,7 +98,7 @@ Panel = (function() {
 
     }
 
-   
+
     
     var closePanel = function() {
         $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
@@ -109,8 +111,9 @@ Panel = (function() {
                 'src': 'assets/sample-images/sample-image@2x.jpg',
                 'thumb': 'assets/sample-images/sample-image@2x.jpg'
             }, {
-                'src': 'https://picsum.photos/200/300',
-                'thumb': 'https://picsum.photos/200/300'
+                'html': '#video2',
+                'thumb': 'https://picsum.photos/300/400',
+                'poster': 'https://picsum.photos/300/400'
             }, {
                 'src': 'https://picsum.photos/400/600',
                 'thumb': 'https://picsum.photos/400/600'
@@ -130,17 +133,114 @@ Panel = (function() {
             dynamic: true,
             dynamicEl: myArray,
             download: false,
+            counter: false,
+            autoplayFirstVideo: false,
             index: myIndex
+
         });
 
        
-       console.log(myIndex);       
+       console.log(myIndex);      
        //$('.zoom').data('lightGallery').slide(index);
 
 
     }
 
 
+     var playVideo = function() {
+         if ($('.lg-current').has('video')) {
+            
+            var videoElement = $('.lg-current').find('video').get(0);
+            
+            if (videoElement.paused) {
+               videoElement.play();
+               //changeButtons();
+            } else if (videoElement.ended) {
+                //console.log('your else statement is working')   
+                videoElement.play();
+            }
+        } 
+
+    }
+
+    var pauseVideo = function() {
+        $(this).addClass('hidden');
+        if ($('.lg-current').has('video')) {
+            
+            var videoElement = $('.lg-current').find('video').get(0);
+            
+            if (!videoElement.paused) {
+               videoElement.pause();
+               //changeButtons();
+            } else if (videoElement.ended) {
+                //console.log('your else statement is working')   
+                videoElement.play();
+            }
+        } 
+
+    }
+
+    var replayVideo = function() {
+        if ($('.lg-current').has('video')) {
+            
+            var videoElement = $('.lg-current').find('video').get(0);
+            videoElement.load();
+            videoElement.play();
+        } 
+    }
+
+    var changeButtons = function(event) {
+        console.log('this is change buttons');
+        if ($('#video-play').hasClass('hidden')) {
+            $('#video-play').removeClass('hidden');
+            $('#video-pause').addClass('hidden');
+        }
+      
+    }
+    
+    var testing = function() {
+        var myTarget = event.target;
+        var myTargetClass = $(event.target).attr('class');
+        var myTargetId = $(event.target).attr('id');
+        console.log(myTarget);
+        console.log(myTargetId);
+        if (myTargetClass != 'lg-img-wrap' && myTargetId != 'video-replay') {
+            console.log(true);
+            if ( !checkForVideoButtons() ) {
+                $('.lg-video-cont').append('<div class="video-buttons"><button id="video-pause"></button><button id="video-play" class="hidden"></button></button><button id="video-replay"></button></div>');
+            }
+        }
+
+        if (myTargetId == 'video-replay') {
+            replayVideo();
+        }
+
+        if (myTargetId == 'video-pause') {
+            pauseVideo();
+            $(event.target).attr('id', 'video-play');
+
+        } 
+
+        if (myTargetId == 'video-play') {
+            playVideo();
+            $(event.target).attr('id', 'video-pause');
+        }
+    }
+
+    var removeVideoButtons = function() {
+        $('.video-buttons').remove();
+    }
+
+    var checkForVideoButtons = function() {
+        if ($('div').hasClass('video-buttons')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    
+    
 
 
     var bindEvents = function() {
@@ -149,11 +249,17 @@ Panel = (function() {
        $(document).on('click tap', '.close', closePanel);
        $(document).on('click tap', '.give', openGive);
        $(document).on('click tap', '.zoom', createLightGallery);
-    }
+       $(document).on('onSlideClick.lg', testing);
+       $(document).on('onBeforeSlide.lg', removeVideoButtons);
+       $(document).on('click tap', '.lg-video', playVideo);
+       $(document).on('click tap', '#video-replay', replayVideo);
+       //$(document).on('click tap', '.lg', testing);    
+   }
 
 
   	return {
-        init: init
+        init: init,
+        closePanel: closePanel
     }
 
 })();

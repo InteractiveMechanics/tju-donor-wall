@@ -11,6 +11,7 @@ Search = (function() {
 
     
     var openSearch = function() {
+        Panel.closePanel();
         $('#right-panel').removeClass('hidden fadeOutRight').addClass('animated slideInRight flex-container');  
         $('#search').removeClass('hidden');
         $('#search-btn').addClass('animated fadeOut');
@@ -28,7 +29,7 @@ Search = (function() {
                 usePreview: false,
                 customLayout: {
                     'normal': [
-                        '1 2 3 4 5 6 7 8 9 0 {del}',
+                        '1 2 3 4 5 6 7 8 9 0 {b}',
                         'Q W E R T Y U I O P',
                         'A S D F G H J K L {enter}',
                         'Z X C V B N M , . \'',
@@ -36,7 +37,7 @@ Search = (function() {
                     ]
                 },
                 display: {
-                    del: '\u232b:Delete',
+                    'b' : '\u232b:Delete',
                     'enter': 'ENTER',
                     'accept' : 'DONE',
                     'space' : 'SPACE'
@@ -56,7 +57,7 @@ Search = (function() {
             autoAccept : true,
             customLayout: {
                 'normal': [
-                    '{left} {right} {del}',
+                    '{left} {right} {b}',
                     '7 8 9',
                     '4 5 6',
                     '1 2 3',
@@ -64,7 +65,7 @@ Search = (function() {
                 ]
             },
             display: {
-                del: '\u232b:Delete',
+                'b': '\u232b:Delete',
                 'accept' : 'DONE'
             }
         })
@@ -80,7 +81,7 @@ Search = (function() {
             autoAccept : true,
             customLayout: {
                 'normal': [
-                    '{left} {right} {del}',
+                    '{left} {right} {b}',
                     '7 8 9',
                     '4 5 6',
                     '1 2 3',
@@ -88,7 +89,7 @@ Search = (function() {
                 ]
             },
             display: {
-                del: '\u232b:Delete',
+                'b': '\u232b:Delete',
                 'accept' : 'DONE'
             }
 
@@ -136,7 +137,8 @@ Search = (function() {
 
 
   	return {
-        init: init
+        init: init,
+        closeSearch: closeSearch
     }
 
 })();
