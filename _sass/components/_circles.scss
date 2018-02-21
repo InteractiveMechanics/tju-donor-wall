@@ -119,10 +119,12 @@
 	width: 155px !important;
 
 	display: inline-flex;
-	margin: 0px 3px !important;
+	margin: 0px 15px !important;
 	padding: 20px;
 
 	background-image: linear-gradient(45deg, rgba(41,73,130,1) 0%,rgba(96,132,195,1) 50%,rgba(137,165,214,1) 100%);
+	box-shadow: none;
+  
 
 	p {
 		font-size: 11px;

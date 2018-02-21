@@ -73,12 +73,16 @@ Panel = (function() {
             h.on("tap press", function() {
                 if ($this.hasClass('large')) {
                     $('#gallery-wrapper').removeClass('hidden');
-                } 
+                    $('#close').css('width', 'calc(100vw - 1300px');
+                }  else {
+                     $('#close').css('width', 'calc(100vw - 650px');
+                }
               
                 $('#panel').removeClass('hidden fadeOutLeft').addClass('animated slideInLeft flex-container');
                 $(this).addClass('active');
                 $('main').addClass('close-panel');
                 Search.closeSearch();
+                setTimeout(function() { openTheClose(); }, 750);
 
             });
         });
@@ -102,6 +106,7 @@ Panel = (function() {
     
     var closePanel = function() {
         $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
+        $('#close').removeClass('fadeIn').addClass('hidden');
         $('#gallery-wrapper').addClass('hidden');
     }
 
@@ -155,8 +160,7 @@ Panel = (function() {
             if (videoElement.paused) {
                videoElement.play();
                //changeButtons();
-            } else if (videoElement.ended) {
-                //console.log('your else statement is working')   
+            } else if (videoElement.ended) { 
                 videoElement.play();
             }
         } 
@@ -172,8 +176,7 @@ Panel = (function() {
             if (!videoElement.paused) {
                videoElement.pause();
                //changeButtons();
-            } else if (videoElement.ended) {
-                //console.log('your else statement is working')   
+            } else if (videoElement.ended) {  
                 videoElement.play();
             }
         } 
@@ -187,6 +190,8 @@ Panel = (function() {
             videoElement.load();
             videoElement.play();
         } 
+
+        
     }
 
     var changeButtons = function(event) {
@@ -205,7 +210,6 @@ Panel = (function() {
         console.log(myTarget);
         console.log(myTargetId);
         if (myTargetClass != 'lg-img-wrap' && myTargetId != 'video-replay') {
-            console.log(true);
             if ( !checkForVideoButtons() ) {
                 $('.lg-video-cont').append('<div class="video-buttons"><button id="video-pause"></button><button id="video-play" class="hidden"></button></button><button id="video-replay"></button></div>');
             }
@@ -213,6 +217,11 @@ Panel = (function() {
 
         if (myTargetId == 'video-replay') {
             replayVideo();
+            if ( checkForVideoButtons() ) {
+                removeVideoButtons();
+                addPauseReplayBts();
+
+            }
         }
 
         if (myTargetId == 'video-pause') {
@@ -231,6 +240,8 @@ Panel = (function() {
         $('.video-buttons').remove();
     }
 
+
+
     var checkForVideoButtons = function() {
         if ($('div').hasClass('video-buttons')) {
             return true;
@@ -239,6 +250,14 @@ Panel = (function() {
         }
     }
 
+    var addPauseReplayBts = function() {
+         $('.lg-video-cont').append('<div class="video-buttons"><button id="video-pause"></button><button id="video-replay"></button></div>');
+    }
+
+    //there's a Harry Potter refernece here somewhere
+    var openTheClose = function() {
+        $('#close').removeClass('hidden').addClass('animated fadeIn');
+    }
     
     
 
@@ -246,14 +265,11 @@ Panel = (function() {
     var bindEvents = function() {
        $(document).ready(openPanel);
        $(document).ready(featureImg);
-       $(document).on('click tap', '.close', closePanel);
+       $(document).on('click tap', '#close', closePanel);
        $(document).on('click tap', '.give', openGive);
        $(document).on('click tap', '.zoom', createLightGallery);
        $(document).on('onSlideClick.lg', testing);
        $(document).on('onBeforeSlide.lg', removeVideoButtons);
-       $(document).on('click tap', '.lg-video', playVideo);
-       $(document).on('click tap', '#video-replay', replayVideo);
-       //$(document).on('click tap', '.lg', testing);    
    }
 
 

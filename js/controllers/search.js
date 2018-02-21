@@ -31,7 +31,7 @@ Search = (function() {
                     'normal': [
                         '1 2 3 4 5 6 7 8 9 0 {b}',
                         'Q W E R T Y U I O P',
-                        'A S D F G H J K L {enter}',
+                        'A S D F G H J K L {accept:Accept}',
                         'Z X C V B N M , . \'',
                         '{accept:Accept} {space} {left} {right} {undo:Undo} {redo:Redo} -'
                     ]
@@ -101,16 +101,31 @@ Search = (function() {
     var resetSelect = function() {
         $("#donor-colleges").val('default');
         $("#donor-colleges").selectpicker("refresh");
+        $('#search-er').addClass('fadeOut hidden').removeClass('fadeIn flex-container');
+
     }
 
-    var checkforErrors = function() {
-        console.log('here is a thing');
+    var checkforErrors = function(event) {
         var donorYear = $('#donor-year').val();
-        if (donorYear > 2015 && donorYear < 1800) {
-            $('#search-er').removeClass('hidden');
+        var donorYearMax = $('#donor-year-max').val();
+        console.log("donor year: " + donorYear);
+        console.log("donor year max: "  + donorYearMax);
+        
+     
+        if (donorYear > 2015 || donorYear < 1800) {
+            event.preventDefault();
+            $('#search-er').removeClass('fadeOut hidden').addClass('animated fadeIn flex-container');
+            console.log('donor year is an error')
+        } else if (donorYearMax > 2015 || donorYearMax < 1800) {
+            event.preventDefault();
+            $('#search-er').removeClass('fadeOut hidden').addClass('animated fadeIn flex-container');
+            console.log('donor year max is an error')
+        } else {
+            
         }
     }
 
+    
 
 
 
@@ -133,6 +148,7 @@ Search = (function() {
         $(document).on('click tap', '#donor-year', openYearKeyboard);
         $(document).on('click tap', '#donor-year-max', openYearMaxKeyboard);
         $(document).on('click tap', '#reset', resetSelect);
+        $(document).on('submit', checkforErrors);
     }
 
 

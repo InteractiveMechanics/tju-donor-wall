@@ -30,6 +30,10 @@
 		padding: 0px 0px 0px 45px;
     	border-bottom: 1px solid $light_grey;
 
+    	>p {
+    		padding-right: 45px;
+    	}
+
     	
     	div {
     		margin-top: 30px;
@@ -43,9 +47,12 @@
 	right: 0px;
 }
 
-#panel section>div:last-of-type {
+#panel section>div:last-of-type,
+#panel section>p:last-of-type {
 	margin-bottom: 50px;
 }
+
+
 
 #gallery-wrapper{
 	background: white;
@@ -64,11 +71,12 @@
 	}
 }
 
-.close {
-    width: calc(100vw - 1300px);
+#close {
+	position: absolute;
+    right: 0px;
+    width: calc(100vw - 650px);
+    height: calc(100vh - 100px);
     background-color: rgba(0, 0, 0, 0.5);
     float: right;
-    position: absolute;
-    right: 0px;
     
 }
