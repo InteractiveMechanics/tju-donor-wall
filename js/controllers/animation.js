@@ -1,7 +1,8 @@
 Animation = (function() {
     var timeout = [];
-    var duration = 30000; //90000
-    var longduration = 900000;
+    var duration = 60000; //90000
+    var myInterval;
+    //var longduration = 000;
 
 
 	 var init = function() {
@@ -10,7 +11,7 @@ Animation = (function() {
 
     
     var myAnimation = function() {
-        console.log('i am working');
+        console.log('myAnimation is running');
 
         $('#instructions').html('');
 
@@ -21,27 +22,30 @@ Animation = (function() {
             autoplay: true,
             path: '../data/Jefferson-instructions.json'
         });
+
     }
 
-    var resetTimeout = function() {
-        if (timeout) {
-            $.each(timeout, function(index, value){
-                clearTimeout(value);
-                timeout.splice(index, 1);
-            });
-        }
-        timeout.push(setTimeout(myAnimation, duration));
-    }
+    // var setAnimationInterval = function() {
+    //     myInterval = setInterval(function(){ myAnimation(); }, 30000);
+    // }
 
+    // var stopAnimationInterval = function() {
+    //     clearInterval(myInterval);
+    // }
+
+    // var stopAnimation = function() {
+    //    $('#instructions').html('');
+    //    stopAnimationInterval();
+    // }
 
     var bindEvents = function() {
-        $(document).on('click tap drag', resetTimeout);
-        //$(document).on('click', '.give', myAnimation);
+        //$(document).on('click tap drag', stopAnimation);
     }
 
 
   	return {
-        init: init
+        init: init,
+        myAnimation: myAnimation
     }
 
 })();

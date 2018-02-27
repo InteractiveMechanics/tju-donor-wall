@@ -2,6 +2,7 @@
 		{
 		  "id": 1,
 		  "name":"Sheeja Abaham, MD",
+		  "headshot": "assets/sample-images/sample-thumbnail@2x.jpg", 
 		  "year":"1996",
 		  "giving": 10000
 		 },
@@ -16,6 +17,7 @@
 		 {
 		  "id": 3,	
 		  "name":"Meredith Grey, MD",
+		  "headshot": "assets/sample-images/sample-thumbnail@2x.jpg",
 		  "year":"2001",
 		  "giving": 10000
 
