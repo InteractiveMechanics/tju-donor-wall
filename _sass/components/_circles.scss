@@ -169,12 +169,12 @@
 	width: auto;
 	top: 15%;
 	height: 70%;
-	//animation: river-flow 10s infinite; 
+	animation: river-flow 50s infinite; 
 }
 
 @keyframes river-flow {
 	0% {
-		left: -100%;
+		left: -50%; //-100%
 	}
 	
 	100% {

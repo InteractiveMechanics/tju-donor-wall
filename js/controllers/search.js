@@ -99,34 +99,14 @@ Search = (function() {
 
 
     var resetSelect = function() {
+        River.resetRiver();
         $("#donor-colleges").val('default');
         $("#donor-colleges").selectpicker("refresh");
         $('#search-er').addClass('fadeOut hidden').removeClass('fadeIn flex-container');
 
     }
 
-    var checkforErrors = function(event) {
-        var donorYear = $('#donor-year').val();
-        var donorYearMax = $('#donor-year-max').val();
-        console.log("donor year: " + donorYear);
-        console.log("donor year max: "  + donorYearMax);
-        
-     
-        if (donorYear > 2015 || donorYear < 1800) {
-            event.preventDefault();
-            $('#search-er').removeClass('fadeOut hidden').addClass('animated fadeIn flex-container');
-            console.log('donor year is an error')
-        } else if (donorYearMax > 2015 || donorYearMax < 1800) {
-            event.preventDefault();
-            $('#search-er').removeClass('fadeOut hidden').addClass('animated fadeIn flex-container');
-            console.log('donor year max is an error')
-        } else {
-            
-        }
-    }
-
     
-
 
 
     var closeSearch = function() {
@@ -148,7 +128,7 @@ Search = (function() {
         $(document).on('click tap', '#donor-year', openYearKeyboard);
         $(document).on('click tap', '#donor-year-max', openYearMaxKeyboard);
         $(document).on('click tap', '#reset', resetSelect);
-        $(document).on('submit', checkforErrors);
+        $(document).on('submit', River.getResults);
     }
 
 

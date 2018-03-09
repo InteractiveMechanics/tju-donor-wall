@@ -19,7 +19,6 @@ Panel = (function() {
 
 
     var enableRelSlider = function() {
-        console.log('enableRelSlider');
         $('#relationships').slick({
             dots: false,
             arrows: false,
@@ -28,16 +27,43 @@ Panel = (function() {
         })
     }
 
+
+    var getRels = function(id) {
+        var getRelsArray = data.donors[id].rels;
+        var newRelsArray = [];
+        if (getRelsArray.length != 0) {
+            for (i = 0; i < getRelsArray.length; i++) {
+                var index = data.donors.findIndex(function(j) {
+                    return j.ID == getRelsArray[i];
+                })
+                newRelsArray.push(index);
+            }
+        }
+
+        for (i = 0; i < newRelsArray.length; i++) {
+            var relId = newRelsArray[i];
+            if (data.donors[id].giving_level == 10000) {
+                $('#relationships').append(' <div class="circle rel"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].edu_0_grad_yr + '</p>');
+            } else {
+                $('#relationships').append(' <div class="circle rel"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].edu_0_grad_yr + '</p>');
+            }
+        }
+
+
+    }
+
+
+
     var enableGallery = function() {
-        console.log('enableGallerySlider');
+        //console.log('enableGallerySlider');
         var active = $('.active').html();
        
         if (active) {
-            console.log('if active this')
+            //console.log('if active this')
             $('#gallery-lg').append(active + '<div class="zoom"><img src="assets/icons/icon-zoom.svg"></div>');
 
         } else {
-            console.log('if active else');
+            //console.log('if active else');
             $( ".gallery-item" ).first().addClass('active');
             enableGallery();
         }
@@ -45,27 +71,65 @@ Panel = (function() {
     }
 
     var featureImg = function() {
-            $('.gallery-item').each( function() {
-            var $this = $(this);
-            var h = new Hammer(this);
-            h.on("tap press", function() {
-                $('#gallery-lg').html('');
-                $('.gallery-item').removeClass('active');
-                $this.addClass('active');
-                enableGallery();
-            });
-        });
+            //console.log('featureImg is working');
+        //     $('.gallery-item').each( function() {
+        //     var $this = $(this);
+        //     var h = new Hammer(this);
+        //     h.on("tap press", function() {
+        //         $('#gallery-lg').html('');
+        //         $('.gallery-item').removeClass('active');
+        //         $this.addClass('active');
+        //         enableGallery();
+        //     });
+        // });
+
+        var $this = $(this);
+        $('#gallery-lg').html('');
+        $('.gallery-item').removeClass('active');
+        $this.addClass('active');
+        //enableGallery();  
     }
 
+    
 
+    var getFeatImgURL = function(id) {
+        var FeatureImgUrl;
+        if (data[id].primary_img){
+                var primaryImgID = data[id].primary_img;
+                console.log(data[id].primary_img);
+                $.getJSON("http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + primaryImgID, function(d) {
+                    if (d.source_url) {
+                        // console.log(index, d.source_url, value.post_title);
+                        FeatureImgUrl = d.source_url;
+                        //console.log(d.source_url);
+                        //$('.active').attr('data-src', d.source_url);
+                        //$('.active>img').attr('src', d.source_url);
+                    }
+                });
+        }
+        return FeatureImgUrl;
+        
+    }
 
 
     
 
     var openPanel = function() {
+        var id = $(this).attr('data-donor');
+        console.log('openPanel id is ' + id);
+        $('#panel').html();
+        $("#panel").html($.templates("#panel-template").render(data.donors[id]));
+        $('#panel').removeClass('hidden fadeOutLeft').addClass('animated slideInLeft flex-container').attr('data-donor', id);
+        getRels(id);
         enableRelSlider();
-        enableGallery();
-
+        //console.log(getFeatImgURL(id));
+        //setTimeout(function() { enableGallery(); }, 1000);
+        if ($(this).hasClass('large')) {
+                    $('#gallery-wrapper').removeClass('hidden');
+                    $('#close').css('width', 'calc(100vw - 1300px');
+                }  else {
+                     $('#close').css('width', 'calc(100vw - 650px');
+                }
 
         $('.donor').each( function() {
             var $this = $(this);
@@ -112,6 +176,8 @@ Panel = (function() {
 
 
     var createLightGallery = function() {
+
+
         var myArray = [{
                 'src': 'assets/sample-images/sample-image@2x.jpg',
                 'thumb': 'assets/sample-images/sample-image@2x.jpg'
@@ -131,7 +197,7 @@ Panel = (function() {
             }];
 
         var activeItem = $('.active').attr('data-src');
-        console.log(activeItem);
+        //console.log(activeItem);
         var myIndex = myArray.map(function(e) { return e.src; }).indexOf(activeItem);
 
         $('.zoom').lightGallery({
@@ -195,7 +261,7 @@ Panel = (function() {
     }
 
     var changeButtons = function(event) {
-        console.log('this is change buttons');
+        //console.log('this is change buttons');
         if ($('#video-play').hasClass('hidden')) {
             $('#video-play').removeClass('hidden');
             $('#video-pause').addClass('hidden');
@@ -207,8 +273,8 @@ Panel = (function() {
         var myTarget = event.target;
         var myTargetClass = $(event.target).attr('class');
         var myTargetId = $(event.target).attr('id');
-        console.log(myTarget);
-        console.log(myTargetId);
+        //console.log(myTarget);
+        //console.log(myTargetId);
         if (myTargetClass != 'lg-img-wrap' && myTargetId != 'video-replay') {
             if ( !checkForVideoButtons() ) {
                 $('.lg-video-cont').append('<div class="video-buttons"><button id="video-pause"></button><button id="video-play" class="hidden"></button></button><button id="video-replay"></button></div>');
@@ -263,13 +329,15 @@ Panel = (function() {
 
 
     var bindEvents = function() {
-       $(document).ready(openPanel);
-       $(document).ready(featureImg);
+      // $(document).ready(openPanel);
+       //$(document).ready(featureImg);
        $(document).on('click tap', '#close', closePanel);
        $(document).on('click tap', '.give', openGive);
        $(document).on('click tap', '.zoom', createLightGallery);
        $(document).on('onSlideClick.lg', testing);
        $(document).on('onBeforeSlide.lg', removeVideoButtons);
+       $(document).on('click tap', '.donor[data-donor]', openPanel);
+       $(document).on('click tap', '.gallery-item', featureImg);
    }
 
 

@@ -25,32 +25,18 @@
 </head>
 <body>
     <main>
-        <div id="instructions"></div>
-        
-        <div id="river">
-        <!-- <div class="circle donor large" style="background-color: rgba(0,0,0, 0.5); background-image: url('assets/sample-images/sample-thumbnail@2x.jpg');">
-            <p>Sheeja Abraham, MD</p>
-            <p>1996</p>
-        </div>
-        <div id="testing" class="circle donor sm">
-            <p>Samuel D. Gross, MD</p>
-            <p>1828</p>
-        </div>
-        <div class="circle give">
-            <p>Would you like to see your name here?</p>
-            <h4>Give Now</h4>
-        </div> -->
-        </div>
-
-        <div id="panel" class="hidden">
-            
-            <article id="gallery-wrapper" class="hidden">
+        <!-- donor panel template -->
+        <script id="panel-template" type="text/x-jsrender">
+            {{if primary_img.length}}
+            <article id="gallery-wrapper" class="hidden" data-donor={{:ID}}>
                 <section id="gallery-lg">
                 </section>
 
                 
                 <section id="gallery-grid">
-                    <div class="gallery-item active" data-src="assets/sample-images/sample-image@2x.jpg"><img src="assets/sample-images/sample-image@2x.jpg"></div>
+                    <div class="gallery-item active" data-src=""><img src=""></div>
+
+                    
                     <div class="gallery-item" data-src="https://picsum.photos/300/400"><img src="https://picsum.photos/300/400"></div>
                     <div class="gallery-item" data-src="https://picsum.photos/400/600"><img src="https://picsum.photos/400/600"></div>
                     <div class="gallery-item" data-src="https://picsum.photos/600/400"><img src="https://picsum.photos/600/400"></div>
@@ -68,64 +54,86 @@
                     <button id="video-replay"><img src="assets/icons/icon-video-replay.svg"></button>
                 </div>
             </article>
+            {{/if}}
 
 
             <article>
-                <h1>Sheeja Abraham, MD</h1>
+                <h1>{{:prefix}} {{:first_name}} {{:middle}} {{:last_name}} {{:suffix}} {{:honorific}}</h1>
                 <section>
+                    {{if giving_amount}}
                     <div>
                         <h5>Giving Level</h5>
-                        <h2>$5,000</h2>
+                        <h2>${{:giving_amount}}</h2>
                     </div>
+                    {{/if}}
 
+                    {{if edu_0_degree}}
                     <div>
                         <h5>Degree</h5>
-                        <h2>Lorem Ipsum Sit Dolor Amet</h2>
+                        <h2>{{:edu_0_degree}}</h2>
                     </div>
+                    {{/if}}
 
+                    {{if edu_0_grad_yr}}
                     <div>
                         <h5>College</h5>
-                        <h2>College of Medicine, 1996</h2>
+                        <h2>{{if edu_0_college}} {{:edu_0_college}}, {{/if}} {{:edu_0_grad_yr}}</h2>
                     </div>
+                    {{/if}}
                 </section>
 
+               {{if rels && rels.length}}
                 <section>
                     <h5>Relationships</h5>
                     
                     <div id="relationships">
-                        <div class="circle rel rel-lg" style="background-color: rgba(0,0,0, 0.5); background-image: url('assets/sample-images/sample-thumbnail@2x.jpg');">
+
+
+                        <!-- <div class="circle rel rel-lg" style="background-color: rgba(0,0,0, 0.5); background-image: url('assets/sample-images/sample-thumbnail@2x.jpg');">
                             <p>Sheeja Abraham, MD</p>
                             <p>1996</p>
-                        </div>
-                        <div class="circle rel">
-                            <p>Gregory House, MD</p>
-                            <p>1996</p>
-                        </div>
-                        <div class="circle rel">
-                            <p>Christina Yang, MD</p>
-                            <p>1996</p>
-                        </div>
-                        <div class="circle rel">
-                            <p>Meredith Grey, MD</p>
-                            <p>1996</p>
-                        </div>
+                        </div> -->
 
                     </div>
                 </section>
+                {{/if}}
 
+                {{if biography}}
                 <section>
+                   
                     <h5>Biography</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta luctus mauris, lobortis tincidunt velit. Integer tempus, ligula ullamcorper suscipit interdum, magna justo dapibus ante, non luctus dolor felis et tortor. Pellentesque molestie dui id eros venenatis mattis. Nam venenatis dictum interdum. Etiam sed tempor felis, non aliquet leo. Donec sagittis, nisl eu varius varius, orci quam cursus sem, ut gravida dui dolor et orci. Proin imperdiet lectus magna, vel vulputate felis aliquet eget. Nulla tristique mauris sit amet urna placerat ullamcorper. Vivamus pulvinar, nisi sed placerat luctus, libero nunc iaculis sem, eu sollicitudin felis dolor nec sapien. Donec tristique eu ipsum sit amet suscipit. Morbi et metus dignissim, mollis velit ac, vestibulum quam. Vestibulum sagittis sapien dolor, non rhoncus ex viverra non. Donec ipsum enim, consequat nec condimentum sit amet, dapibus sit amet orci. Sed ante dolor, tristique id dolor et, convallis porta diam.</p>
+                    {{:biography}}
                 </section>
+                {{/if}}
 
+                {{if tribute_heading}}
                 <section class="no-border">
-                    <h5>Gifted by</h5>
-                    <h2>The Family of Simon Abraham</h2>
+                    <h5>{{:tribute_heading}}</h5>
+                    <h2>{{:tribute_message}}</h2>
                 </section>
+                {{/if}}
             </article>
-           
+        </script>
+
+
+        <div id="instructions"></div>
         
+        <div id="river">
+        <!-- <div class="circle donor large" style="background-color: rgba(0,0,0, 0.5); background-image: url('assets/sample-images/sample-thumbnail@2x.jpg');">
+            <p>Sheeja Abraham, MD</p>
+            <p>1996</p>
         </div>
+        <div id="testing" class="circle donor sm">
+            <p>Samuel D. Gross, MD</p>
+            <p>1828</p>
+        </div>
+        <div class="circle give">
+            <p>Would you like to see your name here?</p>
+            <h4>Give Now</h4>
+        </div> -->
+        </div>
+
+        <div id="panel" class="hidden"></div>
 
         <div id="right-panel" class="hidden">
             <article id="search" class="hidden">
@@ -250,17 +258,22 @@
     <script src="js/lib/lightslider/dist/js/lightslider.min.js"></script>
     <script src="js/lib/lg-video/lg-video.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
+    <script src="js/lib/jsrender/jsrender.js"></script>
     <script src="js/lib/jquery.hammer.js"></script>
     <script src="js/lib/lottie.js"></script>
     <script src="js/lib/bootstrap_select/js/bootstrap-select.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="js/lib/defiantjs/defiant.min.js"></script>
     <script src="js/controllers/utilities.js"></script>
     <script src="js/controllers/panel.js"></script>
     <script src="js/controllers/river.js"></script>
     <script src="js/controllers/animation.js"></script>
     <script src="js/controllers/search.js"></script>
+    <script src="js/controllers/data.js"></script>
     <script src="js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
+
+     <script>var jsonData = 'http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/rest-routes/v2/donors';</script>
    
 
 </body>
