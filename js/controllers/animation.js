@@ -1,6 +1,6 @@
 Animation = (function() {
     var timeout = [];
-    var duration = 60000; //90000
+    var duration = 90000; //90000
     var myInterval;
     //var longduration = 000;
 

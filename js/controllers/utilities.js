@@ -18,14 +18,14 @@ Utilities = (function() {
         timeout.push(setTimeout(resetInteractive, duration));
         timeout.push(setTimeout(resetBrowser, longduration));
         $('#instructions').html('');
-        //clearInterval(myInterval);
+        clearInterval(myInterval);
     }
 
     var resetInteractive = function() {
     	Panel.closePanel();
     	Search.closeSearch();
-    	//Animation.myAnimation();
-    	//myInterval = setInterval(function(){ Animation.myAnimation(); }, 30000);
+    	Animation.myAnimation();
+    	myInterval = setInterval(function(){ Animation.myAnimation(); }, 30000);
     	
     }
 

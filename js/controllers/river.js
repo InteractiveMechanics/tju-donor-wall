@@ -2,16 +2,24 @@ River = (function() {
 
     
     var 
-        width = 3000,
+        width = 6500,
         height = 1000,
         format = d3.format(",d");
 
     var results;
+    var myIncrement = 500;
+    var tweenRiverMain = new TweenMax.to("#river", 35, {x: "44%", ease: Power0.easeNone, repeat: -1});
+    var tweenRiverSwipeLeft = new TweenMax.to("#river", .35, {left: "-="+myIncrement, ease: Power0.easeNone});
+    var tweenRiverSwipeRight = new TweenMax.to("#river", .35, {left: "+="+myIncrement, ease: Power0.easeNone});
 
+    
     
 	var init = function() {
         bindEvents();
     }
+
+
+
 
 
     var resetRiver = function() {
@@ -19,7 +27,8 @@ River = (function() {
         d3.selectAll("svg > *").remove();
         Data.resetData();
         setTimeout(function() { loadData(data.donors); }, 1000);
-        
+        //TweenMax.to("#river", 40, {x: "100%", ease: Power0.easeNone});
+        tweenRiverMain.play();
     }
 
     
@@ -34,6 +43,7 @@ River = (function() {
   
     //data/testing.json
     var loadData = function(datatoload) {
+            console.log(datatoload.length);
 
             // var circles = svgContainer.selectAll("circle")
             //     .data(datatoload)
@@ -84,6 +94,7 @@ River = (function() {
 
             var textNodes = svgContainer.selectAll("text")
                 .data(datatoload);
+                console.log(datatoload);
 
             foreignObjects = textNodes.enter().append("foreignObject")
                 //.attr("x",function (d, i) { return parseInt(testingCircle(i).x)  } )
@@ -91,7 +102,26 @@ River = (function() {
                 .attr('data-donor', function(d, i) {
                    return i;
                 })
-                .classed("donor", true)
+                .classed("donor", function(d){
+                    if (d.bubble_type == "donor") {
+                        return true;
+                    } 
+                })
+                .classed("give", function(d) {
+                    if (d.bubble_type !== "donor") {
+                        return true;
+                    }
+                })
+                .classed("sm", function(d) {
+                    if (d.giving_level == 9999) {
+                        return true;
+                    }
+                }) 
+                .classed("large", function(d) {
+                    if (d.giving_level == 10000) {
+                        return true;
+                    }
+                })
                 .attr("width",function (d) {  
                     if (d.giving_level == 9999) {
                         return 170;
@@ -116,73 +146,101 @@ River = (function() {
                         return true;
                     } 
                 })
-                .style("background-image", function(d) {
-                    var returnHeadshot;
-                    if (d.giving_level == 10000 && d.primary_img.length != 0) {
-                        returnHeadshot = 'url("'+ d.primary_img +'")';
-                    } else {
-                        returnHeadshot = 'linear-gradient(45deg, rgba(17,22,50,1) 0%,rgba(30,38,85,1) 50%,rgba(61,70,123,1) 100%)';
-                    }
-                    return returnHeadshot;
-                })
                 .classed("sm", function(d) {
                     if (d.giving_level == 9999) {
                         return true;
                     } 
                 })
-                .html(function(d) { 
+                .classed("give", function(d) {
+                    if (d.giving_level != 10000 && d.giving_level != 9999) {
+                        return true;
+                    }
+                })
+                .style("background-image", function(d) {
+                    var returnHeadshot;
+                    if (d.giving_level == 10000 && d.primary_img.length != 0) {
+                        returnHeadshot = 'url("'+ d.primary_img +'")';
+                    } else if (d.giving_level == 10000) {
+                        returnHeadshot = 'linear-gradient(45deg, rgba(17,22,50,1) 0%,rgba(30,38,85,1) 50%,rgba(61,70,123,1) 100%)';
+                    } else if (d.giving_level == 9999) {
+                        returnHeadshot = 'linear-gradient(45deg, rgba(41,73,130,1) 0%,rgba(96,132,195,1) 50%,rgba(137,165,214,1) 100%)';
+                    } else {
+                        returnHeadshot = 'linear-gradient(45deg, rgba(72,20,30,1) 1%,rgba(160,41,68,1) 50%,rgba(189,80,104,1) 100%)';
+                    }                    
+                    return returnHeadshot;
+                })
+                .html(function(d) {
+                    //var bubbleId; 
+                    var bubbleLine1;
+                    //var bubbleLine2;
                     var donorPrefix;
                     var donorFirst;
                     var donorMiddle;
                     var donorLast;
                     var donorSuffix;
                     var donorHonor;
+                    var donorGradYear;
 
-                    if (d.prefix.length != 0) {
+                    if (d.bubble_line_1) {
+                        bubbleLine1 = d.bubble_line_1;
+                    } else {
+                        bubbleLine1 = '';
+                    }
+                    
+
+                    if (d.prefix) {
                         donorPrefix = d.prefix + ' ';
                     } else {
                         donorPrefix = '';
                     }
 
-                    if (d.first_name.length != 0 && d.first_name != 'undefined') {
+                    if (d.first_name && d.first_name != 'undefined') {
                         donorFirst = d.first_name + ' ';
                     } else {
-                        donorFirst = '';
+                        donorFirst = 'Give Now';
                     }
 
-                    if (d.middle.length != 0) {
+                    if (d.middle) {
                         donorMiddle = d.middle + ' ';
                     } else {
                         donorMiddle = '';
                     }
 
-                    if (d.last_name.length != 0) {
+                    if (d.last_name) {
                         donorLast = d.last_name + ' '; 
                     } else {
                         donorLast = '';
                     }
 
-                    if (d.suffix.length != 0) {
+                    if (d.suffix) {
                         donorSuffix = d.suffix + ' ';
                     } else {
                         donorSuffix = '';
                     }
 
-                    if (d.honorific.length != 0) {
+                    if (d.honorific) {
                         donorHonor = d.honorific + ' ';
                     } else {
                         donorHonor = '';
                     }
 
-                    return "<p id='" + d.ID +  "''>" + donorPrefix + donorFirst + donorMiddle + donorLast + donorSuffix + donorHonor + '</p><p>' + d.edu_0_grad_yr + '</p>'
+                    if (d.edu_0_grad_yr) {
+                        donorGradYear = '<p>' + d.edu_0_grad_yr + '</p>';
+                    } else {
+                        donorGradYear = '';
+                    }
+
+                    return "<p>" + bubbleLine1 + donorPrefix + donorFirst + donorMiddle + donorLast + donorSuffix + donorHonor + '</p>' + donorGradYear;
+                    //return "<p>Testing Testing</p>";
+                    
                 });
 
            var simulation = d3.forceSimulation(datatoload)
-                .force('charge', d3.forceManyBody().strength(-250))
+                .force('charge', d3.forceManyBody().strength(-300))
                 .force('center', d3.forceCenter(width / 4, height / 4))
                 .on('tick', ticked)
                 .force('collision', d3.forceCollide().radius(function(d) {
-                    return d.radius
+                    return 120
                 }));
 
 
@@ -194,18 +252,19 @@ River = (function() {
               u.enter()
                 .append('foreignObject')
                 .merge(u)
-                .attr('x', function(d) {
-                  return d.x
+                .attr('x', function(d,i) {
+                    return d.x
                 })
                 .attr('y', function(d) {
-                  return d.y
+                    return d.y
+                      
                 })
 
               u.exit().remove()
             }
 
             simulation.force('y', d3.forceY().y(function(d) {
-                return 0;   
+                return 300;   
             }))
 
 
@@ -215,7 +274,7 @@ River = (function() {
 
 
     var collide = function(node) {
-        var r = node.radius + 16,
+        var r = 105,
         nx1 = node.x - r,
         nx2 = node.x + r,
         ny1 = node.y - r,
@@ -283,10 +342,31 @@ River = (function() {
     }
 
 
+    var hammerSwipe = function() {
+         var river = document.getElementById("river");
+       
+    
+        Hammer(river).on("swipeleft", function() {
+            $(river).animate({left: "-=700"}, 250, "linear");
+            //tweenRiverSwipeLeft.play();
+            console.log('swipeleft');
+       
+
+        });
+        
+        Hammer(river).on("swiperight", function() {
+            $(river).animate({left: "+=700"}, 250, "linear");
+            //tweenRiverSwipeRight.play();
+            console.log('swiperight');       
+        
+        });
+    }
+
 
 
     var bindEvents = function() {
         $(document).ready(resetRiver);
+        $(document).ready(hammerSwipe);
     }
 
 
@@ -294,7 +374,9 @@ River = (function() {
         init: init,
         getResults: getResults,
         updateRiver: updateRiver,
-        resetRiver: resetRiver
+        resetRiver: resetRiver,
+        tweenRiverMain: tweenRiverMain
+
     }
 
 })();

@@ -12,6 +12,7 @@ Search = (function() {
     
     var openSearch = function() {
         Panel.closePanel();
+        River.tweenRiverMain.pause();
         $('#right-panel').removeClass('hidden fadeOutRight').addClass('animated slideInRight flex-container');  
         $('#search').removeClass('hidden');
         $('#search-btn').addClass('animated fadeOut');
@@ -111,6 +112,7 @@ Search = (function() {
 
     var closeSearch = function() {
         $('#right-panel').removeClass('slideInRight').addClass('fadeOutRight');
+        River.tweenRiverMain.resume();
         //$('#search').removeClass('fadeIn').addClass('hidden fadeOutRight');
         setTimeout(function(){ $('#search').addClass('hidden'); }, 750);
         setTimeout(function(){ $('#give-panel').addClass('hidden');}, 750);

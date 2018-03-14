@@ -1,6 +1,8 @@
 Data = (function() {
 
 
+    var givingDataToAdd = {};
+
     var init = function(response) {
     	data = {"donors": [] };
     	console.log(response);
@@ -56,10 +58,12 @@ Data = (function() {
             
 
                 var dataToAdd = {};
+                //var givingDataToAdd = {};
                
 
                 //dataToAdd["properties"] = {};
                 dataToAdd["ID"] = value.ID;
+                dataToAdd["bubble_type"] = "donor";
                 dataToAdd["prefix"] = value.prefix;
                 dataToAdd["first_name"] = value.first_name;
                 dataToAdd["middle"] = value.middle;
@@ -78,9 +82,18 @@ Data = (function() {
                 dataToAdd["edu_0_grad_yr"] = value.education_0_graduation_year;
                 dataToAdd["primary_img"] = '';
                 dataToAdd["galleryArray"] = galleryArray; //arrayImgs
+                dataToAdd["bubble_line_1"] = '';
+                dataToAdd["bubble_line_2"] = '';
+                dataToAdd["panel_heading"] = '';
+                dataToAdd["panel_text"] = '';
+                dataToAdd["panel_phone"] = '';
+                dataToAdd["panel_email"] = ''; 
 
         
                 data["donors"].push(dataToAdd);
+               
+                
+
 
                 if (value.primary_img) {
                     $.getJSON("http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + value.primary_img, function(d) {
@@ -99,8 +112,12 @@ Data = (function() {
                 		str = arrayImgs[i];
                 		newStr = str.replace(/"([^"]+(?="))"/g, '$1');
                 		console.log(newStr);
-                		newImgURL = "http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + newStr;
-                		galleryArray.push(newImgURL);
+                		$.getJSON("http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + newStr, function(d) {
+                            if (d.source_url) {
+                                newImgURL = d.source_url;
+                                galleryArray.push(newImgURL);
+                            } 
+                        });
                 	}
                 }
 
@@ -119,13 +136,69 @@ Data = (function() {
 
         });
 
+        $.getJSON(givingData, function(givingResponse) {
+           intersperseGivingData(givingResponse); 
+        }, 'json');
+
+      
+        var intersperseGivingData = function(givingResponse) {
+            $.each(givingResponse, function(index, value) {
+                //givingDataToAdd["ID"] = parseInt(Math.random() * 100);
+                givingDataToAdd["bubble_type"] = "giving";
+                givingDataToAdd["giving_level"] = '90000';
+                givingDataToAdd["prefix"] = '';
+                givingDataToAdd["first_name"] = '';
+                givingDataToAdd["middle"] = '';
+                givingDataToAdd["last_name"] = '';
+                givingDataToAdd["suffix"] = '';
+                givingDataToAdd["honorific"] = '';
+                givingDataToAdd["giving_level"] = '';
+                givingDataToAdd["giving_amount"] = '';
+                givingDataToAdd["bio"] = '';
+                givingDataToAdd["tribute_heading"] = '';
+                givingDataToAdd["tribute_message"] = '';
+                givingDataToAdd["rels"] = [];
+                givingDataToAdd["edu_0_college"] = '';
+                givingDataToAdd["edu_0_degree"] = '';
+                givingDataToAdd["edu_0_college"] = '';
+                givingDataToAdd["edu_0_grad_yr"] = '';
+                givingDataToAdd["primary_img"] = '';
+                givingDataToAdd["galleryArray"] = ''; //arrayImgs
+                givingDataToAdd["bubble_line_1"] = value.bubble_line_1;
+                givingDataToAdd["bubble_line_2"] = value.bubble_line_2;
+                givingDataToAdd["panel_heading"] = value.panel_heading;
+                givingDataToAdd["panel_text"] = value.panel_text;
+                givingDataToAdd["panel_phone"] = value.panel_phone;
+                givingDataToAdd["panel_email"] = value.panel_email;
+                //givingDataToAdd["x"] = 1700;
+                //givingDataToAdd["y"] = 300; 
+            });
+
+        }
+
+         for (i = 0; i < data.donors.length; i++) {
+            if (i > 0 && i % 10 == 0) {
+                data["donors"].splice(i, 0, givingDataToAdd);
+            }
+        }
+
+
+
+
+
+
         console.log(data);
     	console.log(data.donors[0].bio);
 
     }
 
-    
-    
+
+
+
+
+
+
+
 
     var resetData = function() {
          $.get(jsonData, function(response) {

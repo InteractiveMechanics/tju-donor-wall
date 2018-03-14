@@ -8,6 +8,11 @@
 	}
 }
 
+.search-btn-wrapper,
+.all-donors-wrapper {
+	height: 100px;
+}
+
 .search-btn-wrapper {
 	float: right;
 	display: flex;
@@ -15,12 +20,15 @@
 
 	margin: 0px 55px 0px 0px;
 
-	height: 100px;
-
-
 }
 
-#search-btn, #search-close {
+.all-donors-wrapper {
+    float: left;
+}
+
+
+
+#search-btn, #search-close, #all-donors-btn {
 	display: flex;
 	align-items: center;
 
