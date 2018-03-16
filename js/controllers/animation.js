@@ -2,8 +2,6 @@ Animation = (function() {
     var timeout = [];
     var duration = 90000; //90000
     var myInterval;
-    //var longduration = 000;
-
 
 	 var init = function() {
         bindEvents();
@@ -25,22 +23,9 @@ Animation = (function() {
 
     }
 
-    // var setAnimationInterval = function() {
-    //     myInterval = setInterval(function(){ myAnimation(); }, 30000);
-    // }
-
-    // var stopAnimationInterval = function() {
-    //     clearInterval(myInterval);
-    // }
-
-    // var stopAnimation = function() {
-    //    $('#instructions').html('');
-    //    stopAnimationInterval();
-    // }
-
     var bindEvents = function() {
-        //$(document).on('click tap drag', stopAnimation);
     }
+
 
 
   	return {

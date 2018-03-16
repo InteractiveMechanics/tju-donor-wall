@@ -165,27 +165,13 @@
 
 #river {
 	position: absolute;
-	left: -4000px; //-100%
+	left: -4000px; //-4000px
 	width: auto;
 	top: 15%;
 	height: 70%;
 }
 
-// .flowing {
-// 	animation: river-flow 40s infinite;
-// }
 
-
-
-
-.play {
-	animation-play-state: running
-}
-
-
-.paused {
-	animation-play-state: paused;
-}
 
 @keyframes river-flow {
 	0% {

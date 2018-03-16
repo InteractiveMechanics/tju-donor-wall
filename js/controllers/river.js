@@ -252,43 +252,62 @@ River = (function() {
         setTimeout(function() { loadData(results); }, 500);
         playRiver();
         if (results.length == 0) {
-            $('#search-er').removeClass('hidden fadeOut');
+            $('#search-er').removeClass('hidden fadeOut').addClass('flex-container');
         }
     }
 
 
-    var hammerSwipeRight = function() {
-         var river = document.getElementById("river");
-       
-    
-        // new Hammer(river).on("swipeleft", function() {
-        //     $(river).animate({left: "-=700"}, 250, "linear");
-        //     console.log('swipeleft');
-       
+    var prepareForSwipes = function(event) {
+        console.log("prepareForSwipes");
 
-        // });
+        var swipeOptions = { dragLockToAxis: true, dragBlockHorizonal: true};
+
+        function dragEl(event) {
+            var elToDrag = event.target;
+            eltoDrag.style.left = event.deltaX + "px";
+        }
+
+        function swipeRightEl(event) {
+            // var elToSwipe = event.target;
+            // console.log(event);
+            var eDelta = event.deltaX;
+            var eVelocity = event.overallVelocity / 2;
+            var distance = eDelta * eVelocity;
+            console.log(event.deltaX);
+            $('#river').animate({left: "+=" + distance}, "swing");
+        }
+
+        function swipeLeftEl(event) {
+            // var elToSwipe = event.target;
+            // console.log(event);
+            var eDelta = event.deltaX;
+            var eVelocity = event.overallVelocity / 2;
+            var distance = eDelta * eVelocity;
+            console.log(event.deltaX);
+            $('#river').animate({left: "-=" + distance}, "swing");
         
-        new Hammer(river).on("swiperight", function(ev) {
-            //$(river).animate({left: "+=700"}, 250, "linear");
-            console.log(ev);       
-        
-        });
+        }
+
+        function releaseEl(event) {
+            event.gesture.stopDetect();
+        }
+
+        function initTouchListeners(touchableEl) {
+            var touchControl = new Hammer(touchableEl, swipeOptions);
+            touchControl.on("dragright", dragEl)
+                .on("swiperight", swipeRightEl)
+                .on("swipeleft", swipeLeftEl)
+                .on("release", releaseEl);
+        };
+
+
+        var river = document.getElementById('river');
+        initTouchListeners(river);
+
+
+
     }
-
-    var hammerSwipeLeft = function() {
-         var river = document.getElementById("river");
-       
     
-        new Hammer(river).on("swipeleft", function(ev) {
-            //$(river).animate({left: "-=700"}, 250, "linear");
-            console.log(ev);
-       
-
-        });
-        
-        
-    }
-
 
    
 
@@ -296,8 +315,8 @@ River = (function() {
     var pauseRiver = function() {
         if (TweenMax.isTweening( '#river') ) {
             tweenRiverMain.pause();
-        // } else {
-        //     tweenRiverMain.play();
+        } else {
+            tweenRiverMain.play();
         } 
 
     }
@@ -316,7 +335,7 @@ River = (function() {
         d3.selectAll("svg > *").remove();
         Data.resetData(); //Data.resetData();
         setTimeout(function() { loadData(data.donors); }, 750);
-        //tapweenRiverMain.resume();
+        tweenRiverMain.resume();
     }
 
 
@@ -324,8 +343,7 @@ River = (function() {
     var bindEvents = function() {
         //$(document).ready(resetRiver);
         $(document).ready(loadData(data.donors));
-        $(document).ready(hammerSwipeRight);
-        //$(document).ready(hammerSwipeLeft);
+        $(document).ready(prepareForSwipes);
         $(document).on('click tap', '#river', pauseRiver);
     }
 

@@ -17,13 +17,29 @@ Panel = (function() {
         }
     }
 
+     var myCenterMode = function() {
+        if ($(".slick-slide").length > 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    var mySlidesToShow = function() {
+        if ($('.slick-slide').length > 1) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
 
     var enableRelSlider = function() {
         $('#relationships').slick({
             dots: false,
             arrows: false,
-            centerMode: true,
-            slidesToShow: 2
+            centerMode: myCenterMode,
+            slidesToShow: mySlidesToShow
         })
     }
 

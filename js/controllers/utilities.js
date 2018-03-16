@@ -1,7 +1,7 @@
 Utilities = (function() {
 	var timeout = [];
-	var duration = 30000; //90000
-    var longduration = 900000;
+	var duration = 90000; //90000
+    var longduration = 1800000;
     var myInterval;
 
 	 var init = function() {
@@ -16,31 +16,30 @@ Utilities = (function() {
             });
         }
         timeout.push(setTimeout(resetInteractive, duration));
-        timeout.push(setTimeout(resetBrowser, longduration));
+        //timeout.push(setTimeout(resetBrowser, longduration));
         $('#instructions').html('');
-        //clearInterval(myInterval);
+        clearInterval(myInterval);
     }
 
     var resetInteractive = function() {
+        alert("resetInteractive");
     	Panel.closePanel();
     	Search.closeSearch();
     	//Animation.myAnimation();
-    	//myInterval = setInterval(function(){ Animation.myAnimation(); }, 30000);
+    	myInterval = setInterval(function(){ Animation.myAnimation(); }, 23000);
     	
     }
 
 
 
-
-
-
-     var resetBrowser = function() {
+    var resetBrowser = function() {
         location.reload();
     }
 
 
     var bindEvents = function() {
-         $(document).on('click tap drag', resetTimeout);
+         $(document).on('click tap drag swipeleft swiperight', resetTimeout);
+         $(document).ready(resetInteractive);
     }
 
 
