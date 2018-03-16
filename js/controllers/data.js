@@ -2,8 +2,10 @@ Data = (function() {
 
 
     var givingDataToAdd = {};
+   
 
     var init = function(response) {
+        alert('running data init');
     	data = {"donors": [] };
     	console.log(response);
         
@@ -47,21 +49,10 @@ Data = (function() {
                 }
 
 
-                //if (objs)
-                // var objRels = extractText(rawRels);
-                // var objImgs = extractText(rawImgs);
-                // var arrayRels = Object.keys(objRels).map(function (key) { return objRels[key]; });
-                // var arrayImgs = Object.keys(objImgs).map(function (key) { return objImgs[key]; });
-
-
-                //console.log(array);
-            
 
                 var dataToAdd = {};
-                //var givingDataToAdd = {};
-               
-
-                //dataToAdd["properties"] = {};
+                
+            
                 dataToAdd["ID"] = value.ID;
                 dataToAdd["bubble_type"] = "donor";
                 dataToAdd["prefix"] = value.prefix;
@@ -111,7 +102,6 @@ Data = (function() {
                 		var newStr;
                 		str = arrayImgs[i];
                 		newStr = str.replace(/"([^"]+(?="))"/g, '$1');
-                		console.log(newStr);
                 		$.getJSON("http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + newStr, function(d) {
                             if (d.source_url) {
                                 newImgURL = d.source_url;
@@ -143,11 +133,11 @@ Data = (function() {
       
         var intersperseGivingData = function(givingResponse) {
             $.each(givingResponse, function(index, value) {
-                //givingDataToAdd["ID"] = parseInt(Math.random() * 100);
+                givingDataToAdd["ID"] = value.ID;
                 givingDataToAdd["bubble_type"] = "giving";
                 givingDataToAdd["giving_level"] = '90000';
                 givingDataToAdd["prefix"] = '';
-                givingDataToAdd["first_name"] = '';
+                givingDataToAdd["first_name"] = value.bubble_line_1;
                 givingDataToAdd["middle"] = '';
                 givingDataToAdd["last_name"] = '';
                 givingDataToAdd["suffix"] = '';
@@ -177,7 +167,7 @@ Data = (function() {
         }
 
          for (i = 0; i < data.donors.length; i++) {
-            if (i > 0 && i % 10 == 0) {
+            if (i > 0 && i % 10 == 0 && data.donors.length > 10) {
                 data["donors"].splice(i, 0, givingDataToAdd);
             }
         }
@@ -188,14 +178,9 @@ Data = (function() {
 
 
         console.log(data);
-    	console.log(data.donors[0].bio);
+        console.log(givingDataToAdd.first_name);  //sometimes undefined and sometimes give now
 
     }
-
-
-
-
-
 
 
 
@@ -204,6 +189,7 @@ Data = (function() {
          $.get(jsonData, function(response) {
                 init(response);
         }, 'json');
+
     }
     
 
@@ -212,7 +198,8 @@ Data = (function() {
 
   	return {
         init: init,
-        resetData: resetData
+        resetData: resetData,
+        givingDataToAdd: givingDataToAdd
     }
 
 })();

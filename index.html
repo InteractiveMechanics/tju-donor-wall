@@ -76,7 +76,7 @@
 
                     {{if edu_0_grad_yr}}
                     <div>
-                        <h5>College</h5>
+                        <h5>College, Graduation Year</h5>
                         <h2>{{if edu_0_college}} {{:edu_0_college}}, {{/if}} {{:edu_0_grad_yr}}</h2>
                     </div>
                     {{/if}}
@@ -114,6 +114,29 @@
                 {{/if}}
             </article>
         </script>
+
+        <script id="give-template" type="text/x-jsrender">
+              <h1>{{:panel_heading}}</h1>
+                <section class="no-border">
+                    <div>
+                        <p>{{:panel_text}}</p>
+                    </div>
+
+                    <div>
+                        <h5>Call</h5>
+                        <h2>{{:panel_phone}}</h2>
+                    </div>
+
+                    <div>
+                        <h5>Email</h5>
+                        <h2>{{:panel_email}}</h2>
+                    </div>
+                </section>
+
+
+        </script>
+
+
 
 
         <div id="instructions"></div>
@@ -155,11 +178,15 @@
                             <label for="donor-colleges">Colleges</label>
                             <select class="selectpicker" id="donor-colleges">
                                 <option>All Colleges</option>
-                                <option>College 1</option>
-                                <option>College 2</option>
-                                <option>College 3</option>
-                                <option>College 4</option>
-                                <option>College 5</option>
+                                <option>Sidney Kimmel Medical College</option>
+                                <option>Kanbar College of Design Engineering and Commerce</option>
+                                <option>College of Architecture and the Built Environment</option>
+                                <option>College of Biomedical Sciences</option>
+                                <option>College of Health Professions</option>
+                                <option>College of Nursing</option>
+                                <option>College of Pharmacy</option>
+                                <option>College of Population Health</option>
+                                <option>College of Science, Health and the Liberal Arts</option>
                             </select>
                         </div>
 
@@ -177,26 +204,7 @@
                 </form>
             </article>
 
-            <article id="give-panel" class="hidden">
-                <h1>Give Now</h1>
-                <section class="no-border">
-                    <div>
-                        <p>Aliquam egestas tellus ut consectetur finibus. Pellentesque id tempus lorem. Vivamus vitae enim nisl. Curabitur placerat quam nulla, quis finibus augue imperdiet vitae. Ut ac elit eu ante imperdiet efficitur facilisis vel metus. Nulla sed nibh et metus gravida pharetra vitae at ante. Sed lacinia eros eu erat ullamcorper blandit. In eu pellentesque odio, in eleifend mauris. Ut tristique turpis et dui egestas accumsan. Pellentesque tortor nibh, rutrum a blandit in, tincidunt in odio. Duis tincidunt velit velit, eleifend interdum sapien luctus gravida. In accumsan lorem sodales, rhoncus augue sit amet, suscipit massa. Fusce orci augue, finibus et est eu, tincidunt ornare enim. Nam ex velit, vestibulum id condimentum eget, blandit id odio. Quisque feugiat libero finibus eros pretium, non volutpat nibh pellentesque. Nulla facilisi.</p>
-                    </div>
-
-                    <div>
-                        <h5>Call</h5>
-                        <h2>(777) 888 - 9999</h2>
-                    </div>
-
-                    <div>
-                        <h5>Email</h5>
-                        <h2>alumni@jefferson.edu</h2>
-                    </div>
-                </section>
-
-
-            </article>
+            <article id="give-panel" class="hidden"></article>
          
 
         </div>
@@ -259,7 +267,6 @@
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="js/lib/slick/slick.min.js"></script>
     <script src="js/lib/keyboard/js/jquery.keyboard.min.js"></script>
-    <!--<script src="js/lib/keyboard/js/jquery.keyboard.extension-all.min.js"></script> -->
     <script src="js/lib/lightGallery/src/js/lightgallery.js"></script>
     <script src="js/lib/lightslider/dist/js/lightslider.min.js"></script>
     <script src="js/lib/lg-video/lg-video.js"></script>

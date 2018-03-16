@@ -46,7 +46,7 @@ Search = (function() {
                 }
             })
 
-        .addTyping();
+            .addTyping();
     }
 
     var openYearKeyboard = function() {

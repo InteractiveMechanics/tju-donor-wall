@@ -1,16 +1,20 @@
 River = (function() {
 
     
-    var 
-        width = 6500,
+    var width = 6500,
         height = 1000,
-        format = d3.format(",d");
+        results;
 
-    var results;
+    var river = document.getElementById('river');
     var myIncrement = 500;
-    var tweenRiverMain = new TweenMax.to("#river", 35, {x: "44%", ease: Power0.easeNone, repeat: -1});
-    var tweenRiverSwipeLeft = new TweenMax.to("#river", .35, {left: "-="+myIncrement, ease: Power0.easeNone});
-    var tweenRiverSwipeRight = new TweenMax.to("#river", .35, {left: "+="+myIncrement, ease: Power0.easeNone});
+    var tweenRiverMain = new TweenMax.to("#river", 35, {x: "100%", ease: Power0.easeNone, repeat: -1});
+    
+
+    //dead variables 
+    // var tweenRiverSwipeLeft = new TweenMax.to("#river", .35, {left: "-="+myIncrement, ease: Power0.easeNone});
+    // var tweenRiverSwipeRight = new TweenMax.to("#river", .35, {left: "+="+myIncrement, ease: Power0.easeNone});
+    // var nodes;
+    // var format = d3.format(" ,d");
 
     
     
@@ -19,19 +23,7 @@ River = (function() {
     }
 
 
-
-
-
-    var resetRiver = function() {
-        console.log('resetRiver');
-        d3.selectAll("svg > *").remove();
-        Data.resetData();
-        setTimeout(function() { loadData(data.donors); }, 1000);
-        //TweenMax.to("#river", 40, {x: "100%", ease: Power0.easeNone});
-        tweenRiverMain.play();
-    }
-
-    
+   
 
     var svgContainer = d3.select("#river").append("svg")
         .attr("width", width)
@@ -39,66 +31,14 @@ River = (function() {
         .attr("id", "riverpanel");
 
 
-    var nodes;
-  
+    
     //data/testing.json
     var loadData = function(datatoload) {
-            console.log(datatoload.length);
-
-            // var circles = svgContainer.selectAll("circle")
-            //     .data(datatoload)
-            //     .enter()
-            //     .append("circle");
-
-            // var circleAttributes = circles
-            //     .classed("circle", true)
-            //     .classed("donor", true)
-            //     .classed("sm", function(d) {
-            //         if (d.giving_level == 9999) {
-            //             return true;
-            //         }
-            //     }) 
-            //     .classed("large", function(d) {
-            //         if (d.giving_level == 10000) {
-            //             return true;
-            //         }
-            //     })
-            //     .attr('data-donor', function(d, i) {
-            //         return i;
-            //     })
-            //     .style("fill", function(d) {
-            //         var returnColor;
-            //         if (d.giving_level ===  9999) { returnColor = "transparent"; 
-            //         } else { returnColor = "#ff0000"; }
-            //         return returnColor;
-            //     })
-            //     .attr('id', function(d) {
-            //         return d.ID;
-            //     })
-            //     .attr("cx", function (d,i) { return (i+1) * 170; })
-            //     .attr("cy", function (d,i) { return (i+1) * 50; })
-            //     .attr("r", function(d) {
-            //         if (d.giving_level == 9999) {
-            //             return 85;
-            //         } else {
-            //             return 105;
-            //         }
-            //     });
-
-            // var circleCoords;
-            // var testingCircle = function(i) {
-            //     circleCoords = $('circle[data-donor=' + i + ']')[0].getBoundingClientRect();
-            //     return circleCoords;
-            // }
-
-
+          
             var textNodes = svgContainer.selectAll("text")
                 .data(datatoload);
-                console.log(datatoload);
 
             foreignObjects = textNodes.enter().append("foreignObject")
-                //.attr("x",function (d, i) { return parseInt(testingCircle(i).x)  } )
-                //.attr("y",function (d, i) { return parseInt(testingCircle(i).y) - 30 } )
                 .attr('data-donor', function(d, i) {
                    return i;
                 })
@@ -107,10 +47,10 @@ River = (function() {
                         return true;
                     } 
                 })
-                .classed("give", function(d) {
+                .classed("give", function(d, i) {
                     if (d.bubble_type !== "donor") {
-                        return true;
-                    }
+                        return true; 
+                    } 
                 })
                 .classed("sm", function(d) {
                     if (d.giving_level == 9999) {
@@ -169,11 +109,7 @@ River = (function() {
                     }                    
                     return returnHeadshot;
                 })
-                .html(function(d) {
-                    //var bubbleId; 
-                    var bubbleLine1;
-                    //var bubbleLine2;
-                    var donorPrefix;
+                .html(function(d, i) { 
                     var donorFirst;
                     var donorMiddle;
                     var donorLast;
@@ -181,23 +117,11 @@ River = (function() {
                     var donorHonor;
                     var donorGradYear;
 
-                    if (d.bubble_line_1) {
-                        bubbleLine1 = d.bubble_line_1;
-                    } else {
-                        bubbleLine1 = '';
-                    }
-                    
-
-                    if (d.prefix) {
-                        donorPrefix = d.prefix + ' ';
-                    } else {
-                        donorPrefix = '';
-                    }
 
                     if (d.first_name && d.first_name != 'undefined') {
                         donorFirst = d.first_name + ' ';
                     } else {
-                        donorFirst = 'Give Now';
+                        donorFirst = '';
                     }
 
                     if (d.middle) {
@@ -230,8 +154,13 @@ River = (function() {
                         donorGradYear = '';
                     }
 
-                    return "<p>" + bubbleLine1 + donorPrefix + donorFirst + donorMiddle + donorLast + donorSuffix + donorHonor + '</p>' + donorGradYear;
-                    //return "<p>Testing Testing</p>";
+                    if (i % 10 != 0 || i == 0) {
+                        return "<p>" + donorFirst + donorMiddle + donorLast + donorSuffix + donorHonor + '</p>' + donorGradYear;
+                    
+                    } else {
+                        
+                        return "<p>Would you like to see your name here?</p><h4>Give Now</h4>"; 
+                    }
                     
                 });
 
@@ -240,7 +169,7 @@ River = (function() {
                 .force('center', d3.forceCenter(width / 4, height / 4))
                 .on('tick', ticked)
                 .force('collision', d3.forceCollide().radius(function(d) {
-                    return 120
+                    return 120;
                 }));
 
 
@@ -273,35 +202,7 @@ River = (function() {
 
 
 
-    var collide = function(node) {
-        var r = 105,
-        nx1 = node.x - r,
-        nx2 = node.x + r,
-        ny1 = node.y - r,
-        ny2 = node.y + r;
-            
-        return function(quad, x1, y1, x2, y2) {
-            if (quad.point && (quad.point !== node)) {
-                var x = node.x - quad.point.x,
-                y = node.y - quad.point.y,
-                l = Math.sqrt(x * x + y * y),
-                r = node.radius + quad.point.radius;
-                
-                if (l < r) {
-                    l = (l - r) / l * .5;
-                    node.x -= x *= l;
-                    node.y -= y *= l;
-                    quad.point.x += x;
-                    quad.point.y += y;
-                }
-            
-            }
-        
-                
-            return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-        }
-    } 
-
+    
 
 
     var getResults = function(event) {
@@ -309,15 +210,16 @@ River = (function() {
         var name = '';
         var year = '';
         var yearMax = '';
+        var college = '';
         var donorName = $('#donor-name').val();
         var donorYear = $('#donor-year').val();
         var donorYearMax = $('#donor-year-max').val();
-        console.log("donor name: " + donorName + " donor year: " + donorYear + " donor year max: " + donorYearMax);
+        var donorCollege = $("#donor-colleges").find("option:selected").val(); 
+        console.log("donor name: " + donorName + " donor year: " + donorYear + " donor year max: " + donorYearMax + " donor college: " + donorCollege);
 
-        if (donorName) {
+        if (donorName.length) {
             name = '[contains(first_name, "' +  donorName + '") or contains(last_name, "' +  donorName + '")]';
-        }
-
+        } 
 
         if (donorYear) {
             year = '[edu_0_grad_yr > ' + donorYear + ']';
@@ -325,48 +227,106 @@ River = (function() {
 
         if (donorYearMax) {
             yearMax = '[edu_0_grad_yr < ' + donorYearMax + ']';
-        } 
+        }
 
-        results = JSON.search(data,  '//*' + name + year + yearMax);
+        if (donorCollege) {
+            college = '[contains(edu_0_college, "' + donorCollege + '")]';  
+        }
+
+
+
+        results = JSON.search(data,  '//*' + name + year + yearMax + college);
         console.log("LOOK AT ME ", results);
+        console.log(donorCollege);
+        
+       
         updateRiver(results);
+       
 
     }
 
 
     
     var updateRiver = function(results) {
-        //Data.init(results);
         d3.selectAll("svg > *").remove();
-        setTimeout(function() { loadData(results); }, 1000);
+        setTimeout(function() { loadData(results); }, 500);
+        playRiver();
+        if (results.length == 0) {
+            $('#search-er').removeClass('hidden fadeOut');
+        }
     }
 
 
-    var hammerSwipe = function() {
+    var hammerSwipeRight = function() {
          var river = document.getElementById("river");
        
     
-        Hammer(river).on("swipeleft", function() {
-            $(river).animate({left: "-=700"}, 250, "linear");
-            //tweenRiverSwipeLeft.play();
-            console.log('swipeleft');
+        // new Hammer(river).on("swipeleft", function() {
+        //     $(river).animate({left: "-=700"}, 250, "linear");
+        //     console.log('swipeleft');
+       
+
+        // });
+        
+        new Hammer(river).on("swiperight", function(ev) {
+            //$(river).animate({left: "+=700"}, 250, "linear");
+            console.log(ev);       
+        
+        });
+    }
+
+    var hammerSwipeLeft = function() {
+         var river = document.getElementById("river");
+       
+    
+        new Hammer(river).on("swipeleft", function(ev) {
+            //$(river).animate({left: "-=700"}, 250, "linear");
+            console.log(ev);
        
 
         });
         
-        Hammer(river).on("swiperight", function() {
-            $(river).animate({left: "+=700"}, 250, "linear");
-            //tweenRiverSwipeRight.play();
-            console.log('swiperight');       
         
-        });
+    }
+
+
+   
+
+
+    var pauseRiver = function() {
+        if (TweenMax.isTweening( '#river') ) {
+            tweenRiverMain.pause();
+        // } else {
+        //     tweenRiverMain.play();
+        } 
+
+    }
+
+    var playRiver = function() {
+         if (!TweenMax.isTweening( '#river') ) {
+            tweenRiverMain.play();
+        } 
+    }
+
+   
+
+   
+
+    var resetRiver = function() {
+        d3.selectAll("svg > *").remove();
+        Data.resetData(); //Data.resetData();
+        setTimeout(function() { loadData(data.donors); }, 750);
+        //tapweenRiverMain.resume();
     }
 
 
 
     var bindEvents = function() {
-        $(document).ready(resetRiver);
-        $(document).ready(hammerSwipe);
+        //$(document).ready(resetRiver);
+        $(document).ready(loadData(data.donors));
+        $(document).ready(hammerSwipeRight);
+        //$(document).ready(hammerSwipeLeft);
+        $(document).on('click tap', '#river', pauseRiver);
     }
 
 
@@ -375,6 +335,7 @@ River = (function() {
         getResults: getResults,
         updateRiver: updateRiver,
         resetRiver: resetRiver,
+        playRiver: playRiver,
         tweenRiverMain: tweenRiverMain
 
     }
