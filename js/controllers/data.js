@@ -18,6 +18,8 @@ Data = (function() {
                 var objImgs;
                 var arrayRels;
                 var arrayImgs;
+
+
                
                 function extractText( str ){
                     var ret;
@@ -39,6 +41,8 @@ Data = (function() {
                 } else {
                     arrayRels = [];
                 }
+            
+                
 
                 if (value.gallery) {
                     rawImgs = value.gallery;
@@ -67,10 +71,9 @@ Data = (function() {
                 dataToAdd["tribute_heading"] = value.tribute_heading;
                 dataToAdd["tribute_message"] = value.tribute_message;
                 dataToAdd["rels"] = relsArray;
-                dataToAdd["edu_0_college"] = value.education_0_college;
-                dataToAdd["edu_0_degree"] = value.education_0_degree;
-                dataToAdd["edu_0_college"] = value.education_0_college;
-                dataToAdd["edu_0_grad_yr"] = value.education_0_graduation_year;
+                dataToAdd["education_0_degree"] = value.education_0_degree;
+                dataToAdd["education_0_college"] = value.education_0_college;
+                dataToAdd["education_0_graduation_year"] = value.education_0_graduation_year;
                 dataToAdd["primary_img"] = '';
                 dataToAdd["galleryArray"] = galleryArray; //arrayImgs
                 dataToAdd["bubble_line_1"] = '';
@@ -182,13 +185,17 @@ Data = (function() {
 
     }
 
+    var searchData = function(results) {
+
+    }
+
 
 
 
     var resetData = function() {
          $.get(jsonData, function(response) {
                 init(response);
-        }, 'json');
+        }, 'json');       
 
     }
     

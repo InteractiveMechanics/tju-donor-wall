@@ -17,8 +17,8 @@ Panel = (function() {
         }
     }
 
-     var myCenterMode = function() {
-        if ($(".slick-slide").length > 1) {
+    var myCenterMode = function() {
+        if ($(".slider .slick-slide").length > 1) {
             return true;
         } else {
             return false;
@@ -26,12 +26,26 @@ Panel = (function() {
     }
 
     var mySlidesToShow = function() {
+        var numToShow;
         if ($('.slick-slide').length > 1) {
-            return 2;
+            numToShow = 2;
         } else {
-            return 1;
+            numToShow = 1;
         }
+        return numToShow
     }
+
+    var sliderNav = $('.slider-nav');
+    var maxItems = 2;
+    var myCenterMode = true;
+    if(sliderNav.children('div').length < 3) {
+        maxItems = 1;
+        myCenterMode = false;
+    }
+
+  
+
+
 
 
     var enableRelSlider = function() {
@@ -39,13 +53,18 @@ Panel = (function() {
             dots: false,
             arrows: false,
             centerMode: myCenterMode,
-            slidesToShow: mySlidesToShow
+            slidesToShow: maxItems
         })
     }
 
 
+
     var getRels = function(id) {
-        var getRelsArray = data.donors[id].rels;
+        var panelData = JSON.search(data, '//*[ID=' + id + ']');
+        
+
+        var getRelsArray = panelData[0].rels;
+        console.log(getRelsArray);
         var newRelsArray = [];
         if (getRelsArray.length != 0) {
             for (i = 0; i < getRelsArray.length; i++) {
@@ -58,11 +77,14 @@ Panel = (function() {
 
         for (i = 0; i < newRelsArray.length; i++) {
             var relId = newRelsArray[i];
-            if (data.donors[id].giving_level == 10000) {
-                $('#relationships').append(' <div class="circle rel donor large" data-donor="'+ relId + '"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].edu_0_grad_yr + '</p>');
+            var originalId = getRelsArray[i];
+            if (data.donors[relId].giving_level == 10000 && data.donors[relId].primary_img) {
+                $('#relationships').append(' <div class="circle rel donor large" data-donor="'+ relId + '" data-id="'+ originalId + '" style="background-color: rgba(0,0,0, 0.5); background-image: url('+ data.donors[relId].primary_img + ');"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
+            } else if (data.donors[relId].givinglevel == 10000)  {
+                 $('#relationships').append(' <div class="circle rel donor large" data-donor="'+ relId + '" data-id="'+ originalId + '"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
             } else {
-                $('#relationships').append(' <div class="circle rel donor"  data-donor="'+ relId + '"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].edu_0_grad_yr + '</p>');
-            } 
+                $('#relationships').append(' <div class="circle rel donor"  data-donor="'+ relId + '" data-id="'+ originalId + '"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
+            }
         }
 
 
@@ -73,11 +95,13 @@ Panel = (function() {
     var enableGallery = function() {
         //console.log('enableGallerySlider');
         var active = $('.active').html();
-        var id = $('#panel').attr('data-donor');
+        var id = $('#panel').attr('data-id');
+        var panelData = JSON.search(data, '//*[ID=' + id + ']');
+
        
         if (active) {
 
-            $('#gallery-lg').append(active + '<div class="zoom" data-donor=' + id + '><img src="assets/icons/icon-zoom.svg"></div>');
+            $('#gallery-lg').append(active + '<div class="zoom" data-id=' + id + '><img src="assets/icons/icon-zoom.svg"></div>');
 
         } else {
             $( ".gallery-item" ).first().addClass('active');
@@ -109,8 +133,11 @@ Panel = (function() {
     
 
     var getFeatImgURL = function(id) {
+        var panelData = JSON.search(data, '//*[ID=' + id + ']');
+        
         var FeatureImgUrl;
-        if (data[id].primary_img){
+
+        if (panelData[0].primary_img){
                 var primaryImgID = data[id].primary_img;
                 console.log(data[id].primary_img);
                 $.getJSON("http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + primaryImgID, function(d) {
@@ -129,20 +156,26 @@ Panel = (function() {
 
 
     
+    //$("#panel").html($.templates("#panel-template").render(data.donors[id]));
+    var openPanel = function(event) {
+        var id = $(this).attr('data-id');
 
-    var openPanel = function() {
-        var id = $(this).attr('data-donor');
-        River.tweenRiverMain.pause();
+        console.log(id);
+
+        var panelData = JSON.search(data, '//*[ID=' + id + ']');
+        console.log(panelData);
+
+        //River.tweenRiverMain.pause();
         $('#panel').html('');
-        $("#panel").html($.templates("#panel-template").render(data.donors[id]));
-        $('#panel').removeClass('hidden fadeOutLeft').addClass('animated slideInLeft flex-container').attr('data-donor', id);
+        $("#panel").html($.templates("#panel-template").render(panelData)); // data.donors[id]
+        $('#panel').removeClass('hidden fadeOutLeft').addClass('animated slideInLeft flex-container').attr('data-id', id);
         $('.all-donors-wrapper').removeClass('hidden').addClass('animated fadeIn flex-container');
         getRels(id);
         enableRelSlider();
 
         //console.log(getFeatImgURL(id));
-        setTimeout(function() { enableGallery(id); }, 1000);
-        if (data.donors[id].giving_level == 10000) {
+        //setTimeout(function() { enableGallery(id); }, 1000);
+        if (panelData[0].giving_level == 10000) {
             $('#gallery-wrapper').removeClass('hidden');
             $('#close').css('width', 'calc(100vw - 1300px');
         }  else {
@@ -187,7 +220,7 @@ Panel = (function() {
 
     
     var closePanel = function() {
-        River.tweenRiverMain.resume();
+        //River.tweenRiverMain.resume();
         $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
         $('#close').removeClass('fadeIn').addClass('hidden');
         $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
@@ -197,11 +230,12 @@ Panel = (function() {
 
 
     var createLightGallery = function() {
-        var id = $(this).attr('data-donor');
+        var id = $(this).attr('data-id');
+        var panelData = JSON.search(data, '//*[ID=' + id + ']');
        
         var lgArray = [];
-        var imgArray = data.donors[id].galleryArray;
-        var primaryImgLg = data.donors[id].primary_img;
+        var imgArray = panelData[0].galleryArray;
+        var primaryImgLg = panelData[0].primary_img;
 
         if (primaryImgLg.length != 0) {
             var primaryImgOb = {};
@@ -213,7 +247,7 @@ Panel = (function() {
 
 
         for (i = 0; i < imgArray.length; i ++) {
-            var fileName = data.donors[id].galleryArray[i];
+            var fileName = panelData[0].galleryArray[i];
             var fileExtension = fileName.split('.').pop();
             if (fileExtension == 'jpg' || fileExtension == 'png') {
                 var lgImg = {};
@@ -380,13 +414,13 @@ Panel = (function() {
        //$(document).ready(featureImg);
        $(document).on('click tap', '#close', closePanel);
        $(document).on('click tap', '.give[data-donor]', openGive);
-       $(document).on('click tap', '.zoom[data-donor]', createLightGallery);
+       $(document).on('click tap', '.zoom[data-id]', createLightGallery);
        $(document).on('onSlideClick.lg', testing);
        $(document).on('onBeforeSlide.lg', removeVideoButtons);
-       $(document).on('click tap', '.donor[data-donor]', openPanel);
+       $(document).on('click tap', '.donor[data-id]', openPanel);
        $(document).on('click tap', '.gallery-item', featureImg);
        $(document).on('click tap', '#all-donors-btn', closePanel);
-       $(document).on('click tap', '.slick-slide[data-donor]', openPanel);
+       $(document).on('click tap', '.slick-slide[data-id]', openPanel);
    }
 
 

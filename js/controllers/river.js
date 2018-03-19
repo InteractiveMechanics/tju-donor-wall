@@ -3,16 +3,27 @@ River = (function() {
     
     var width = 6500,
         height = 1000,
+        river,
+        tweenRiverMain,
         results;
 
-    var river = document.getElementById('river');
-    var myIncrement = 500;
-    var tweenRiverMain = new TweenMax.to("#river", 35, {x: "100%", ease: Power0.easeNone, repeat: -1});
+
+    var getSeconds = function(datatoload) {
+        var numBubbles = datatoload.length;
+        var riverTiming = (numBubbles / 3) * 2;
+        console.log(numBubbles);
+        console.log(riverTiming);
+        return riverTiming;
+    } 
+
+   
+
+
+    // var river = document.getElementById('river');
+    // var tweenRiverMain = new TweenMax.to("#river", riverSeconds, {x: "5000px", ease: Power0.easeNone, repeat: -1});
     
 
     //dead variables 
-    // var tweenRiverSwipeLeft = new TweenMax.to("#river", .35, {left: "-="+myIncrement, ease: Power0.easeNone});
-    // var tweenRiverSwipeRight = new TweenMax.to("#river", .35, {left: "+="+myIncrement, ease: Power0.easeNone});
     // var nodes;
     // var format = d3.format(" ,d");
 
@@ -20,20 +31,53 @@ River = (function() {
     
 	var init = function() {
         bindEvents();
+        river = document.getElementById('river');
+        velocity = 300;
+        var timing = getWidth(data.donors) / velocity;
+        tweenRiverMain = new TweenMax.to("#river", timing, {x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+     
     }
 
+    var getWidth = function(datatoload) {
+        var numBubbles = datatoload.length;
+        var riverWidth = numBubbles * 150;
+        var windowWidth = $(window).width();
+        if (riverWidth < windowWidth) {
+            return windowWidth;
+        } else {
+            return riverWidth
+        }
+        
+    }
+
+    var getNegWidth = function(datatoload) {
+        var myWidth = getWidth(datatoload);
+        var windowWidth = $( window ).width();
+        if (myWidth < windowWidth) {
+            return -windowWidth;
+        } else {
+            return -(getWidth(datatoload));
+        }
+    }
+
+    var getMyWidth = function(datatoload) {
+        var numBubbles = datatoload.length;
+        var riverWidth = numBubbles * 85;
+        return -riverWidth;
+    }
 
    
 
-    var svgContainer = d3.select("#river").append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .attr("id", "riverpanel");
 
-
+    
     
     //data/testing.json
     var loadData = function(datatoload) {
+            var svgContainer = d3.select("#river").append("svg")
+            .attr("width", getWidth(datatoload))
+            .attr("height", height)
+            .attr("id", "riverpanel");
+
           
             var textNodes = svgContainer.selectAll("text")
                 .data(datatoload);
@@ -41,6 +85,9 @@ River = (function() {
             foreignObjects = textNodes.enter().append("foreignObject")
                 .attr('data-donor', function(d, i) {
                    return i;
+                })
+                .attr('data-id', function(d, i) {
+                    return d.ID;
                 })
                 .classed("donor", function(d){
                     if (d.bubble_type == "donor") {
@@ -98,9 +145,9 @@ River = (function() {
                 })
                 .style("background-image", function(d) {
                     var returnHeadshot;
-                    if (d.giving_level == 10000 && d.primary_img.length != 0) {
+                    if (d.giving_level == 10000 && d.primary_img) {
                         returnHeadshot = 'url("'+ d.primary_img +'")';
-                    } else if (d.giving_level == 10000) {
+                    } else if (d.giving_level == 10000 && !(d.primary_img)) {
                         returnHeadshot = 'linear-gradient(45deg, rgba(17,22,50,1) 0%,rgba(30,38,85,1) 50%,rgba(61,70,123,1) 100%)';
                     } else if (d.giving_level == 9999) {
                         returnHeadshot = 'linear-gradient(45deg, rgba(41,73,130,1) 0%,rgba(96,132,195,1) 50%,rgba(137,165,214,1) 100%)';
@@ -148,8 +195,8 @@ River = (function() {
                         donorHonor = '';
                     }
 
-                    if (d.edu_0_grad_yr) {
-                        donorGradYear = '<p>' + d.edu_0_grad_yr + '</p>';
+                    if (d.education_0_graduation_year) {
+                        donorGradYear = '<p>' + d.education_0_graduation_year + '</p>';
                     } else {
                         donorGradYear = '';
                     }
@@ -163,13 +210,16 @@ River = (function() {
                     }
                     
                 });
+ 
+             
 
-           var simulation = d3.forceSimulation(datatoload)
-                .force('charge', d3.forceManyBody().strength(-300))
+            var simulation = d3.forceSimulation(datatoload)
+                // .force('charge', d3.forceManyBody().distanceMax(210).distanceMin(150))
                 .force('center', d3.forceCenter(width / 4, height / 4))
+                .alphaDecay(0.02)
                 .on('tick', ticked)
                 .force('collision', d3.forceCollide().radius(function(d) {
-                    return 120;
+                     return 120;
                 }));
 
 
@@ -222,15 +272,15 @@ River = (function() {
         } 
 
         if (donorYear) {
-            year = '[edu_0_grad_yr > ' + donorYear + ']';
+            year = '[education_0_graduation_year > ' + donorYear + ']';
         } 
 
         if (donorYearMax) {
-            yearMax = '[edu_0_grad_yr < ' + donorYearMax + ']';
+            yearMax = '[education_0_graduation_year < ' + donorYearMax + ']';
         }
 
-        if (donorCollege) {
-            college = '[contains(edu_0_college, "' + donorCollege + '")]';  
+        if (donorCollege != "All Colleges") {
+            college = '[contains(education_0_college, "' + donorCollege + '")]';  
         }
 
 
@@ -241,6 +291,7 @@ River = (function() {
         
        
         updateRiver(results);
+
        
 
     }
@@ -248,12 +299,20 @@ River = (function() {
 
     
     var updateRiver = function(results) {
-        d3.selectAll("svg > *").remove();
-        setTimeout(function() { loadData(results); }, 500);
-        playRiver();
         if (results.length == 0) {
             $('#search-er').removeClass('hidden fadeOut').addClass('flex-container');
+        } else {
+
+            d3.selectAll("svg").remove();
+            setTimeout(function() { 
+                loadData(results);
+                tweenRiverMain.updateTo({x: getMyWidth(results) }, true);
+                Search.closeSearch();
+
+            }, 500);
+            //setTimeout(function() { Data.init(results); }, 750);
         }
+        playRiver();
     }
 
 
@@ -271,10 +330,11 @@ River = (function() {
             // var elToSwipe = event.target;
             // console.log(event);
             var eDelta = event.deltaX;
-            var eVelocity = event.overallVelocity / 2;
+            var eVelocity = event.overallVelocity;
             var distance = eDelta * eVelocity;
             console.log(event.deltaX);
             $('#river').animate({left: "+=" + distance}, "swing");
+            $('#instructions').html('');
         }
 
         function swipeLeftEl(event) {
@@ -285,6 +345,7 @@ River = (function() {
             var distance = eDelta * eVelocity;
             console.log(event.deltaX);
             $('#river').animate({left: "-=" + distance}, "swing");
+            $('#instructions').html('');
         
         }
 
@@ -315,9 +376,7 @@ River = (function() {
     var pauseRiver = function() {
         if (TweenMax.isTweening( '#river') ) {
             tweenRiverMain.pause();
-        } else {
-            tweenRiverMain.play();
-        } 
+        }
 
     }
 
@@ -327,22 +386,21 @@ River = (function() {
         } 
     }
 
-   
-
-   
+    
 
     var resetRiver = function() {
-        d3.selectAll("svg > *").remove();
-        Data.resetData(); //Data.resetData();
+        d3.selectAll("svg").remove(); //d3.selectAll("svg > *").remove();
+        //Data.resetData(); //Data.resetData();
         setTimeout(function() { loadData(data.donors); }, 750);
         tweenRiverMain.resume();
+        //$('#river').css('left', 'Opx');
     }
 
 
 
     var bindEvents = function() {
         //$(document).ready(resetRiver);
-        $(document).ready(loadData(data.donors));
+        //$(document).ready(loadData(data.donors));
         $(document).ready(prepareForSwipes);
         $(document).on('click tap', '#river', pauseRiver);
     }
@@ -354,7 +412,8 @@ River = (function() {
         updateRiver: updateRiver,
         resetRiver: resetRiver,
         playRiver: playRiver,
-        tweenRiverMain: tweenRiverMain
+        tweenRiverMain: tweenRiverMain,
+        results: results
 
     }
 

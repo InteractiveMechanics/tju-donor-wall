@@ -25,6 +25,8 @@ Utilities = (function() {
         alert("resetInteractive");
     	Panel.closePanel();
     	Search.closeSearch();
+        River.resetRiver();
+        //$('#river').css('left', '0px');
     	//Animation.myAnimation();
     	myInterval = setInterval(function(){ Animation.myAnimation(); }, 23000);
     	
