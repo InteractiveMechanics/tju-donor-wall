@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+	<title>LED Test</title>
+
+    <style>
+        html, 
+        body {
+            margin: 20px;
+            padding: 0;
+        }
+
+        #connectionStatus {
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        #activeLeds {
+            display: inline-block;
+        }
+        #wall {
+            display: block;
+            border: 1px solid gray;
+        }
+        #wall .panel {
+            border-right: 1px solid gray;
+            display: inline-block;
+            padding: 2px 8px 8px;
+        }
+        #wall .panel:last-of-type {
+            border: none;
+        }
+        #wall .panel:not(.no-leds) .panel-row {
+            height: 15px;
+        }
+        
+        label {
+            text-align: center;
+            display: block;
+            font-family: sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            line-height: 2;
+            margin: 0 -8px 4px;
+            border-bottom: 1px solid gray;
+        }
+
+        input[type="checkbox"] {
+            width: 10px;
+            height: 10px;
+            margin: 0 2px 0 0;
+        }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $(function() {
+            $('.panel:not(.no-leds)').each(function( index ) {
+                for (i = 0; i < 29; i++) {
+                    $(this).append('<div class="panel-row"></div>');
+                }
+            });
+            $('.panel-row').each(function( index ) {
+                for (i = 0; i < 60; i++) {
+                    $(this).append('<input type="checkbox" />');
+                }
+            });
+            $('input').each(function( index ) {
+                $(this).attr('value', index);
+            });
+
+
+            $('input').on('change', function() {
+                var ledArray = [];
+                $('input').each(function( index ) {
+                    if ($(this).is(':checked')) {
+                        ledArray.push(parseInt($(this).attr('value')));
+                    }
+                });
+                writeFrame(ledArray);
+                outputLedArray(ledArray);
+            });
+
+
+            function outputLedArray(ledArray) {
+                $('#activeLeds').text(' - Active LEDs: ' + ledArray);
+            }
+		
+    
+    		// Set pixels to a given color
+    		function writeFrame(ledArray) {
+                var leds = 256;
+
+        		var r = 0;
+        		var g = 0;
+        		var b = 0;
+    
+                var upSpeed = 0.5;
+                var downSpeed = 1;
+
+    			var packet = new Uint8ClampedArray(4 + leds * 3);
+    
+    			if (socket.readyState != 1 /* OPEN */) {
+    				// The server connection isn't open. Nothing to do.
+    				return;
+    			}
+    
+    			if (socket.bufferedAmount > packet.length) {
+    				// The network is lagging, and we still haven't sent the previous frame.
+    				// Don't flood the network, it will just make us laggy.
+    				// If fcserver is running on the same computer, it should always be able
+    				// to keep up with the frames we send, so we shouldn't reach this point.
+    				return;
+    			}
+    
+    			// Dest position in our packet. Start right after the header.
+    			var dest = 4;
+                for (var led = 0; led < leds; led++) {
+
+                    if ( ledArray.indexOf(led) > -1 ) {
+                        packet[dest++] = r + 117;
+                        packet[dest++] = g + 117;
+                        packet[dest++] = b + 117;
+                    } else {
+                        packet[dest++] = r;
+                        packet[dest++] = g;
+                        packet[dest++] = b;
+                    }
+                }
+    
+    			socket.send(packet.buffer);
+    		}
+    
+            // Connect to a Fadecandy server running on the same computer, on the default port
+            var socket = new WebSocket('ws://127.0.0.1:7890');
+    
+            // Put some connection status text in the corner of the screen
+            $('#connectionStatus').text('Connecting to fcserver...');
+            socket.onclose = function(event) { $('#connectionStatus').text('Not connected to LED server'); }
+            socket.onopen = function(event) { $('#connectionStatus').text('Connected to LED server'); }
+
+        });
+
+    </script>
+</head>
+<body>
+    <div id="connectionStatus"></div>
+    <div id="activeLeds"></div>
+    
+    <div id="wall">
+        <div class="panel"><label>Panel 1</label></div>
+    </div>
+</body>
+</html>
