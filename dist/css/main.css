@@ -1,0 +1,620 @@
+@charset "UTF-8";
+@font-face {
+  font-family: 'MuseoSans-100';
+  src: url("../../assets/fonts/MuseoSans-100.otf"); }
+@font-face {
+  font-family: 'MuseoSans-100Italic';
+  src: url("../../assets/fonts/MuseoSans-100Italic.otf"); }
+@font-face {
+  font-family: 'MuseoSans-300';
+  src: url("../../assets/fonts/MuseoSans-300.otf"); }
+@font-face {
+  font-family: 'MuseoSans-300Italic';
+  src: url("../../assets/fonts/MuseoSans-300Italic.otf"); }
+@font-face {
+  font-family: 'MuseoSans-500';
+  src: url("../../assets/fonts/MuseoSans_500.otf"); }
+@font-face {
+  font-family: 'MuseoSans-500Italic';
+  src: url("../../assets/fonts/MuseoSans_500Italic.otf"); }
+@font-face {
+  font-family: 'MuseoSans-700';
+  src: url("../../assets/fonts/MuseoSans_700.otf"); }
+@font-face {
+  font-family: 'MuseoSans-700Italic';
+  src: url("../../assets/fonts/MuseoSans-700Italic.otf"); }
+@font-face {
+  font-family: 'MuseoSans-900';
+  src: url("../../assets/fonts/MuseoSans_900.otf"); }
+@font-face {
+  font-family: 'MuseoSans-900Italic';
+  src: url("../../assets/fonts/MuseoSans-900Italic.otf"); }
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+@keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+.fade-in {
+  -webkit-animation: fadeIn 1s 1 forwards;
+  -moz-animation: fadeIn 1s 1 forwards;
+  -o-animation: fadeIn 1s 1 forwards;
+  animation: fadeIn 1s 1 forwards; }
+
+.hidden {
+  display: none; }
+
+.no-border {
+  border-bottom: none !important; }
+
+.r-margin {
+  margin-right: 45px; }
+
+.flex-container {
+  display: flex; }
+
+* {
+  font-family: 'MuseoSans-300', Helvetica, Arial, sans-serif; }
+
+h1, h2, h5, label {
+  font-family: "MuseoSans-100", Helvetica, Arial, sans-serif; }
+
+h1 {
+  color: #569bca;
+  font-size: 40px; }
+
+h2 {
+  color: #231f20;
+  font-size: 24px; }
+
+h4 {
+  color: #569bca;
+  font-family: "MuseoSans-700", Helvetica, Arial, sans-serif;
+  letter-spacing: 0.5px;
+  text-transform: uppercase; }
+
+h5, label {
+  color: #939598;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase; }
+
+body {
+  overflow: hidden; }
+
+main {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 100px);
+  background: linear-gradient(45deg, #1e2655 19%, #569bca 100%); }
+
+footer {
+  position: relative;
+  z-index: 1000;
+  height: 100px;
+  -webkit-box-shadow: 0px -1px 23px 1px rgba(0, 0, 0, 0.18);
+  -moz-box-shadow: 0px -1px 23px 1px rgba(0, 0, 0, 0.18);
+  box-shadow: 0px -1px 23px 1px rgba(0, 0, 0, 0.18); }
+
+#instructions {
+  position: absolute;
+  left: 42%;
+  top: 82%;
+  width: 300px; }
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); }
+
+::-webkit-scrollbar {
+  width: 0.75em; }
+
+::-webkit-scrollbar-thumb {
+  background-color: #939598;
+  outline: 1px solid #939598;
+  border-radius: 10px; }
+
+.logo-wrapper {
+  float: left;
+  height: 100px;
+  padding: 16px; }
+  .logo-wrapper img {
+    height: 100%; }
+
+.search-btn-wrapper,
+.all-donors-wrapper {
+  height: 100px; }
+
+.search-btn-wrapper {
+  float: right;
+  display: flex;
+  align-items: center;
+  margin: 0px 55px 0px 0px; }
+
+.all-donors-wrapper {
+  float: left; }
+
+#search-btn, #search-close, #all-donors-btn {
+  display: flex;
+  align-items: center; }
+  #search-btn h4, #search-close h4, #all-donors-btn h4 {
+    margin-bottom: 0px;
+    color: #569bca;
+    line-height: 1; }
+  #search-btn img, #search-close img, #all-donors-btn img {
+    margin-right: 10px; }
+  #search-btn svg, #search-close svg, #all-donors-btn svg {
+    margin-right: 10px; }
+  #search-btn:hover, #search-close:hover, #all-donors-btn:hover {
+    text-decoration: none; }
+
+#search-close {
+  display: none; }
+
+.slick-initialized .slick-slide {
+  display: flex; }
+
+.slick-list {
+  margin-left: -45px;
+  padding: 0px 10px !important; }
+
+#gallery-lg {
+  position: relative;
+  top: -8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 550px;
+  padding: 0px !important;
+  background: #bcbec0;
+  overflow: hidden; }
+  #gallery-lg a {
+    position: relative;
+    display: block;
+    height: 100%;
+    overflow: hidden; }
+  #gallery-lg img {
+    height: 100%; }
+
+#gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 140px);
+  grid-template-rows: repeat(3, 140px);
+  grid-gap: 10px;
+  padding: 45px 30px !important; }
+
+.gallery-item {
+  display: flex;
+  align-items: center;
+  width: 140px;
+  height: 140px;
+  margin: 0px !important;
+  overflow: hidden;
+  background-color: #939598; }
+  .gallery-item img {
+    width: 100%;
+    height: auto; }
+
+.zoom {
+  position: absolute;
+  bottom: -34px;
+  right: 17px; }
+
+.circle {
+  display: flex;
+  flex-direction: column;
+  border-radius: 50%;
+  box-shadow: 0px 0px 13px 5px rgba(0, 0, 0, 0.2);
+  background-size: cover;
+  text-align: center; }
+  .circle p {
+    color: white;
+    margin-bottom: 5px;
+    font-family: "MuseoSans-100", Helvetica, Arial, sans-serif;
+    font-size: 14px; }
+
+.circle-text {
+  fill: white;
+  margin-bottom: 5px;
+  font-family: "MuseoSans-100", Helvetica, Arial, sans-serif;
+  font-size: 14px; }
+
+.large, .sm, .rel {
+  justify-content: flex-end; }
+  .large p, .sm p, .rel p {
+    z-index: 3;
+    color: white;
+    margin-bottom: 5px;
+    padding-right: 0px !important;
+    font-family: "MuseoSans-500", Helvetica, Arial, sans-serif;
+    font-size: 14px; }
+    .large p:last-of-type, .sm p:last-of-type, .rel p:last-of-type {
+      color: #ebe71c;
+      font-size: 11px; }
+
+.large {
+  position: relative;
+  height: 210px;
+  width: 210px;
+  padding: 30px;
+  background-size: cover; }
+  .large:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%; }
+
+.sm {
+  height: 170px;
+  width: 170px;
+  padding: 25px; }
+
+.give {
+  justify-content: center;
+  height: 210px;
+  width: 210px;
+  padding: 30px; }
+  .give p {
+    color: white;
+    margin-bottom: 5px;
+    font-family: "MuseoSans-100", Helvetica, Arial, sans-serif;
+    font-size: 14px; }
+  .give h4 {
+    color: white; }
+
+.rel {
+  position: relative;
+  height: 155px !important;
+  width: 155px !important;
+  display: inline-flex;
+  margin: 0px 15px !important;
+  padding: 20px;
+  background-image: linear-gradient(45deg, #294982 0%, #6084c3 50%, #89a5d6 100%);
+  box-shadow: none; }
+  .rel p {
+    font-size: 11px; }
+    .rel p:last-of-type {
+      font-size: 9px; }
+
+.rel-lg:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%; }
+
+#river {
+  position: absolute;
+  left: 0px;
+  width: auto;
+  top: 0%;
+  height: calc(100% - 100px);
+  padding-top: 5%; }
+
+@keyframes river-flow {
+  0% {
+    left: -75%; }
+  100% {
+    left: 100%; } }
+#panel, #right-panel {
+  position: absolute;
+  top: 0;
+  z-index: 100;
+  height: 100%;
+  padding-bottom: 30px;
+  background-color: white; }
+  #panel h5, #panel label, #right-panel h5, #right-panel label {
+    padding-top: 45px; }
+  #panel h1, #right-panel h1 {
+    padding: 50px 45px 0px 45px; }
+  #panel article, #right-panel article {
+    width: 650px; }
+    #panel article:last-of-type, #right-panel article:last-of-type {
+      overflow-x: hidden;
+      overflow-y: scroll; }
+  #panel section, #right-panel section {
+    padding: 0px 0px 0px 45px;
+    border-bottom: 1px solid #939598; }
+    #panel section p, #right-panel section p {
+      padding-right: 45px; }
+    #panel section div, #right-panel section div {
+      margin-top: 30px;
+      margin-bottom: 30px; }
+
+#right-panel {
+  right: 0px; }
+
+#panel section > div:last-of-type,
+#panel section > p:last-of-type {
+  margin-bottom: 50px; }
+
+#gallery-wrapper {
+  background: white;
+  border-right: 1px solid #939598; }
+
+.gallery-item.active {
+  opacity: 0.75; }
+
+#relationships {
+  margin-bottom: 10px !important; }
+  #relationships .slick-list {
+    padding: 0px; }
+
+#close {
+  position: absolute;
+  right: 0px;
+  width: calc(100vw - 650px);
+  height: calc(100vh - 100px);
+  background-color: rgba(0, 0, 0, 0.5);
+  float: right; }
+
+form {
+  padding: 0px 45px;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding-bottom: 105px; }
+
+label {
+  display: block; }
+
+#search article {
+  overflow: hidden; }
+#search input {
+  height: 70px;
+  padding: 20px;
+  font-size: 24px;
+  border-color: #939598;
+  border-radius: 0px; }
+#search input[type="reset"] {
+  width: 40%;
+  margin-right: 25px;
+  color: white;
+  background: #cdc6c1;
+  line-height: 1;
+  border-color: #cdc6c1; }
+#search input[type="submit"] {
+  width: calc(59% - 25px);
+  color: white;
+  line-height: 1;
+  background: linear-gradient(to right, #1e2655 43%, #569bca 100%); }
+
+.donor-year-wrapper label {
+  display: block; }
+.donor-year-wrapper input {
+  width: 49.5%;
+  display: inline; }
+  .donor-year-wrapper input:last-of-type {
+    position: relative;
+    left: -5px; }
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+  width: 100% !important; }
+
+/*
+Make bootstrap-select work with bootstrap 4 see:
+https://github.com/silviomoreto/bootstrap-select/issues/1135
+*/
+.dropdown-toggle.btn-default {
+  color: #939598;
+  background-color: #fff;
+  border-color: #939598; }
+
+.bootstrap-select.show > .dropdown-menu > .dropdown-menu {
+  display: block; }
+
+.bootstrap-select > .dropdown-menu > .dropdown-menu li.hidden {
+  display: none; }
+
+.bootstrap-select > .dropdown-menu > .dropdown-menu li a {
+  display: block;
+  width: 100%;
+  padding: 3px 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: #939598;
+  text-align: inherit;
+  white-space: nowrap;
+  background: 0 0;
+  border: 0; }
+
+.dropdown-menu > li.active > a {
+  color: #fff !important;
+  background-color: #bcbec0 !important; }
+
+.bootstrap-select .check-mark::after {
+  content: "✓"; }
+
+.bootstrap-select button {
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+/* Make filled out selects be the same size as empty selects */
+.bootstrap-select.btn-group .dropdown-toggle .filter-option {
+  display: inline !important;
+  font-size: 24px; }
+
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  border-radius: 0px; }
+
+.dropdown-toggle::after {
+  border-top: 16px solid;
+  border-right: 8px solid transparent;
+  border-bottom: 0;
+  border-left: 8px solid transparent; }
+
+.dropup .dropdown-toggle::after {
+  border-right: 8px solid transparent;
+  border-bottom: 16px solid;
+  border-left: 8px solid transparent; }
+
+#search-er {
+  background-color: #be1e2d;
+  border-radius: 6px;
+  height: 70px;
+  font-size: 22px;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px; }
+  #search-er p {
+    margin: 0px;
+    font-family: "MuseoSans-100", Helvetica, Arial, sans-serif; }
+    #search-er p span {
+      font-family: "MuseoSans-500", Helvetica, Arial, sans-serif; }
+
+.ui-keyboard {
+  background: #2d3d78; }
+
+.ui-state-default,
+.ui-widget-content
+.ui-state-default,
+.ui-widget-header
+.ui-state-default,
+.ui-button,
+html .ui-button.ui-state-disabled:hover,
+html .ui-button.ui-state-disabled:active {
+  border: none;
+  background: #1e2655;
+  color: #d6d7d8; }
+
+.ui-keyboard-button {
+  margin: 1px; }
+
+.ui-keyboard-button span {
+  font-family: "MuseoSans-100", Helvetica, Arial, sans-serif;
+  font-size: 14px; }
+
+.ui-keyboard-button[data-name="enter"] span,
+.ui-keyboard-button[data-name="accept"] span {
+  font-size: 10px;
+  position: relative;
+  top: -2px; }
+
+.ui-keyboard-button[data-name="enter"],
+.ui-keyboard-button[data-name="accept"] {
+  text-align: left; }
+
+.ui-keyboard-button[data-name="enter"] {
+  width: 59px; }
+
+.ui-keyboard-button[data-name="accept"] {
+  width: 54px; }
+
+.ui-keyboard-button[data-name="accept"][data-pos="4,1"] {
+  width: 74px; }
+
+.ui-corner-all,
+.ui-corner-top,
+.ui-corner-left,
+.ui-corner-tl {
+  border-radius: 0px; }
+
+.lg-backdrop.in {
+  opacity: 0.9 !important; }
+
+.lg-actions .lg-next {
+  right: 12%;
+  background-color: transparent; }
+  .lg-actions .lg-next:before {
+    content: url("../../../assets/icons/icon-gallery-arrow-next.svg"); }
+
+.lg-actions .lg-prev {
+  left: 12%;
+  background-color: transparent; }
+  .lg-actions .lg-prev:after {
+    content: url("../../../assets/icons/icon-gallery-arrow-prev.svg"); }
+
+.lg-outer .lg-img-wrap,
+.lg-outer .lg-video {
+  background-color: black;
+  top: 10%;
+  bottom: 10%;
+  left: 15%;
+  width: 70%;
+  height: 80%; }
+
+.lg-outer .lg-video-cont {
+  background-color: black;
+  left: 15%;
+  width: 70%;
+  max-width: initial !important; }
+
+.lg-toolbar {
+  background-color: transparent;
+  width: 70%;
+  left: 15%;
+  top: 85%; }
+
+#video-pause {
+  position: relative;
+  left: -50%;
+  top: 43px;
+  width: 80px;
+  height: 87px;
+  background: transparent;
+  border: none;
+  z-index: 1085; }
+  #video-pause:before {
+    content: url("../../../assets/icons/icon-video-pause.svg");
+    position: absolute;
+    left: 0px;
+    top: 0px; }
+  #video-pause:hover {
+    opacity: 0.5; }
+
+#video-play {
+  position: relative;
+  left: -50%;
+  top: 43px;
+  width: 80px;
+  height: 87px;
+  background: transparent;
+  border: none; }
+  #video-play:before {
+    content: url("../../../assets/icons/icon-video-play.svg");
+    position: absolute;
+    left: 0px;
+    top: 0px; }
+
+#video-replay {
+  position: relative;
+  left: -49%;
+  top: 43px;
+  width: 80px;
+  height: 87px;
+  background: transparent;
+  border: none; }
+  #video-replay:before {
+    content: url("../../../assets/icons/icon-video-replay.svg");
+    position: absolute;
+    left: 0px;
+    top: 0px; }
+
+.lg-toolbar .lg-close:after {
+  content: url("../../../assets/icons/icon-gallery-close.svg"); }
+
+/*# sourceMappingURL=main.css.map */
