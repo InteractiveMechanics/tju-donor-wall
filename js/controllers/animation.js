@@ -9,7 +9,6 @@ Animation = (function() {
 
     
     var myAnimation = function() {
-        console.log('myAnimation is running');
 
         $('#instructions').html('');
 

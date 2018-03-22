@@ -5,7 +5,6 @@ Data = (function() {
    
 
     var init = function(response) {
-        alert('running data init');
     	data = {"donors": [] };
     	console.log(response);
         

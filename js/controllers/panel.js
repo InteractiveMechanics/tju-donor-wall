@@ -93,7 +93,6 @@ Panel = (function() {
 
 
     var enableGallery = function() {
-        //console.log('enableGallerySlider');
         var active = $('.active').html();
         var id = $('#panel').attr('data-id');
         var panelData = JSON.search(data, '//*[ID=' + id + ']');
@@ -111,7 +110,6 @@ Panel = (function() {
     }
 
     var featureImg = function() {
-            console.log('featureImg is working');
             $('.gallery-item').each( function() {
             var $this = $(this);
             var h = new Hammer(this);
@@ -174,7 +172,7 @@ Panel = (function() {
         enableRelSlider();
 
         //console.log(getFeatImgURL(id));
-        //setTimeout(function() { enableGallery(id); }, 1000);
+        setTimeout(function() { enableGallery(id); }, 1000);
         if (panelData[0].giving_level == 10000) {
             $('#gallery-wrapper').removeClass('hidden');
             $('#close').css('width', 'calc(100vw - 1300px');
@@ -183,19 +181,6 @@ Panel = (function() {
             $('#close').css('width', 'calc(100vw - 650px');
         }
 
-        // $('.donor').each( function() {
-        //     var $this = $(this);
-        //     var h = new Hammer(this);
-        //     h.on("tap press", function() {
-              
-        //         $('#panel').removeClass('hidden fadeOutLeft').addClass('animated slideInLeft flex-container');
-        //         $(this).addClass('active');
-        //         $('main').addClass('close-panel');
-        //         Search.closeSearch();
-        //         setTimeout(function() { openTheClose(); }, 750);
-
-        //     });
-        // });
 
         Search.closeSearch();
         setTimeout(function() { openTheClose(); }, 750);
@@ -410,8 +395,6 @@ Panel = (function() {
 
 
     var bindEvents = function() {
-      // $(document).ready(openPanel);
-       //$(document).ready(featureImg);
        $(document).on('click tap', '#close', closePanel);
        $(document).on('click tap', '.give[data-donor]', openGive);
        $(document).on('click tap', '.zoom[data-id]', createLightGallery);

@@ -5,6 +5,7 @@ River = (function() {
         height = 1000,
         river,
         tweenRiverMain,
+        timing,
         results;
 
 
@@ -16,6 +17,8 @@ River = (function() {
         return riverTiming;
     } 
 
+
+   
    
 
 
@@ -32,9 +35,16 @@ River = (function() {
 	var init = function() {
         bindEvents();
         river = document.getElementById('river');
-        velocity = 300;
-        var timing = getWidth(data.donors) / velocity;
-        tweenRiverMain = new TweenMax.to("#river", timing, {x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+        velocity = 200;
+        timing = getWidth(data.donors) / velocity;
+        tweenRiverMain = new TweenMax.to("#river", timing, {x: 3600, ease: Power1.easeInOut, yoyo: true, repeat: -1});
+        Draggable.create("#river", {
+            type:"x",
+            edgeResistance:0.50,
+            bounds:"main",
+            lockAxis:true,
+            throwProps:true
+        });
      
     }
 
@@ -66,15 +76,12 @@ River = (function() {
         return -riverWidth;
     }
 
-   
 
-
-    
     
     //data/testing.json
     var loadData = function(datatoload) {
             var svgContainer = d3.select("#river").append("svg")
-            .attr("width", getWidth(datatoload))
+            .attr("width", 3600)
             .attr("height", height)
             .attr("id", "riverpanel");
 
@@ -214,7 +221,7 @@ River = (function() {
              
 
             var simulation = d3.forceSimulation(datatoload)
-                // .force('charge', d3.forceManyBody().distanceMax(210).distanceMin(150))
+                .force('charge', d3.forceManyBody().distanceMax(210).distanceMin(150))
                 .force('center', d3.forceCenter(width / 4, height / 4))
                 .alphaDecay(0.02)
                 .on('tick', ticked)
@@ -306,7 +313,11 @@ River = (function() {
             d3.selectAll("svg").remove();
             setTimeout(function() { 
                 loadData(results);
-                tweenRiverMain.updateTo({x: getMyWidth(results) }, true);
+                tweenRiverMain.kill();
+                velocity = 300;
+                timing = getWidth(results) / velocity;
+                tweenRiverMain = new TweenMax.to("#river", 0, {x: getMyWidth(results), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+                $
                 Search.closeSearch();
 
             }, 500);
@@ -334,6 +345,7 @@ River = (function() {
             var distance = eDelta * eVelocity;
             console.log(event.deltaX);
             $('#river').animate({left: "+=" + distance}, "swing");
+
             $('#instructions').html('');
         }
 
@@ -392,7 +404,11 @@ River = (function() {
         d3.selectAll("svg").remove(); //d3.selectAll("svg > *").remove();
         //Data.resetData(); //Data.resetData();
         setTimeout(function() { loadData(data.donors); }, 750);
-        tweenRiverMain.resume();
+        velocity = 300;
+        timing = getWidth(data.donors) / velocity;
+        tweenRiverMain = new TweenMax.to("#river", timing, {x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+     
+        //weenRiverMain.resume();
         //$('#river').css('left', 'Opx');
     }
 

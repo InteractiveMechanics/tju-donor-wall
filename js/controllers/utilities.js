@@ -22,11 +22,11 @@ Utilities = (function() {
     }
 
     var resetInteractive = function() {
-        alert("resetInteractive");
     	Panel.closePanel();
     	Search.closeSearch();
         River.resetRiver();
-        //$('#river').css('left', '0px');
+        //$('#river').css('left', 'initial');
+        $('#river').animate({left: "0"}, "swing");
     	//Animation.myAnimation();
     	myInterval = setInterval(function(){ Animation.myAnimation(); }, 23000);
     	
