@@ -25,6 +25,41 @@
 </head>
 <body>
     <main>
+
+        <!-- river template -->
+        <script id="river-template" type="text/x-jsrender">
+
+           
+                {{if giving_level == 10000}}
+                <div class="circle-wrapper">
+                    {{if primary_img}}
+                    <div data-id="{{:ID}}" class="circle donor large" style="background-color: rgba(0,0,0, 0.5); background-image: url('{{:primary_img}}');">
+                    {{else}}
+                      <div data-id="{{:ID}}" class="circle donor large">
+                    {{/if}}
+
+                        <p>{{:first_name}} {{:middle}} {{:last_name}} {{:honorific}}</p>
+                        <p>{{:education_0_graduation_year}}</p>
+                    </div>
+                </div>
+                {{else giving_level == 9999}}
+                <div class="circle-wrapper">
+                    <div data-id="{{:ID}}" class="circle donor sm">
+                        <p>{{:first_name}} {{:middle}} {{:last_name}} {{:honorific}}</p>
+                        <p>{{:education_0_graduation_year}}</p>
+                    </div>
+                </div>
+                {{else}}
+                 <div class="circle-wrapper">
+                    <div data-id="{{:ID}}" class="circle give {{:bubble_type}}">
+                        <p>Would you like to see your name here?</p>
+                        <h4>Give Now</h4>
+                    </div> 
+                </div>
+                {{/if}}
+            
+        </script>
+
         <!-- donor panel template -->
         <script id="panel-template" type="text/x-jsrender">
             <article id="gallery-wrapper" class="hidden" data-donor={{:ID}}>

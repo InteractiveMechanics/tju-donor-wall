@@ -190,11 +190,18 @@ Panel = (function() {
 
 
     var openGive = function() {
-        var id = $(this).attr('data-donor');
+        id = $(this).attr('data-id');
+        var idType = typeof(id);
+        if (idType != "string") {
+            var panelData = JSON.search(data, '//*[ID=' + id + ']');
+            $("#give-panel").html($.templates("#give-template").render(panelData));
+        } else {
+            $("#give-panel").html($.templates("#give-template").render(data.donors[10]))
+        }
+     
         $('#right-panel').removeClass('hidden fadeOutRight').addClass('animated slideInRight flex-container'); 
         $('#search').addClass('hidden'); 
         $('#give-panel').removeClass('hidden');
-        $("#give-panel").html($.templates("#give-template").render(data.donors[id]));
         $('#search-btn').addClass('animated fadeOut');
 
         setTimeout(function(){ $('#search-close').addClass('animated fadeIn').removeClass('fadeOut').css('display', 'flex'); }, 750);
@@ -396,7 +403,7 @@ Panel = (function() {
 
     var bindEvents = function() {
        $(document).on('click tap', '#close', closePanel);
-       $(document).on('click tap', '.give[data-donor]', openGive);
+       $(document).on('click tap', '.give', openGive);
        $(document).on('click tap', '.zoom[data-id]', createLightGallery);
        $(document).on('onSlideClick.lg', testing);
        $(document).on('onBeforeSlide.lg', removeVideoButtons);

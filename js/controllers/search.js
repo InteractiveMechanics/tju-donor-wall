@@ -27,6 +27,7 @@ Search = (function() {
         $('#donor-name')
             .keyboard({ 
                 layout: 'custom',
+                autoAccept : true,
                 usePreview: false,
                 customLayout: {
                     'normal': [

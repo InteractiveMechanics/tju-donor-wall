@@ -37,11 +37,12 @@ River = (function() {
         river = document.getElementById('river');
         velocity = 200;
         timing = getWidth(data.donors) / velocity;
-        tweenRiverMain = new TweenMax.to("#river", timing, {x: 3600, ease: Power1.easeInOut, yoyo: true, repeat: -1});
+        tweenRiverMain = new TweenMax.to("#river", timing, {x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
         Draggable.create("#river", {
             type:"x",
             edgeResistance:0.50,
-            bounds:"main",
+            zIndexBoost:false,
+            //bounds:"main",
             lockAxis:true,
             throwProps:true
         });
@@ -76,185 +77,201 @@ River = (function() {
         return -riverWidth;
     }
 
+    var getRiverWidth = function() {
+        var numBubbles = $('.circle-wrapper').length;
+        var riverWidth = numBubbles * 100;
+        return riverWidth; 
+    }
+
+
+    var loadData = function(datatoload) {
+        setTimeout(function() {
+            //var numBubbles = $('.circle-wrapper').length;
+            //var riverWidth = numBubbles * 80;
+            $('#river').css('width', getRiverWidth());
+        }, 0);
+
+        $("#river").html($.templates("#river-template").render(datatoload)); // data.donors[id]
+    }
 
     
     //data/testing.json
-    var loadData = function(datatoload) {
-            var svgContainer = d3.select("#river").append("svg")
-            .attr("width", 3600)
-            .attr("height", height)
-            .attr("id", "riverpanel");
+    // var loadData = function(datatoload) {
+    //         var svgContainer = d3.select("#river").append("svg")
+    //         .attr("width", 3600)
+    //         .attr("height", height)
+    //         .attr("id", "riverpanel");
 
           
-            var textNodes = svgContainer.selectAll("text")
-                .data(datatoload);
+    //         var textNodes = svgContainer.selectAll("text")
+    //             .data(datatoload);
 
-            foreignObjects = textNodes.enter().append("foreignObject")
-                .attr('data-donor', function(d, i) {
-                   return i;
-                })
-                .attr('data-id', function(d, i) {
-                    return d.ID;
-                })
-                .classed("donor", function(d){
-                    if (d.bubble_type == "donor") {
-                        return true;
-                    } 
-                })
-                .classed("give", function(d, i) {
-                    if (d.bubble_type !== "donor") {
-                        return true; 
-                    } 
-                })
-                .classed("sm", function(d) {
-                    if (d.giving_level == 9999) {
-                        return true;
-                    }
-                }) 
-                .classed("large", function(d) {
-                    if (d.giving_level == 10000) {
-                        return true;
-                    }
-                })
-                .attr("width",function (d) {  
-                    if (d.giving_level == 9999) {
-                        return 170;
-                    } else {
-                        return 210;
-                    }
-                })
-                .attr("height",function (d) {
-                     if (d.giving_level == 9999) {
-                        return 170;
-                    } else {
-                        return 210;
-                    } 
-                });
+    //         foreignObjects = textNodes.enter().append("foreignObject")
+    //             .attr('data-donor', function(d, i) {
+    //                return i;
+    //             })
+    //             .attr('data-id', function(d, i) {
+    //                 return d.ID;
+    //             })
+    //             .classed("donor", function(d){
+    //                 if (d.bubble_type == "donor") {
+    //                     return true;
+    //                 } 
+    //             })
+    //             .classed("give", function(d, i) {
+    //                 if (d.bubble_type !== "donor") {
+    //                     return true; 
+    //                 } 
+    //             })
+    //             .classed("sm", function(d) {
+    //                 if (d.giving_level == 9999) {
+    //                     return true;
+    //                 }
+    //             }) 
+    //             .classed("large", function(d) {
+    //                 if (d.giving_level == 10000) {
+    //                     return true;
+    //                 }
+    //             })
+    //             .attr("width",function (d) {  
+    //                 if (d.giving_level == 9999) {
+    //                     return 170;
+    //                 } else {
+    //                     return 210;
+    //                 }
+    //             })
+    //             .attr("height",function (d) {
+    //                  if (d.giving_level == 9999) {
+    //                     return 170;
+    //                 } else {
+    //                     return 210;
+    //                 } 
+    //             });
 
-            htmlDOMs = foreignObjects.append("xhtml:div");
+    //         htmlDOMs = foreignObjects.append("xhtml:div");
 
-            htmlDivs = htmlDOMs.append("div")
-                .classed("circle", true)
-                .classed("large", function(d) {
-                     if (d.giving_level == 10000) {
-                        return true;
-                    } 
-                })
-                .classed("sm", function(d) {
-                    if (d.giving_level == 9999) {
-                        return true;
-                    } 
-                })
-                .classed("give", function(d) {
-                    if (d.giving_level != 10000 && d.giving_level != 9999) {
-                        return true;
-                    }
-                })
-                .style("background-image", function(d) {
-                    var returnHeadshot;
-                    if (d.giving_level == 10000 && d.primary_img) {
-                        returnHeadshot = 'url("'+ d.primary_img +'")';
-                    } else if (d.giving_level == 10000 && !(d.primary_img)) {
-                        returnHeadshot = 'linear-gradient(45deg, rgba(17,22,50,1) 0%,rgba(30,38,85,1) 50%,rgba(61,70,123,1) 100%)';
-                    } else if (d.giving_level == 9999) {
-                        returnHeadshot = 'linear-gradient(45deg, rgba(41,73,130,1) 0%,rgba(96,132,195,1) 50%,rgba(137,165,214,1) 100%)';
-                    } else {
-                        returnHeadshot = 'linear-gradient(45deg, rgba(72,20,30,1) 1%,rgba(160,41,68,1) 50%,rgba(189,80,104,1) 100%)';
-                    }                    
-                    return returnHeadshot;
-                })
-                .html(function(d, i) { 
-                    var donorFirst;
-                    var donorMiddle;
-                    var donorLast;
-                    var donorSuffix;
-                    var donorHonor;
-                    var donorGradYear;
+    //         htmlDivs = htmlDOMs.append("div")
+    //             .classed("circle", true)
+    //             .classed("large", function(d) {
+    //                  if (d.giving_level == 10000) {
+    //                     return true;
+    //                 } 
+    //             })
+    //             .classed("sm", function(d) {
+    //                 if (d.giving_level == 9999) {
+    //                     return true;
+    //                 } 
+    //             })
+    //             .classed("give", function(d) {
+    //                 if (d.giving_level != 10000 && d.giving_level != 9999) {
+    //                     return true;
+    //                 }
+    //             })
+    //             .style("background-image", function(d) {
+    //                 var returnHeadshot;
+    //                 if (d.giving_level == 10000 && d.primary_img) {
+    //                     returnHeadshot = 'url("'+ d.primary_img +'")';
+    //                 } else if (d.giving_level == 10000 && !(d.primary_img)) {
+    //                     returnHeadshot = 'linear-gradient(45deg, rgba(17,22,50,1) 0%,rgba(30,38,85,1) 50%,rgba(61,70,123,1) 100%)';
+    //                 } else if (d.giving_level == 9999) {
+    //                     returnHeadshot = 'linear-gradient(45deg, rgba(41,73,130,1) 0%,rgba(96,132,195,1) 50%,rgba(137,165,214,1) 100%)';
+    //                 } else {
+    //                     returnHeadshot = 'linear-gradient(45deg, rgba(72,20,30,1) 1%,rgba(160,41,68,1) 50%,rgba(189,80,104,1) 100%)';
+    //                 }                    
+    //                 return returnHeadshot;
+    //             })
+    //             .html(function(d, i) { 
+    //                 var donorFirst;
+    //                 var donorMiddle;
+    //                 var donorLast;
+    //                 var donorSuffix;
+    //                 var donorHonor;
+    //                 var donorGradYear;
 
 
-                    if (d.first_name && d.first_name != 'undefined') {
-                        donorFirst = d.first_name + ' ';
-                    } else {
-                        donorFirst = '';
-                    }
+    //                 if (d.first_name && d.first_name != 'undefined') {
+    //                     donorFirst = d.first_name + ' ';
+    //                 } else {
+    //                     donorFirst = '';
+    //                 }
 
-                    if (d.middle) {
-                        donorMiddle = d.middle + ' ';
-                    } else {
-                        donorMiddle = '';
-                    }
+    //                 if (d.middle) {
+    //                     donorMiddle = d.middle + ' ';
+    //                 } else {
+    //                     donorMiddle = '';
+    //                 }
 
-                    if (d.last_name) {
-                        donorLast = d.last_name + ' '; 
-                    } else {
-                        donorLast = '';
-                    }
+    //                 if (d.last_name) {
+    //                     donorLast = d.last_name + ' '; 
+    //                 } else {
+    //                     donorLast = '';
+    //                 }
 
-                    if (d.suffix) {
-                        donorSuffix = d.suffix + ' ';
-                    } else {
-                        donorSuffix = '';
-                    }
+    //                 if (d.suffix) {
+    //                     donorSuffix = d.suffix + ' ';
+    //                 } else {
+    //                     donorSuffix = '';
+    //                 }
 
-                    if (d.honorific) {
-                        donorHonor = d.honorific + ' ';
-                    } else {
-                        donorHonor = '';
-                    }
+    //                 if (d.honorific) {
+    //                     donorHonor = d.honorific + ' ';
+    //                 } else {
+    //                     donorHonor = '';
+    //                 }
 
-                    if (d.education_0_graduation_year) {
-                        donorGradYear = '<p>' + d.education_0_graduation_year + '</p>';
-                    } else {
-                        donorGradYear = '';
-                    }
+    //                 if (d.education_0_graduation_year) {
+    //                     donorGradYear = '<p>' + d.education_0_graduation_year + '</p>';
+    //                 } else {
+    //                     donorGradYear = '';
+    //                 }
 
-                    if (i % 10 != 0 || i == 0) {
-                        return "<p>" + donorFirst + donorMiddle + donorLast + donorSuffix + donorHonor + '</p>' + donorGradYear;
+    //                 if (i % 10 != 0 || i == 0) {
+    //                     return "<p>" + donorFirst + donorMiddle + donorLast + donorSuffix + donorHonor + '</p>' + donorGradYear;
                     
-                    } else {
+    //                 } else {
                         
-                        return "<p>Would you like to see your name here?</p><h4>Give Now</h4>"; 
-                    }
+    //                     return "<p>Would you like to see your name here?</p><h4>Give Now</h4>"; 
+    //                 }
                     
-                });
+    //             });
  
              
 
-            var simulation = d3.forceSimulation(datatoload)
-                .force('charge', d3.forceManyBody().distanceMax(210).distanceMin(150))
-                .force('center', d3.forceCenter(width / 4, height / 4))
-                .alphaDecay(0.02)
-                .on('tick', ticked)
-                .force('collision', d3.forceCollide().radius(function(d) {
-                     return 120;
-                }));
+    //         var simulation = d3.forceSimulation(datatoload)
+    //             .force('charge', d3.forceManyBody().distanceMax(210).distanceMin(150))
+    //             .force('center', d3.forceCenter(width / 4, height / 4))
+    //             .alphaDecay(0.02)
+    //             .on('tick', ticked)
+    //             .force('collision', d3.forceCollide().radius(function(d) {
+    //                  return 120;
+    //             }));
 
 
-            function ticked() {
-              var u = d3.select('svg')
-                .selectAll('foreignObject')
-                .data(datatoload)
+    //         function ticked() {
+    //           var u = d3.select('svg')
+    //             .selectAll('foreignObject')
+    //             .data(datatoload)
 
-              u.enter()
-                .append('foreignObject')
-                .merge(u)
-                .attr('x', function(d,i) {
-                    return d.x
-                })
-                .attr('y', function(d) {
-                    return d.y
+    //           u.enter()
+    //             .append('foreignObject')
+    //             .merge(u)
+    //             .attr('x', function(d,i) {
+    //                 return d.x
+    //             })
+    //             .attr('y', function(d) {
+    //                 return d.y
                       
-                })
+    //             })
 
-              u.exit().remove()
-            }
+    //           u.exit().remove()
+    //         }
 
-            simulation.force('y', d3.forceY().y(function(d) {
-                return 300;   
-            }))
+    //         simulation.force('y', d3.forceY().y(function(d) {
+    //             return 300;   
+    //         }))
 
 
-    }
+    // }
 
 
 
@@ -310,20 +327,21 @@ River = (function() {
             $('#search-er').removeClass('hidden fadeOut').addClass('flex-container');
         } else {
 
-            d3.selectAll("svg").remove();
+            //d3.selectAll("svg").remove();
+            $('#river').html('');
             setTimeout(function() { 
                 loadData(results);
                 tweenRiverMain.kill();
-                velocity = 300;
-                timing = getWidth(results) / velocity;
-                tweenRiverMain = new TweenMax.to("#river", 0, {x: getMyWidth(results), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+                //velocity = 300;
+                //timing = getWidth(results) / velocity;
+                tweenRiverMain = new TweenMax.to("#river", 0, {x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
                 $
                 Search.closeSearch();
 
             }, 500);
             //setTimeout(function() { Data.init(results); }, 750);
         }
-        playRiver();
+        //playRiver();
     }
 
 
@@ -401,14 +419,14 @@ River = (function() {
     
 
     var resetRiver = function() {
-        d3.selectAll("svg").remove(); //d3.selectAll("svg > *").remove();
+        //d3.selectAll("svg").remove(); //d3.selectAll("svg > *").remove();
         //Data.resetData(); //Data.resetData();
         setTimeout(function() { loadData(data.donors); }, 750);
         velocity = 300;
         timing = getWidth(data.donors) / velocity;
         tweenRiverMain = new TweenMax.to("#river", timing, {x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
      
-        //weenRiverMain.resume();
+        tweenRiverMain.resume();
         //$('#river').css('left', 'Opx');
     }
 
@@ -417,7 +435,7 @@ River = (function() {
     var bindEvents = function() {
         //$(document).ready(resetRiver);
         //$(document).ready(loadData(data.donors));
-        $(document).ready(prepareForSwipes);
+        //$(document).ready(prepareForSwipes);
         $(document).on('click tap', '#river', pauseRiver);
     }
 

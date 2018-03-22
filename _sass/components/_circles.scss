@@ -1,3 +1,13 @@
+.circle-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	&:nth-child(3n+2) {
+		position: relative;
+		left: 106px;
+	}
+}
+
 .circle{
 	display: flex;
 	flex-direction: column;
@@ -69,7 +79,7 @@
 	// position: relative;
 	// left: 75%;
 
-	//background-image: linear-gradient(45deg, rgba(17,22,50,1) 0%,rgba(30,38,85,1) 50%,rgba(61,70,123,1) 100%);
+	background-image: linear-gradient(45deg, rgba(17,22,50,1) 0%,rgba(30,38,85,1) 50%,rgba(61,70,123,1) 100%);
 	background-size: cover;
 
 	&:before {
@@ -94,7 +104,7 @@
 	// left: 500px;
 	// top: 15%;
 
-	//background: linear-gradient(45deg, rgba(41,73,130,1) 0%,rgba(96,132,195,1) 50%,rgba(137,165,214,1) 100%);
+	background: linear-gradient(45deg, rgba(41,73,130,1) 0%,rgba(96,132,195,1) 50%,rgba(137,165,214,1) 100%);
 }
 
 .give {
@@ -108,7 +118,7 @@
 	// left: 10px;
 	// top: 30%;
 
-	//background: linear-gradient(45deg, rgba(72,20,30,1) 1%,rgba(160,41,68,1) 50%,rgba(189,80,104,1) 100%);
+	background: linear-gradient(45deg, rgba(72,20,30,1) 1%,rgba(160,41,68,1) 50%,rgba(189,80,104,1) 100%);
 
 	p {
 	    color: white;
@@ -165,11 +175,17 @@
 
 #river {
 	position: absolute;
-	left: 0px; //-4000px
-	width: auto;
+	//left: 0px; //-4000px
+	//width: 100%;
 	top: 0%;
 	height: calc(100% - 100px);
 	padding-top: 5%;
+	padding-left: 2.5%;
+	display: grid;
+	grid-gap: 25px;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    grid-template-rows: repeat(3, 210px);
+    grid-auto-flow: column;
 }
 
 

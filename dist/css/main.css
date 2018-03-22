@@ -213,6 +213,14 @@ footer {
   bottom: -34px;
   right: 17px; }
 
+.circle-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .circle-wrapper:nth-child(3n+2) {
+    position: relative;
+    left: 106px; }
+
 .circle {
   display: flex;
   flex-direction: column;
@@ -250,6 +258,7 @@ footer {
   height: 210px;
   width: 210px;
   padding: 30px;
+  background-image: linear-gradient(45deg, #111632 0%, #1e2655 50%, #3d467b 100%);
   background-size: cover; }
   .large:before {
     content: '';
@@ -264,13 +273,15 @@ footer {
 .sm {
   height: 170px;
   width: 170px;
-  padding: 25px; }
+  padding: 25px;
+  background: linear-gradient(45deg, #294982 0%, #6084c3 50%, #89a5d6 100%); }
 
 .give {
   justify-content: center;
   height: 210px;
   width: 210px;
-  padding: 30px; }
+  padding: 30px;
+  background: linear-gradient(45deg, #48141e 1%, #a02944 50%, #bd5068 100%); }
   .give p {
     color: white;
     margin-bottom: 5px;
@@ -305,11 +316,15 @@ footer {
 
 #river {
   position: absolute;
-  left: 0px;
-  width: auto;
   top: 0%;
   height: calc(100% - 100px);
-  padding-top: 5%; }
+  padding-top: 5%;
+  padding-left: 2.5%;
+  display: grid;
+  grid-gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  grid-template-rows: repeat(3, 210px);
+  grid-auto-flow: column; }
 
 @keyframes river-flow {
   0% {
