@@ -1,5 +1,6 @@
 .lg-backdrop.in {
 	opacity: 0.9 !important;
+	z-index: 10040;
 }
 
 .lg-actions .lg-next {
@@ -20,6 +21,10 @@
 	&:after {
 		content: url('../../../assets/icons/icon-gallery-arrow-prev.svg');
 	}
+}
+
+.lg-outer {
+	z-index: 10050;
 }
 
 .lg-outer .lg-img-wrap,

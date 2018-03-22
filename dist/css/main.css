@@ -104,7 +104,7 @@ main {
 
 footer {
   position: relative;
-  z-index: 1000;
+  z-index: 10030;
   height: 100px;
   -webkit-box-shadow: 0px -1px 23px 1px rgba(0, 0, 0, 0.18);
   -moz-box-shadow: 0px -1px 23px 1px rgba(0, 0, 0, 0.18);
@@ -319,7 +319,7 @@ footer {
 #panel, #right-panel {
   position: absolute;
   top: 0;
-  z-index: 100;
+  z-index: 1050;
   height: 100%;
   padding-bottom: 30px;
   background-color: white; }
@@ -342,7 +342,8 @@ footer {
       margin-bottom: 30px; }
 
 #right-panel {
-  right: 0px; }
+  right: 0px;
+  z-index: 1050; }
 
 #panel section > div:last-of-type,
 #panel section > p:last-of-type {
@@ -366,7 +367,8 @@ footer {
   width: calc(100vw - 650px);
   height: calc(100vh - 100px);
   background-color: rgba(0, 0, 0, 0.5);
-  float: right; }
+  float: right;
+  z-index: 10000; }
 
 form {
   padding: 0px 45px;
@@ -487,7 +489,8 @@ https://github.com/silviomoreto/bootstrap-select/issues/1135
       font-family: "MuseoSans-500", Helvetica, Arial, sans-serif; }
 
 .ui-keyboard {
-  background: #2d3d78; }
+  background: #2d3d78;
+  z-index: 100000; }
 
 .ui-state-default,
 .ui-widget-content
@@ -534,7 +537,8 @@ html .ui-button.ui-state-disabled:active {
   border-radius: 0px; }
 
 .lg-backdrop.in {
-  opacity: 0.9 !important; }
+  opacity: 0.9 !important;
+  z-index: 10040; }
 
 .lg-actions .lg-next {
   right: 12%;
@@ -547,6 +551,9 @@ html .ui-button.ui-state-disabled:active {
   background-color: transparent; }
   .lg-actions .lg-prev:after {
     content: url("../../../assets/icons/icon-gallery-arrow-prev.svg"); }
+
+.lg-outer {
+  z-index: 10050; }
 
 .lg-outer .lg-img-wrap,
 .lg-outer .lg-video {
