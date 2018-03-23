@@ -31,11 +31,10 @@ Search = (function() {
                 usePreview: false,
                 customLayout: {
                     'normal': [
-                        '1 2 3 4 5 6 7 8 9 0 {b}',
-                        'Q W E R T Y U I O P',
+                        'Q W E R T Y U I O P {b}',
                         'A S D F G H J K L {accept:Accept}',
                         'Z X C V B N M , . \'',
-                        '{accept:Accept} {space} {left} {right} {undo:Undo} {redo:Redo} -'
+                        '{space} {left} {right} {undo:Undo} {redo:Redo} -'
                     ]
                 },
                 display: {
@@ -45,15 +44,14 @@ Search = (function() {
                     'space' : 'SPACE'
 
                 }
-            })
-
-            .addTyping();
+            });
     }
 
     var openYearKeyboard = function() {
         $('#donor-year')
         .keyboard({
             layout : 'custom',
+            usePreview: false,
             restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
             preventPaste : true,  // prevent ctrl-v and right click
             autoAccept : true,
@@ -78,6 +76,7 @@ Search = (function() {
         $('#donor-year-max')
         .keyboard({
             layout : 'custom',
+            usePreview: false,
             restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
             preventPaste : true,  // prevent ctrl-v and right click
             autoAccept : true,

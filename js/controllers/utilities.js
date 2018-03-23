@@ -17,7 +17,8 @@ Utilities = (function() {
         }
         timeout.push(setTimeout(resetInteractive, duration));
         //timeout.push(setTimeout(resetBrowser, longduration));
-        $('#instructions').html('');
+        $('#instructions-wrapper').html('');
+        $('#instruction-text').addClass('fadeOut hidden');
         clearInterval(myInterval);
     }
 
@@ -28,7 +29,10 @@ Utilities = (function() {
         //$('#river').css('left', 'initial');
         $('#river').animate({left: "0"}, "swing");
     	//Animation.myAnimation();
-    	myInterval = setInterval(function(){ Animation.myAnimation(); }, 23000);
+    	myInterval = setInterval(function(){ 
+            Animation.myAnimation(); 
+            $('#instructions-text').removeClass('hidden fadeOut').addClass('fadeIn');
+        }, 23000);
     	
     }
 

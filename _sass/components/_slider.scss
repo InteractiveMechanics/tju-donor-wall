@@ -7,6 +7,10 @@
     padding: 0px 10px !important;
 }
 
+.slick-track {
+	left: 18px;
+}
+
 
 #gallery-lg {
 	position: relative;
@@ -38,7 +42,7 @@
 	grid-template-columns: repeat(4, 140px);
 	grid-template-rows: repeat(3, 140px);
 	grid-gap: 10px;
-	padding: 45px 30px !important;
+	padding: 35px 30px !important;
 }
 
 .gallery-item {

@@ -5,16 +5,18 @@
 
 	height: 100%;
 	//width: 25%;
-	padding-bottom: 30px;
+	//padding-bottom: 30px;
 	
 	background-color: white;
 
 	h5 {
-		padding-top: 45px;
+		padding-top: 0px;  //45px
 	}
 
 	h1 {
 		padding: 50px 45px 0px 45px;
+		margin-bottom: 0px;
+		line-height: 1;
 	}
 
 	article {
@@ -22,12 +24,12 @@
 
 		&:last-of-type {
 			overflow-x: hidden;
-			overflow-y: scroll;
+			overflow-y: auto;
 		}
 	}
 
 	section {
-		padding: 0px 0px 0px 45px;
+		padding: 45px 0px 0px 45px;
     	border-bottom: 1px solid $light_grey;
 
     	p {
@@ -38,6 +40,18 @@
     	div {
     		margin-top: 30px;
 			margin-bottom: 30px;
+
+			&:first-of-type {
+				margin-top: 0px;
+			}
+    	}
+
+    	&:first-of-type {
+    		padding: 22px 0px 0px 45px;
+    	}
+
+    	&:last-of-type {
+    		border-bottom: none;
     	}
 	}
 
@@ -66,6 +80,7 @@
 
 
 #relationships {
+	margin-top: 30px !important;
 	margin-bottom: 10px !important;
 	.slick-list {
 		padding: 0px;

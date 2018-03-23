@@ -35,14 +35,13 @@ River = (function() {
 	var init = function() {
         bindEvents();
         river = document.getElementById('river');
-        velocity = 200;
+        velocity = 150;
         timing = getWidth(data.donors) / velocity;
         tweenRiverMain = new TweenMax.to("#river", timing, {x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
         Draggable.create("#river", {
             type:"x",
-            edgeResistance:0.50,
+            edgeResistance:0.1,
             zIndexBoost:false,
-            //bounds:"main",
             lockAxis:true,
             throwProps:true
         });
@@ -307,9 +306,15 @@ River = (function() {
             college = '[contains(education_0_college, "' + donorCollege + '")]';  
         }
 
+        if (!donorName && !donorYear && !donorYearMax && donorCollege == "All Colleges") {
+            results = JSON.search(data, "//donors");
+        } else {
+            results = JSON.search(data,  '//*' + name + year + yearMax + college); 
+        }
 
 
-        results = JSON.search(data,  '//*' + name + year + yearMax + college);
+
+        //results = JSON.search(data,  '//*' + name + year + yearMax + college);
         console.log("LOOK AT ME ", results);
         console.log(donorCollege);
         
@@ -328,13 +333,14 @@ River = (function() {
         } else {
 
             //d3.selectAll("svg").remove();
+            $('#search-er').addClass('hidden fadeOut').removeClass('flex-container');
             $('#river').html('');
             setTimeout(function() { 
                 loadData(results);
                 tweenRiverMain.kill();
                 //velocity = 300;
                 //timing = getWidth(results) / velocity;
-                tweenRiverMain = new TweenMax.to("#river", 0, {x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+                tweenRiverMain = new TweenMax.to("#river", 0, {x: 0, ease: Power1.easeInOut, yoyo: true, repeat: -1});
                 $
                 Search.closeSearch();
 

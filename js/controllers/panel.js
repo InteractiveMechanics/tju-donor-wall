@@ -44,14 +44,17 @@ Panel = (function() {
     }
 
   
-
-
+    $('#relationships').on('edge', function(event, slick, direction){
+  alert('edge was hit')
+});
 
 
     var enableRelSlider = function() {
         $('#relationships').slick({
             dots: false,
             arrows: false,
+            infinite: false,
+            edgeFriction: 0.5, //default is 0.15
             centerMode: myCenterMode,
             slidesToShow: maxItems
         })
