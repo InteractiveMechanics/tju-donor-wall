@@ -26,6 +26,7 @@ Utilities = (function() {
     	Panel.closePanel();
     	Search.closeSearch();
         River.resetRiver();
+        $('.zoom').data('lightGallery').destroy();
         //$('#river').css('left', 'initial');
         $('#river').animate({left: "0"}, "swing");
     	//Animation.myAnimation();
@@ -42,10 +43,16 @@ Utilities = (function() {
         location.reload();
     }
 
+    var disableZoom = function(e) {
+        e.preventDefault();
+    }
+
 
     var bindEvents = function() {
          $(document).on('click tap drag swipeleft swiperight', resetTimeout);
          $(document).ready(resetInteractive);
+         $(document).on('gesturestart', disableZoom);
+        
     }
 
 

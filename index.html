@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="user-scalable=no,width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="user-scalable=no,width=device-width, initial-scale=1, maximum-scale=1" user-scalable=no>
 
     <title>Thomas Jefferson University Donor Wall</title>
 
@@ -33,7 +33,7 @@
                 {{if giving_level == 10000}}
                 <div class="circle-wrapper">
                     {{if primary_img}}
-                    <div data-id="{{:ID}}" class="circle donor large" style="background-color: rgba(0,0,0, 0.5); background-image: url('{{:primary_img}}');">
+                    <div data-id="{{:ID}}" class="circle donor large" style="background-color: linear-gradient(45deg, rgba(41,73,130,1) 0%,rgba(96,132,195,1) 50%,rgba(137,165,214,1) 100%); background-image: url('{{:primary_img}}');">
                     {{else}}
                       <div data-id="{{:ID}}" class="circle donor large">
                     {{/if}}
@@ -200,22 +200,22 @@
 
         <div id="right-panel" class="hidden">
             <article id="search" class="hidden">
-                 <h1>Search all donors</h1>
+                 <h1>Search All Donors</h1>
                  <form class="flex-container">
                     <div class="form-wrapper">
                         <div class="form-group">
                             <label for="donor-name">Name</label>
-                            <input type="text" class="form-control" id="donor-name" placeholder="All donors">
+                            <input type="text" class="form-control" id="donor-name" placeholder="e.g. James or Smith">
                         </div>
 
                          <div class="form-group donor-year-wrapper">
-                            <label for="donor-year">Years</label>
+                            <label for="donor-year">Graduation Year(s)</label>
                             <input type="text" class="form-control" id="donor-year" placeholder="1910">
                             <input type="text" class="form-control" id="donor-year-max" placeholder="2010">
                         </div>
 
                         <div class="form-group">
-                            <label for="donor-colleges">Colleges</label>
+                            <label for="donor-colleges">College</label>
                             <select class="selectpicker" id="donor-colleges">
                                 <option>All Colleges</option>
                                 <option>Sidney Kimmel Medical College</option>
@@ -237,7 +237,9 @@
 
                     <div class="form-group">
                         <input class="btn btn-primary" id="reset" type="reset" value="Reset">
-                        <input class="btn btn-primary" id="submit" type="submit" value="Submit">
+                        <button class="btn btn-primary" id="submit" type="submit" value="Search">
+                            Submit <img src="assets/icons/icon-right-arrow.svg">
+                        </button>
                     </div>
 
 
@@ -305,7 +307,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="https://unpkg.com/popper.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="js/lib/slick/slick.min.js"></script>
+    <script src="js/lib/slick/slick.js"></script>
     <script src="js/lib/keyboard/js/jquery.keyboard.min.js"></script>
     <script src="js/lib/lightGallery/src/js/lightgallery.js"></script>
     <script src="js/lib/lightslider/dist/js/lightslider.min.js"></script>
@@ -316,6 +318,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/utils/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/plugins/CSSPlugin.min.js"></script>
+    <script src="js/lib/ThrowPropsPlugin.min.js"></script>
     <script src="js/lib/lottie.js"></script>
     <script src="js/lib/bootstrap_select/js/bootstrap-select.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>

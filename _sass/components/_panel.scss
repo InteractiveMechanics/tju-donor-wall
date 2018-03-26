@@ -30,7 +30,7 @@
 
 	section {
 		padding: 45px 0px 0px 45px;
-    	border-bottom: 1px solid $light_grey;
+    	border-bottom: 1px solid $lighter_grey;
 
     	p {
     		padding-right: 45px;
@@ -71,7 +71,7 @@
 
 #gallery-wrapper{
 	background: white;
-	border-right: 1px solid $light_grey;
+	border-right: 1px solid $lighter_grey;
 }
 
 .gallery-item.active {
@@ -86,6 +86,12 @@
 		padding: 0px;
 	}
 }
+
+#all-donors-btn {
+	padding-left: 40px;
+	border-left: 1px solid $lighter_grey;
+}
+
 
 #close {
 	position: absolute;

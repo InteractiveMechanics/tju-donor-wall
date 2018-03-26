@@ -74,7 +74,7 @@ h1, h2, h5, label {
   font-family: "MuseoSans-100", Helvetica, Arial, sans-serif; }
 
 h1 {
-  color: #569bca;
+  color: #294982;
   font-size: 40px; }
 
 h2 {
@@ -208,7 +208,7 @@ footer {
   grid-template-columns: repeat(4, 140px);
   grid-template-rows: repeat(3, 140px);
   grid-gap: 10px;
-  padding: 35px 30px !important; }
+  padding: 20px 30px !important; }
 
 .gallery-item {
   display: flex;
@@ -246,7 +246,8 @@ footer {
     color: white;
     margin-bottom: 5px;
     font-family: "MuseoSans-100", Helvetica, Arial, sans-serif;
-    font-size: 14px; }
+    font-size: 15px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.35); }
 
 .circle-text {
   fill: white;
@@ -262,17 +263,17 @@ footer {
     margin-bottom: 5px;
     padding-right: 0px !important;
     font-family: "MuseoSans-500", Helvetica, Arial, sans-serif;
-    font-size: 14px; }
+    font-size: 15px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.35); }
     .large p:last-of-type, .sm p:last-of-type, .rel p:last-of-type {
       color: #ebe71c;
-      font-size: 11px; }
+      font-size: 12px; }
 
 .large {
   position: relative;
   height: 210px;
   width: 210px;
   padding: 30px;
-  background-image: linear-gradient(45deg, #111632 0%, #1e2655 50%, #3d467b 100%);
   background-size: cover; }
   .large:before {
     content: '';
@@ -364,7 +365,7 @@ footer {
       overflow-y: auto; }
   #panel section, #right-panel section {
     padding: 45px 0px 0px 45px;
-    border-bottom: 1px solid #939598; }
+    border-bottom: 1px solid #d7d5d9; }
     #panel section p, #right-panel section p {
       padding-right: 45px; }
     #panel section div, #right-panel section div {
@@ -387,7 +388,7 @@ footer {
 
 #gallery-wrapper {
   background: white;
-  border-right: 1px solid #939598; }
+  border-right: 1px solid #d7d5d9; }
 
 .gallery-item.active {
   opacity: 0.75; }
@@ -397,6 +398,10 @@ footer {
   margin-bottom: 10px !important; }
   #relationships .slick-list {
     padding: 0px; }
+
+#all-donors-btn {
+  padding-left: 40px;
+  border-left: 1px solid #d7d5d9; }
 
 #close {
   position: absolute;
@@ -425,10 +430,11 @@ label {
 
 #search article {
   overflow: hidden; }
-#search input {
+#search input, #search button {
   height: 70px;
   padding: 20px;
   font-size: 24px;
+  text-align: left;
   border-color: #939598;
   border-radius: 0px; }
 #search input[type="reset"] {
@@ -438,8 +444,10 @@ label {
   background: #cdc6c1;
   line-height: 1;
   border-color: #cdc6c1; }
-#search input[type="submit"] {
+#search button[type="submit"] {
   width: calc(59% - 25px);
+  display: inline-flex;
+  justify-content: space-between;
   color: white;
   line-height: 1;
   background: linear-gradient(to right, #1e2655 43%, #569bca 100%); }
@@ -584,20 +592,22 @@ html .ui-button.ui-state-disabled:active {
   border-radius: 0px; }
 
 .lg-backdrop.in {
-  opacity: 0.9 !important;
+  opacity: 0.75 !important;
   z-index: 10040; }
 
 .lg-actions .lg-next {
-  right: 12%;
+  right: 5%;
   background-color: transparent; }
   .lg-actions .lg-next:before {
-    content: url("../../../assets/icons/icon-gallery-arrow-next.svg"); }
+    content: url("../../../assets/icons/icon-gallery-arrow-next.svg");
+    filter: drop-shadow(-1px 1px 8px rgba(0, 0, 0, 0.56)); }
 
 .lg-actions .lg-prev {
-  left: 12%;
+  left: 5%;
   background-color: transparent; }
   .lg-actions .lg-prev:after {
-    content: url("../../../assets/icons/icon-gallery-arrow-prev.svg"); }
+    content: url("../../../assets/icons/icon-gallery-arrow-prev.svg");
+    filter: drop-shadow(-1px 1px 8px rgba(0, 0, 0, 0.56)); }
 
 .lg-outer {
   z-index: 10050; }
@@ -605,11 +615,11 @@ html .ui-button.ui-state-disabled:active {
 .lg-outer .lg-img-wrap,
 .lg-outer .lg-video {
   background-color: black;
-  top: 10%;
-  bottom: 10%;
-  left: 15%;
-  width: 70%;
-  height: 80%; }
+  top: 7.5%;
+  bottom: 7.5%;
+  left: 7.5%;
+  width: 85%;
+  height: 85%; }
 
 .lg-outer .lg-video-cont {
   background-color: black;
@@ -617,10 +627,13 @@ html .ui-button.ui-state-disabled:active {
   width: 70%;
   max-width: initial !important; }
 
+.lg-outer .lg-image {
+  height: 100% !important; }
+
 .lg-toolbar {
   background-color: transparent;
-  width: 70%;
-  left: 15%;
+  width: 85%;
+  left: 7.5%;
   top: 85%; }
 
 #video-pause {
@@ -669,6 +682,7 @@ html .ui-button.ui-state-disabled:active {
     top: 0px; }
 
 .lg-toolbar .lg-close:after {
-  content: url("../../../assets/icons/icon-gallery-close.svg"); }
+  content: url("../../../assets/icons/icon-gallery-close.svg");
+  filter: drop-shadow(-1px 1px 8px rgba(0, 0, 0, 0.56)); }
 
 /*# sourceMappingURL=main.css.map */

@@ -35,14 +35,15 @@ River = (function() {
 	var init = function() {
         bindEvents();
         river = document.getElementById('river');
-        velocity = 150;
-        timing = getWidth(data.donors) / velocity;
-        tweenRiverMain = new TweenMax.to("#river", timing, {x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+        velocity = .005;
+        timing = getWidth(data.donors) * velocity;
+        tweenRiverMain = new TweenMax.to("#river", 50, {x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
         Draggable.create("#river", {
             type:"x",
-            edgeResistance:0.1,
+            edgeResistance:0.25,
             zIndexBoost:false,
-            lockAxis:true,
+            bounds:{width:getRiverWidth()},
+            //lockAxis:true,
             throwProps:true
         });
      

@@ -25,7 +25,8 @@
 	    margin-bottom: 5px;
 
 	    font-family: $MuseoSans-100;
-	    font-size: 14px;
+	    font-size: 15px; //14px
+	    text-shadow: 0 0 5px rgba(0,0,0,0.35)
 
 	}
 
@@ -55,11 +56,12 @@
 	    padding-right: 0px !important;
 
 	    font-family: $MuseoSans-500;
-	    font-size: 14px;
+	    font-size: 15px; //original: 14px
+	    text-shadow: 0 0 5px rgba(0,0,0,0.35);
 
 	    &:last-of-type {
 	    	color: $yellow;
-	    	font-size: 11px;
+	    	font-size: 12px; //original: 11px
 	    }
 
 	}
@@ -79,7 +81,7 @@
 	// position: relative;
 	// left: 75%;
 
-	background-image: linear-gradient(45deg, rgba(17,22,50,1) 0%,rgba(30,38,85,1) 50%,rgba(61,70,123,1) 100%);
+	//background-image: linear-gradient(45deg, rgba(17,22,50,1) 0%,rgba(30,38,85,1) 50%,rgba(61,70,123,1) 100%);
 	background-size: cover;
 
 	&:before {

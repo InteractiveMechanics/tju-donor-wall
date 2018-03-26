@@ -28,12 +28,13 @@ label {
 		overflow: hidden;
 	}
 
-	input {
+	input, button {
 		height: 70px;
 
 		padding: 20px;
 
 		font-size: 24px;
+		text-align: left;
 
 		border-color: $light_grey;
 		border-radius: 0px;
@@ -48,11 +49,13 @@ label {
 		border-color: $beige; 
 	}
 
-	input[type="submit"] {
+	button[type="submit"] {
 		width: calc(59% - 25px);
+		display: inline-flex;
+    	justify-content: space-between;
 		color: white; 
 		line-height: 1;
-		background: linear-gradient(to right, rgba(30,38,85,1) 43%,rgba(86,155,202,1) 100%); 
+		background: linear-gradient(to right, rgba(30,38,85,1) 43%,rgba(86,155,202,1) 100%);
 	}
 }
 

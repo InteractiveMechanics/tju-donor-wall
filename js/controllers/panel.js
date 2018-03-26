@@ -82,11 +82,11 @@ Panel = (function() {
             var relId = newRelsArray[i];
             var originalId = getRelsArray[i];
             if (data.donors[relId].giving_level == 10000 && data.donors[relId].primary_img) {
-                $('#relationships').append(' <div class="circle rel donor large" data-donor="'+ relId + '" data-id="'+ originalId + '" style="background-color: rgba(0,0,0, 0.5); background-image: url('+ data.donors[relId].primary_img + ');"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
+                $('#relationships').append(' <div class="circle rel donor large" data-donor="'+ relId + '" data-id="'+ originalId + '" style="width: 155px; background-color: rgba(0,0,0, 0.5); background-image: url('+ data.donors[relId].primary_img + ');"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
             } else if (data.donors[relId].givinglevel == 10000)  {
-                 $('#relationships').append(' <div class="circle rel donor large" data-donor="'+ relId + '" data-id="'+ originalId + '"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
+                 $('#relationships').append(' <div class="circle rel donor large" data-donor="'+ relId + '" data-id="'+ originalId + '" style="width: 155px;"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
             } else {
-                $('#relationships').append(' <div class="circle rel donor"  data-donor="'+ relId + '" data-id="'+ originalId + '"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
+                $('#relationships').append(' <div class="circle rel donor"  data-donor="'+ relId + '" data-id="'+ originalId + '" style="width: 155px;"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
             }
         }
 
@@ -102,11 +102,12 @@ Panel = (function() {
 
        
         if (active) {
-
+            $('#gallery-lg').html('');
             $('#gallery-lg').append(active + '<div class="zoom" data-id=' + id + '><img src="assets/icons/icon-zoom.svg"></div>');
+            
 
         } else {
-            $( ".gallery-item" ).first().addClass('active');
+           $( ".gallery-item" ).first().addClass('active');
             enableGallery();
         }
 
@@ -159,6 +160,7 @@ Panel = (function() {
     
     //$("#panel").html($.templates("#panel-template").render(data.donors[id]));
     var openPanel = function(event) {
+
         var id = $(this).attr('data-id');
 
         console.log(id);
@@ -173,6 +175,7 @@ Panel = (function() {
         $('.all-donors-wrapper').removeClass('hidden').addClass('animated fadeIn flex-container');
         getRels(id);
         enableRelSlider();
+        $("#relationships").slick("refresh");
 
         //console.log(getFeatImgURL(id));
         setTimeout(function() { enableGallery(id); }, 1000);
@@ -220,6 +223,7 @@ Panel = (function() {
         $('#close').removeClass('fadeIn').addClass('hidden');
         $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
         $('#gallery-wrapper').addClass('hidden');
+        
 
     }
 
@@ -281,6 +285,7 @@ Panel = (function() {
             dynamicEl: lgArray,
             download: false,
             counter: false,
+            hideBarsDelay: 90000,
             autoplayFirstVideo: false,
             index: myIndex
 
