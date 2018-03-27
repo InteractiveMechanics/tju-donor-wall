@@ -11,7 +11,7 @@ form {
 
 label {
 	@extend h5;
-	display: block;
+	display: inline-block;
 }
 
 .form-group {
@@ -62,7 +62,7 @@ label {
 
 .donor-year-wrapper {
 	label {
-		display: block;
+		display: inline-block;
 	}
 
 	input {

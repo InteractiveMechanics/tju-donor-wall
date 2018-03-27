@@ -37,7 +37,7 @@ River = (function() {
         river = document.getElementById('river');
         velocity = .005;
         timing = getWidth(data.donors) * velocity;
-        tweenRiverMain = new TweenMax.to("#river", 50, {x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+        tweenRiverMain = new TweenMax.to("#river", 0, {x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
         Draggable.create("#river", {
             type:"x",
             edgeResistance:0.25,
@@ -73,7 +73,7 @@ River = (function() {
 
     var getMyWidth = function(datatoload) {
         var numBubbles = datatoload.length;
-        var riverWidth = numBubbles * 85;
+        var riverWidth = numBubbles * 75;
         return -riverWidth;
     }
 
@@ -429,12 +429,11 @@ River = (function() {
         //d3.selectAll("svg").remove(); //d3.selectAll("svg > *").remove();
         //Data.resetData(); //Data.resetData();
         setTimeout(function() { loadData(data.donors); }, 750);
-        velocity = 300;
+        velocity = 100;
         timing = getWidth(data.donors) / velocity;
-        tweenRiverMain = new TweenMax.to("#river", timing, {x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+        tweenRiverMain = new TweenMax.to("#river", 22, {x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
      
         tweenRiverMain.resume();
-        //$('#river').css('left', 'Opx');
     }
 
 

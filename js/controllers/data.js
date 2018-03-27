@@ -75,6 +75,8 @@ Data = (function() {
                 dataToAdd["education_0_graduation_year"] = value.education_0_graduation_year;
                 dataToAdd["primary_img"] = '';
                 dataToAdd["galleryArray"] = galleryArray; //arrayImgs
+                dataToAdd["video"] = '';
+                dataToAdd["video_poster"] = '';
                 dataToAdd["bubble_line_1"] = '';
                 dataToAdd["bubble_line_2"] = '';
                 dataToAdd["panel_heading"] = '';
@@ -94,6 +96,22 @@ Data = (function() {
                             data["donors"][index]["primary_img"] = d.source_url;
                         }
                     });
+                }
+
+                if (value.video) {
+                     $.getJSON("http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + value.video, function(d) {
+                        if (d.source_url) {
+                            data["donors"][index]["video"] = d.source_url;
+                        }
+                    });
+                }
+
+                if (value.video_poster) {
+                    $.getJSON("http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + value.video_poster, function(d) {
+                        if (d.source_url) {
+                            data["donors"][index]["video_poster"] = d.source_url;
+                        }
+                    }); 
                 }
 
                

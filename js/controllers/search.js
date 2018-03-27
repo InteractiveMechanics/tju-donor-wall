@@ -90,8 +90,7 @@ Search = (function() {
                 'accept' : 'DONE'
             }
 
-        })
-        .addTyping();
+        });
     }
 
 
@@ -102,10 +101,21 @@ Search = (function() {
         $("#donor-colleges").selectpicker("refresh");
         $('#search-er').addClass('fadeOut hidden').removeClass('fadeIn flex-container');
         closeSearch();
-
     }
 
-    
+    var closeKeyboards = function() {
+        var donorYearKeyboard = $('#donor-year').keyboard().getkeyboard();
+        donorYearKeyboard.destroy();
+
+        var donorYearMaxKeyboard = $('#donor-year-max').keyboard().getkeyboard();
+        donorYearMaxKeyboard.destroy();
+
+        var donorNameKeyboard = $('#donor-name').keyboard().getkeyboard();
+        donorNameKeyboard.destroy();
+    }
+
+
+   
 
 
     var closeSearch = function() {
@@ -117,6 +127,8 @@ Search = (function() {
         $('#search-btn').removeClass('fadeOut').addClass('fadeIn');
         $('#search-close').removeClass('fadeIn').addClass('fadeOut').css('display', 'none');
         $('#search-er').addClass('hidden');
+        closeKeyboards();
+
     }
 
 
@@ -124,9 +136,9 @@ Search = (function() {
     var bindEvents = function() {
     	$(document).on('click tap', '#search-btn', openSearch);
         $(document).on('click tap', '#search-close', closeSearch);
-        $(document).on('click tap', '#donor-name', openKeyboard);
-        $(document).on('click tap', '#donor-year', openYearKeyboard);
-        $(document).on('click tap', '#donor-year-max', openYearMaxKeyboard);
+        $(document).on('focus', '#donor-name', openKeyboard);
+        $(document).on('focus', '#donor-year', openYearKeyboard);
+        $(document).on('focus', '#donor-year-max', openYearMaxKeyboard);
         $(document).on('click tap', '#reset', resetSelect);
         $(document).on('submit', River.getResults);
     }

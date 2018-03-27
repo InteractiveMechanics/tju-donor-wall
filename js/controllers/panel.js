@@ -82,7 +82,7 @@ Panel = (function() {
             var relId = newRelsArray[i];
             var originalId = getRelsArray[i];
             if (data.donors[relId].giving_level == 10000 && data.donors[relId].primary_img) {
-                $('#relationships').append(' <div class="circle rel donor large" data-donor="'+ relId + '" data-id="'+ originalId + '" style="width: 155px; background-color: rgba(0,0,0, 0.5); background-image: url('+ data.donors[relId].primary_img + ');"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
+                $('#relationships').append(' <div class="circle rel donor large" data-donor="'+ relId + '" data-id="'+ originalId + '" style="width: 155px; background-image: linear-gradient(rgba(46, 57, 86, 0.58) 0%,rgba(61, 73, 107, 0.51) 49.2%,rgba(76, 90, 129, 0.7) 100%), url('+ data.donors[relId].primary_img + ');"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
             } else if (data.donors[relId].givinglevel == 10000)  {
                  $('#relationships').append(' <div class="circle rel donor large" data-donor="'+ relId + '" data-id="'+ originalId + '" style="width: 155px;"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
             } else {
@@ -235,6 +235,9 @@ Panel = (function() {
         var lgArray = [];
         var imgArray = panelData[0].galleryArray;
         var primaryImgLg = panelData[0].primary_img;
+        var myVideoLg = panelData[0].video;
+        var videoPoster = panelData[0].video_poster;
+        var myVideoOb = {};
 
         if (primaryImgLg.length != 0) {
             var primaryImgOb = {};
@@ -243,7 +246,13 @@ Panel = (function() {
             lgArray.push(primaryImgOb);
         }
 
-
+        if (myVideoLg.length != 0) {
+            //myVideoOb.html = "#html2";
+            myVideoOb.html = '<video class="lg-video-object lg-html5" preload="none"><source src="' + myVideoLg  + '" type="video/mp4">Your browser does not support HTML5 video</video>';
+            myVideoOb.poster = videoPoster;
+            myVideoOb.thumb = videoPoster;
+            lgArray.push(myVideoOb);
+        }
 
         for (i = 0; i < imgArray.length; i ++) {
             var fileName = panelData[0].galleryArray[i];
@@ -252,13 +261,15 @@ Panel = (function() {
                 var lgImg = {};
                 lgImg.src = fileName;
                 lgImg.thumb = fileName;
+                lgImg.type = "image";
                 lgArray.push(lgImg);
             } else {
-                var lgVid = {};
-                lgVid.html = '#video2';
-                lgVid.thumb = fileName;
-                lgVid.post = fileName;
-                lgArray.push(lgVid);
+                // var lgVid = {};
+                // lgVid.html = '#video2';
+                // lgVid.thumb = fileName;
+                // lgVid.post = fileName;
+                // lgVid.type = "video";
+                // lgArray.push(lgVid);
             }
 
         }
@@ -354,8 +365,8 @@ Panel = (function() {
         var myTarget = event.target;
         var myTargetClass = $(event.target).attr('class');
         var myTargetId = $(event.target).attr('id');
-        //console.log(myTarget);
-        //console.log(myTargetId);
+        console.log(myTarget);
+        console.log(myTargetId);
         if (myTargetClass != 'lg-img-wrap' && myTargetId != 'video-replay') {
             if ( !checkForVideoButtons() ) {
                 $('.lg-video-cont').append('<div class="video-buttons"><button id="video-pause"></button><button id="video-play" class="hidden"></button></button><button id="video-replay"></button></div>');
@@ -384,6 +395,7 @@ Panel = (function() {
     }
 
     var removeVideoButtons = function() {
+        console.log('removeVideoButtons');
         $('.video-buttons').remove();
     }
 

@@ -26,9 +26,10 @@ Utilities = (function() {
     	Panel.closePanel();
     	Search.closeSearch();
         River.resetRiver();
-        $('.zoom').data('lightGallery').destroy();
+       $('.zoom').data('lightGallery').destroy();
         //$('#river').css('left', 'initial');
         $('#river').animate({left: "0"}, "swing");
+
     	//Animation.myAnimation();
     	myInterval = setInterval(function(){ 
             Animation.myAnimation(); 

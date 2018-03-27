@@ -33,9 +33,9 @@
                 {{if giving_level == 10000}}
                 <div class="circle-wrapper">
                     {{if primary_img}}
-                    <div data-id="{{:ID}}" class="circle donor large" style="background-color: linear-gradient(45deg, rgba(41,73,130,1) 0%,rgba(96,132,195,1) 50%,rgba(137,165,214,1) 100%); background-image: url('{{:primary_img}}');">
+                    <div data-id="{{:ID}}" class="circle donor large" style="background-image: linear-gradient(rgba(46, 57, 86, 0.58) 0%,rgba(61, 73, 107, 0.51) 49.2%,rgba(76, 90, 129, 0.7) 100%), url('{{:primary_img}}');">
                     {{else}}
-                      <div data-id="{{:ID}}" class="circle donor large">
+                      <div data-id="{{:ID}}" class="circle donor large large-no-img">
                     {{/if}}
 
                         <p>{{:first_name}} {{:middle}} {{:last_name}} {{:honorific}}</p>
@@ -72,23 +72,34 @@
 
                     {{if galleryArray}}
                         {{for galleryArray}}
-
+                            
                             <div class="gallery-item" data-src="{{>}}"><img src="{{>}}"></div>
+                            
 
                         {{/for}}
                     {{/if}}
+
+                    {{if video}}
+                            <div class="gallery-item gallery-item-video" data-poster="{{:video_poster}}" data-html="#video2" ><img src="{{:video_poster}}"></div>
+                    {{/if}}
                 </section>
 
-                  <div style="display:none;" id="video2">
+                {{if video}}
+                    {{for video}}
+                <div style="display:none;" id="video2">
                     <video class="lg-video-object lg-html5" muted preload="none">
-                        <source src="assets/sample-images/leds.mp4" type="video/mp4">
-                    </video>
+                        <source src="{{>}}" type="video/mp4">
+                        </video>
                 </div>
+                {{/for}}
+                        
                 <div id="video-controls" class="hidden">
                     <button id="video-play" class="hidden"><img src="assets/icons/icon-video-play.svg"></button>
                     <button id="video-pause"><img src="assets/icons/icon-video-pause.svg"></button>
                     <button id="video-replay"><img src="assets/icons/icon-video-replay.svg"></button>
                 </div>
+                {{/if}}
+                   
             </article>
 
 
@@ -210,8 +221,10 @@
 
                          <div class="form-group donor-year-wrapper">
                             <label for="donor-year">Graduation Year(s)</label>
-                            <input type="text" class="form-control" id="donor-year" placeholder="1910">
-                            <input type="text" class="form-control" id="donor-year-max" placeholder="2010">
+                            <div class="year-input-wrapper">
+                                <input type="text" class="form-control" id="donor-year" placeholder="1910">
+                                <input type="text" class="form-control" id="donor-year-max" placeholder="2010">
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -309,6 +322,7 @@
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="js/lib/slick/slick.js"></script>
     <script src="js/lib/keyboard/js/jquery.keyboard.min.js"></script>
+    <script src="js/lib/keyboard/js/jquery.keyboard.extension-typing.min.js"></script>
     <script src="js/lib/lightGallery/src/js/lightgallery.js"></script>
     <script src="js/lib/lightslider/dist/js/lightslider.min.js"></script>
     <script src="js/lib/lg-video/lg-video.js"></script>
