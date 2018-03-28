@@ -246,14 +246,7 @@ Panel = (function() {
             lgArray.push(primaryImgOb);
         }
 
-        if (myVideoLg.length != 0) {
-            //myVideoOb.html = "#html2";
-            myVideoOb.html = '<video class="lg-video-object lg-html5" preload="none"><source src="' + myVideoLg  + '" type="video/mp4">Your browser does not support HTML5 video</video>';
-            myVideoOb.poster = videoPoster;
-            myVideoOb.thumb = videoPoster;
-            lgArray.push(myVideoOb);
-        }
-
+        
         for (i = 0; i < imgArray.length; i ++) {
             var fileName = panelData[0].galleryArray[i];
             var fileExtension = fileName.split('.').pop();
@@ -263,15 +256,16 @@ Panel = (function() {
                 lgImg.thumb = fileName;
                 lgImg.type = "image";
                 lgArray.push(lgImg);
-            } else {
-                // var lgVid = {};
-                // lgVid.html = '#video2';
-                // lgVid.thumb = fileName;
-                // lgVid.post = fileName;
-                // lgVid.type = "video";
-                // lgArray.push(lgVid);
-            }
+            } 
 
+        }
+
+         if (myVideoLg.length != 0) {
+            //myVideoOb.html = "#html2";
+            myVideoOb.html = '<video class="lg-video-object lg-html5" preload="none"><source src="' + myVideoLg  + '" type="video/mp4">Your browser does not support HTML5 video</video>';
+            myVideoOb.poster = videoPoster;
+            myVideoOb.thumb = videoPoster;
+            lgArray.push(myVideoOb);
         }
         
         console.log(lgArray);

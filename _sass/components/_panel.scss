@@ -78,6 +78,16 @@
 	opacity: 0.75;
 }
 
+.gallery-item-video {
+	position: relative;
+	&:after {
+		content: url('../../../assets/icons/icon-thumbnail-play.svg');
+		position: absolute;
+    	left: 24px;
+    	top: 23px;
+	}
+}
+
 
 #relationships {
 	margin-top: 20px !important; //original: 30px

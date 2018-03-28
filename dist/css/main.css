@@ -331,6 +331,7 @@ footer {
   border-radius: 50%; }
 
 #river {
+  will-change: transform;
   position: absolute;
   top: 0%;
   height: 100%;
@@ -393,6 +394,14 @@ footer {
 
 .gallery-item.active {
   opacity: 0.75; }
+
+.gallery-item-video {
+  position: relative; }
+  .gallery-item-video:after {
+    content: url("../../../assets/icons/icon-thumbnail-play.svg");
+    position: absolute;
+    left: 24px;
+    top: 23px; }
 
 #relationships {
   margin-top: 20px !important;
@@ -622,14 +631,22 @@ html .ui-button.ui-state-disabled:active {
   width: 85%;
   height: 85%; }
 
+.lg-outer .lg-video {
+  height: 100%;
+  top: 0%; }
+
 .lg-outer .lg-video-cont {
   background-color: black;
   left: 7.5%;
   width: 85%;
+  height: 85%;
   max-width: initial !important; }
 
 .lg-outer .lg-image {
   height: 100% !important; }
+
+.lg-outer .lg-video {
+  padding-bottom: initial; }
 
 .lg-toolbar {
   background-color: transparent;
@@ -639,8 +656,8 @@ html .ui-button.ui-state-disabled:active {
 
 #video-pause {
   position: relative;
-  left: -50%;
-  top: 43px;
+  left: -43%;
+  top: -120px;
   width: 80px;
   height: 87px;
   background: transparent;
@@ -656,8 +673,8 @@ html .ui-button.ui-state-disabled:active {
 
 #video-play {
   position: relative;
-  left: -50%;
-  top: 43px;
+  left: -43%;
+  top: -120px;
   width: 80px;
   height: 87px;
   background: transparent;
@@ -670,8 +687,8 @@ html .ui-button.ui-state-disabled:active {
 
 #video-replay {
   position: relative;
-  left: -49%;
-  top: 43px;
+  left: -42%;
+  top: -120px;
   width: 80px;
   height: 87px;
   background: transparent;

@@ -26,7 +26,9 @@ Utilities = (function() {
     	Panel.closePanel();
     	Search.closeSearch();
         River.resetRiver();
-       $('.zoom').data('lightGallery').destroy();
+        if ($('.zoom').data('lightGallery')) {
+            $('.zoom').data('lightGallery').destroy();
+        }
         //$('#river').css('left', 'initial');
         $('#river').animate({left: "0"}, "swing");
 

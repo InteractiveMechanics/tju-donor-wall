@@ -23,10 +23,12 @@ Animation = (function() {
 
         anim.play();
         anim.addEventListener('complete', hideText);
+        console.log('my Animation');
 
     }
 
     var hideText = function() {
+        console.log('hide text');
         $('#instructions-text').addClass('fadeOut').removeClass('fadeIn');
         setTimeout(function() { $('#instructions-text').addClass('hidden')}, 750);
     }
