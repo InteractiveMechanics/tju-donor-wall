@@ -284,8 +284,8 @@
         <div class="search-btn-wrapper">
             
             <button class="btn btn-link" id="search-btn">
-                <img src="assets/icons/icon-search.svg" alt="search">
-                <h4>Search Donors</h4>
+                <img id="mysearch" src="assets/icons/icon-search.svg" alt="search">
+                <h4 id="text-to-split">Search Donors</h4>
             </button>
             
             <button class="btn btn-link" id="search-close">
@@ -332,6 +332,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/utils/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/plugins/CSSPlugin.min.js"></script>
+    <script src="js/lib/SplitText.js"></script>
     <script src="js/lib/ThrowPropsPlugin.min.js"></script>
     <script src="js/lib/lottie.js"></script>
     <script src="js/lib/bootstrap_select/js/bootstrap-select.min.js"></script>
@@ -343,10 +344,12 @@
     <script src="js/controllers/animation.js"></script>
     <script src="js/controllers/search.js"></script>
     <script src="js/controllers/data.js"></script>
+    <script src="js/controllers/leds.js"></script>
     <script src="js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
 
      <script>
+        var plainData = "http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/posts/?per_page=50";
         var jsonData = 'http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/rest-routes/v2/donors';
         var givingData = 'http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/rest-routes/v2/giving';
     </script>

@@ -103,7 +103,7 @@ Panel = (function() {
        
         if (active) {
             $('#gallery-lg').html('');
-            $('#gallery-lg').append(active + '<div class="zoom" data-id=' + id + '><img src="assets/icons/icon-zoom.svg"></div>');
+            $('#gallery-lg').append(active + '<div class="zoom" data-id=' + id + '><img src="assets/icons/icon-zoom.svg"><h3>View Larger</h3></div>');
             
 
         } else {
@@ -167,6 +167,13 @@ Panel = (function() {
 
         var panelData = JSON.search(data, '//*[ID=' + id + ']');
         console.log(panelData);
+        if (panelData[0].ledstodisplay) {
+            donorLeds = panelData[0].ledstodisplay;
+            console.log(donorLeds);
+            Leds.resetLeds();
+            //Leds.writeFrame(donorLeds);
+            Leds.checkLedArray(donorLeds);
+        }
 
         //River.tweenRiverMain.pause();
         $('#panel').html('');
@@ -176,6 +183,7 @@ Panel = (function() {
         getRels(id);
         enableRelSlider();
         $("#relationships").slick("refresh");
+
 
         //console.log(getFeatImgURL(id));
         setTimeout(function() { enableGallery(id); }, 1000);
@@ -219,10 +227,12 @@ Panel = (function() {
     
     var closePanel = function() {
         //River.tweenRiverMain.resume();
+        Leds.resetLeds(); 
         $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
         $('#close').removeClass('fadeIn').addClass('hidden');
         $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
         $('#gallery-wrapper').addClass('hidden');
+        Leds.writeFrame([]);
         
 
     }
@@ -236,6 +246,7 @@ Panel = (function() {
         var imgArray = panelData[0].galleryArray;
         var primaryImgLg = panelData[0].primary_img;
         var myVideoLg = panelData[0].video;
+        console.log(myVideoLg);
         var videoPoster = panelData[0].video_poster;
         var myVideoOb = {};
 
@@ -260,7 +271,7 @@ Panel = (function() {
 
         }
 
-         if (myVideoLg.length != 0) {
+         if (myVideoLg) {
             //myVideoOb.html = "#html2";
             myVideoOb.html = '<video class="lg-video-object lg-html5" preload="none"><source src="' + myVideoLg  + '" type="video/mp4">Your browser does not support HTML5 video</video>';
             myVideoOb.poster = videoPoster;

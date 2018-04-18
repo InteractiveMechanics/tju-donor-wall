@@ -18,9 +18,12 @@ River = (function() {
     } 
 
 
+   var mySplitText = new SplitText("#text-to-split", {type:"chars,words"}),
+   tl = new TimelineMax({repeat: -1, yoyo: true, repeatDelay:0});
+   tl.from('#mysearch', 2.5, {opacity: 0.3, ease: Power4.easeInOut});
+   tl.staggerFrom(mySplitText.chars, 2.5, {opacity: 0.3,  ease: Power4.easeInOut}, 0.25, 0.25);
    
-   
-
+   //TweenMax.from('#mysearch', 2.5, {opacity: 0.7, ease: Power4.easeInOut, repeat: -1, yoyo: true});
 
     // var river = document.getElementById('river');
     // var tweenRiverMain = new TweenMax.to("#river", riverSeconds, {x: "5000px", ease: Power0.easeNone, repeat: -1});

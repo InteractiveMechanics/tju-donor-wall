@@ -7,14 +7,16 @@
 var data = function() {};
 
 $(function(){
-	$.get(jsonData, function(response) {
+	$.get(plainData, function(response) {
 	Data.init(response);
 
 	Utilities.init();
+	Leds.init();
 	Panel.init();
 	River.init();
 	Animation.init();
 	Search.init();
+
 
 	}, 'json');
 

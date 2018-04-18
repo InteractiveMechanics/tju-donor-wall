@@ -225,8 +225,26 @@ footer {
 .zoom {
   position: absolute;
   bottom: -34px;
-  right: 17px; }
+  right: 17px;
+  display: flex;
+  align-items: center;
+  padding: 0px 20px 0px 7px;
+  background-color: rgba(30, 38, 85, 0.87);
+  border-radius: 30px;
+  animation: pulse 4s 4 ease-in-out; }
+  .zoom h3 {
+    text-transform: initial;
+    font-family: "MuseoSans-100", Helvetica, Arial, sans-serif;
+    margin: 0px 0px 0px -10px;
+    line-height: 1; }
 
+@keyframes pulse {
+  0% {
+    opacity: 1.0; }
+  50% {
+    opacity: 0.35; }
+  100% {
+    opacity: 1.0; } }
 .circle-wrapper {
   display: flex;
   align-items: center;
