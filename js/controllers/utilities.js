@@ -1,6 +1,6 @@
 Utilities = (function() {
 	var timeout = [];
-	var duration = 90000; //90000
+	var duration = 150000; //90000
     var longduration = 1800000;
     var myInterval;
 
@@ -20,6 +20,7 @@ Utilities = (function() {
         $('#instructions-wrapper').html('');
         $('#instruction-text').addClass('fadeOut hidden');
         clearInterval(myInterval);
+        console.log('resetTimeout');
     }
 
     var resetInteractive = function() {
@@ -51,10 +52,14 @@ Utilities = (function() {
     }
 
 
+
+
+    //callBack functions that call resetTimeout on each keyboard change in the search keyboards are in search.js
+    //callback function that calls resetTimeout on the start of each drag of the river is in river.js
+    //event that calls resetTimeout on each swipe of relationship slider is in panel.js
     var bindEvents = function() {
-         $(document).on('click tap drag swipeleft swiperight', resetTimeout);
+         $(document).on('click tap drag', resetTimeout); 
          $(document).ready(resetInteractive);
-         $(document).on('gesturestart', disableZoom);
         
     }
 
@@ -62,7 +67,8 @@ Utilities = (function() {
 
 
   	return {
-        init: init
+        init: init,
+        resetTimeout: resetTimeout
     }
 
 })();

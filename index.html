@@ -38,14 +38,14 @@
                       <div data-id="{{:ID}}" class="circle donor large large-no-img">
                     {{/if}}
 
-                        <p>{{:first_name}} {{:middle}} {{:last_name}} {{:honorific}}</p>
+                        <p>{{:first_name}} {{:middle}} {{:last_name}}{{if honorific}}, {{:honorific}}{{/if}}</p>
                         <p>{{:education_0_graduation_year}}</p>
                     </div>
                 </div>
                 {{else giving_level == 9999}}
                 <div class="circle-wrapper">
                     <div data-id="{{:ID}}" class="circle donor sm">
-                        <p>{{:first_name}} {{:middle}} {{:last_name}} {{:honorific}}</p>
+                        <p>{{:first_name}} {{:middle}} {{:last_name}}{{if honorific}}, {{:honorific}}{{/if}}</p>
                         <p>{{:education_0_graduation_year}}</p>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
 
 
             <article>
-                <h1>{{:prefix}} {{:first_name}} {{:middle}} {{:last_name}} {{:suffix}} {{:honorific}}</h1>
+                <h1>{{:first_name}} {{:middle}} {{:last_name}}{{if suffix}} ,{{:suffix}}{{/if}}{{if honorific}}, {{:honorific}}{{/if}}</h1>
                 <section>
                     {{if giving_amount}}
                     <div>
@@ -211,7 +211,7 @@
 
         <div id="right-panel" class="hidden">
             <article id="search" class="hidden">
-                 <h1>Search All Donors</h1>
+                 <h1>Search All Benefactors</h1>
                  <form class="flex-container">
                     <div class="form-wrapper">
                         <div class="form-group">
@@ -278,14 +278,14 @@
         <div class="all-donors-wrapper hidden">
             <button id="all-donors-btn" class="btn btn-link">
                 <img src="assets/icons/icon-back.svg" alt="right arrow">
-                <h4>Back to All Donors</h4>
+                <h4>Back to All Benefactors</h4>
             </button>
         </div>
         <div class="search-btn-wrapper">
             
             <button class="btn btn-link" id="search-btn">
                 <img id="mysearch" src="assets/icons/icon-search.svg" alt="search">
-                <h4 id="text-to-split">Search Donors</h4>
+                <h4 id="text-to-split">Search Benefactors</h4>
             </button>
             
             <button class="btn btn-link" id="search-close">

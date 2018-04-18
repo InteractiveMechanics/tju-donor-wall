@@ -6,7 +6,8 @@ River = (function() {
         river,
         tweenRiverMain,
         timing,
-        results;
+        results,
+        myDraggable;
 
 
     var getSeconds = function(datatoload) {
@@ -16,6 +17,22 @@ River = (function() {
         console.log(riverTiming);
         return riverTiming;
     } 
+
+
+    var initDraggable = function() {
+        myDraggable = Draggable.create("#river", {
+            type:"x",
+            edgeResistance:0.25,
+            zIndexBoost:false,
+            bounds:{width:getRiverWidth()},
+            //lockAxis:true,
+            throwProps:true,
+            onDragStart:  function(){
+               Utilities.resetTimeout();
+            }
+        });
+
+    }
 
 
    var mySplitText = new SplitText("#text-to-split", {type:"chars,words"}),
@@ -41,16 +58,20 @@ River = (function() {
         velocity = .005;
         timing = getWidth(data.donors) * velocity;
         tweenRiverMain = new TweenMax.to("#river", 0, {x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
-        Draggable.create("#river", {
-            type:"x",
-            edgeResistance:0.25,
-            zIndexBoost:false,
-            bounds:{width:getRiverWidth()},
-            //lockAxis:true,
-            throwProps:true
-        });
+        initDraggable();
+        // Draggable.create("#river", {
+        //     type:"x",
+        //     edgeResistance:0.25,
+        //     zIndexBoost:false,
+        //     bounds:{width:getRiverWidth()},
+        //     //lockAxis:true,
+        //     throwProps:true
+        // });
      
     }
+
+
+   
 
     var getWidth = function(datatoload) {
         var numBubbles = datatoload.length;
@@ -437,6 +458,10 @@ River = (function() {
         tweenRiverMain = new TweenMax.to("#river", 22, {x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
      
         tweenRiverMain.resume();
+    }
+
+    var testingDrag = function() {
+        console.log('testingDrag');
     }
 
 

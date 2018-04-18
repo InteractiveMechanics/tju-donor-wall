@@ -234,7 +234,6 @@ Data = (function() {
 
 
         console.log(data);
-        console.log(givingDataToAdd.first_name);  //sometimes undefined and sometimes give now
 
     }
 

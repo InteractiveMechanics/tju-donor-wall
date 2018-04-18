@@ -366,7 +366,7 @@ Panel = (function() {
       
     }
     
-    var testing = function() {
+    var toggleVideoBtns = function() {
         var myTarget = event.target;
         var myTargetClass = $(event.target).attr('class');
         var myTargetId = $(event.target).attr('id');
@@ -430,12 +430,13 @@ Panel = (function() {
        $(document).on('click tap', '#close', closePanel);
        $(document).on('click tap', '.give', openGive);
        $(document).on('click tap', '.zoom[data-id]', createLightGallery);
-       $(document).on('onSlideClick.lg', testing);
+       $(document).on('onSlideClick.lg', toggleVideoBtns);
        $(document).on('onBeforeSlide.lg', removeVideoButtons);
        $(document).on('click tap', '.donor[data-id]', openPanel);
        $(document).on('click tap', '.gallery-item', featureImg);
        $(document).on('click tap', '#all-donors-btn', closePanel);
        $(document).on('click tap', '.slick-slide[data-id]', openPanel);
+       $(document).on('swipe', '#relationships', Utilities.resetTimeout);
    }
 
 

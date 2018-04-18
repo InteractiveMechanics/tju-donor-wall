@@ -21,6 +21,9 @@ Search = (function() {
 
     var openKeyboard = function() {
         $('#donor-name')
+            .bind('keyboardChange', function (e, keyboard, el) {
+                Utilities.resetTimeout();
+            })
             .keyboard({ 
                 layout: 'custom',
                 autoAccept : true,
@@ -45,6 +48,9 @@ Search = (function() {
 
     var openYearKeyboard = function() {
         $('#donor-year')
+        .bind('keyboardChange', function (e, keyboard, el) {
+                Utilities.resetTimeout();
+        })
         .keyboard({
             layout : 'custom',
             usePreview: false,
@@ -70,6 +76,9 @@ Search = (function() {
 
     var openYearMaxKeyboard = function() {
         $('#donor-year-max')
+        .bind('keyboardChange', function (e, keyboard, el) {
+                Utilities.resetTimeout();
+        })
         .keyboard({
             layout : 'custom',
             usePreview: false,
@@ -131,6 +140,8 @@ Search = (function() {
 
     }
 
+   
+
 
 
     var bindEvents = function() {
@@ -141,6 +152,7 @@ Search = (function() {
         $(document).on('focus', '#donor-year-max', openYearMaxKeyboard);
         $(document).on('click tap', '#reset', resetSelect);
         $(document).on('submit', River.getResults);
+        $(document).ready(testingKeyboard);
     }
 
 
