@@ -49,6 +49,9 @@
     opacity: 0; }
   100% {
     opacity: 1; } }
+* {
+  user-select: none; }
+
 .fade-in {
   -webkit-animation: fadeIn 1s 1 forwards;
   -moz-animation: fadeIn 1s 1 forwards;
