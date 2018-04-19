@@ -35,10 +35,15 @@ River = (function() {
     }
 
 
-   var mySplitText = new SplitText("#text-to-split", {type:"chars,words"}),
-   tl = new TimelineMax({repeat: -1, yoyo: true, repeatDelay:0});
-   tl.from('#mysearch', 2.5, {opacity: 0.3, ease: Power4.easeInOut});
-   tl.staggerFrom(mySplitText.chars, 2.5, {opacity: 0.3,  ease: Power4.easeInOut}, 0.25, 0.25);
+    var mySplitText = new SplitText("#text-to-split", {type:"chars,words"}),
+    tl = new TimelineMax({repeat: -1, yoyo: true, repeatDelay:0});
+    tl.from('#mysearch', 2.5, {opacity: 0.3, ease: Power4.easeInOut});
+    tl.staggerFrom(mySplitText.chars, 2.5, {opacity: 0.3,  ease: Power4.easeInOut}, 0.25, 0.25);
+
+    var mySplitTextReset = new SplitText("#text-to-split-reset", {type:"chars,words"}),
+    tlR = new TimelineMax({repeat: -1, yoyo: true, repeatDelay:0});
+    tlR.from('#myreset', 2.5, {opacity: 0.3, ease: Power4.easeInOut});
+    tlR.staggerFrom(mySplitTextReset.chars, 2.5, {opacity: 0.3,  ease: Power4.easeInOut}, 0.25, 0.25);
    
    //TweenMax.from('#mysearch', 2.5, {opacity: 0.7, ease: Power4.easeInOut, repeat: -1, yoyo: true});
 
@@ -305,6 +310,11 @@ River = (function() {
 
     var getResults = function(event) {
         event.preventDefault();
+        $('#submit').addClass('active-search');
+        
+        setTimeout(function() {
+
+    
         var name = '';
         var year = '';
         var yearMax = '';
@@ -345,6 +355,7 @@ River = (function() {
         
        
         updateRiver(results);
+        }, 1250);
 
        
 
@@ -359,6 +370,7 @@ River = (function() {
 
             //d3.selectAll("svg").remove();
             $('#search-er').addClass('hidden fadeOut').removeClass('flex-container');
+            $('.reset-search-wrapper').removeClass('hidden fadeOut').addClass('animated fadeIn flex-container');
             $('#river').html('');
             setTimeout(function() { 
                 loadData(results);
@@ -458,6 +470,9 @@ River = (function() {
         tweenRiverMain = new TweenMax.to("#river", 22, {x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
      
         tweenRiverMain.resume();
+        $('.reset-search-wrapper').addClass('animated fadeOut hidden').removeClass('flex-container');
+        $('#submit').removeClass('active-search');
+        $('#all-donors-btn').removeClass('active-all-donors');
     }
 
     var testingDrag = function() {

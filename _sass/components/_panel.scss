@@ -76,6 +76,7 @@
 
 .gallery-item.active {
 	opacity: 0.75;
+	animation: bubblePulse 1s 2 ease-in-out;
 }
 
 .gallery-item-video {
@@ -90,7 +91,7 @@
 
 
 #relationships {
-	margin-top: 20px !important; //original: 30px
+	margin-top: 0px !important; //original: 30px
 	margin-bottom: 10px !important;
 	.slick-list {
 		padding: 0px;

@@ -8,8 +8,15 @@
 	}
 }
 
+.search-btns-container {
+	float: right;
+	display: flex;
+}
+
+
 .search-btn-wrapper,
-.all-donors-wrapper {
+.all-donors-wrapper,
+.reset-search-wrapper {
 	height: 100px;
 }
 
@@ -22,13 +29,21 @@
 
 }
 
+.reset-search-wrapper {
+	align-items: center;
+    margin: 0px 20px 0px 0px;
+    padding-right: 20px;
+    border-right: 1px solid #d7d5d9;
+
+}
+
 .all-donors-wrapper {
     float: left;
 }
 
 
 
-#search-btn, #search-close, #all-donors-btn {
+#search-btn, #search-close, #all-donors-btn, #reset-search-btn {
 	display: flex;
 	align-items: center;
 
@@ -52,6 +67,16 @@
 
 	&:hover {
 		text-decoration: none;
+	}
+}
+
+#all-donors-btn.active-all-donors,
+#search-close.active-search-close {
+	h4 {
+		color: $dark_blue !important;
+	}
+	svg .st0{
+		fill: $dark_blue !important;
 	}
 }
 

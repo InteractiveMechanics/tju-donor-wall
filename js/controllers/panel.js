@@ -125,11 +125,13 @@ Panel = (function() {
             });
         });
 
-        var $this = $(this);
-        $('#gallery-lg').html('');
-        $('.gallery-item').removeClass('active');
-        $this.addClass('active');
-        enableGallery();  
+            var $this = $(this);
+            $('#gallery-lg').html('');
+            $('.gallery-item').removeClass('active');
+            $this.addClass('active');
+            enableGallery(); 
+
+    
     }
 
     
@@ -160,9 +162,8 @@ Panel = (function() {
 
     
     //$("#panel").html($.templates("#panel-template").render(data.donors[id]));
-    var openPanel = function(event) {
-
-        var id = $(this).attr('data-id');
+    var openPanel = function(id) {
+        //var id = $(this).attr('data-id');
 
         console.log(id);
 
@@ -170,7 +171,7 @@ Panel = (function() {
         console.log(panelData);
         if (panelData[0].ledstodisplay) {
             donorLeds = panelData[0].ledstodisplay;
-            console.log(donorLeds);
+            //console.log(donorLeds);
             Leds.resetLeds();
             //Leds.writeFrame(donorLeds);
             Leds.checkLedArray(donorLeds);
@@ -228,19 +229,35 @@ Panel = (function() {
     
     var closePanel = function() {
         //River.tweenRiverMain.resume();
-        Leds.resetLeds(); 
-        $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
-        $('#close').removeClass('fadeIn').addClass('hidden');
-        $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
-        $('#gallery-wrapper').addClass('hidden');
-        Leds.writeFrame([]);
+            $('.donor').removeClass('animated pulse active-bubble');
+            Leds.resetLeds(); 
+            $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
+            $('#close').removeClass('fadeIn').addClass('hidden');
+            $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
+            $('#gallery-wrapper').addClass('hidden');
+            Leds.writeFrame([]);
         
+    }
 
+    var resetPanel = function() {
+       $('#reset').removeClass('active-reset');
+        $('#all-donors-btn').addClass('animated pulse active-all-donors');
+
+        setTimeout(function() {
+            $('.donor').removeClass('animated pulse active-bubble');
+            Leds.resetLeds(); 
+            $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
+            $('#close').removeClass('fadeIn').addClass('hidden');
+            $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
+            $('#gallery-wrapper').addClass('hidden');
+            Leds.writeFrame([]);
+        }, 1250); 
     }
 
 
-    var createLightGallery = function() {
-        var id = $(this).attr('data-id');
+    var createLightGallery = function(id) {
+        //var id = $(this).attr('data-id');
+        $('.zoom').removeClass('zoom-active animated tada');
         var panelData = JSON.search(data, '//*[ID=' + id + ']');
        
         var lgArray = [];
@@ -313,6 +330,12 @@ Panel = (function() {
        //$('.zoom').data('lightGallery').slide(index);
 
 
+    }
+
+    var animateZoom = function() {
+        var id = $(this).attr('data-id');
+        $('.zoom').addClass('zoom-active ');
+        setTimeout(function() { createLightGallery(id) }, 1250);
     }
 
 
@@ -423,6 +446,13 @@ Panel = (function() {
     var openTheClose = function() {
         $('#close').removeClass('hidden').addClass('animated fadeIn');
     }
+
+    var animateBubble = function() {
+        $(this).addClass('animated pulse active-bubble');
+        $('#all-donors-btn').removeClass('animated pulse active-all-donors');
+        var id = $(this).attr('data-id');
+        setTimeout(function() {  openPanel(id); }, 1500);
+    }
     
     
 
@@ -430,12 +460,12 @@ Panel = (function() {
     var bindEvents = function() {
        $(document).on('click tap', '#close', closePanel);
        $(document).on('click tap', '.give', openGive);
-       $(document).on('click tap', '.zoom[data-id]', createLightGallery);
+       $(document).on('click tap', '.zoom[data-id]', animateZoom);
        $(document).on('onSlideClick.lg', toggleVideoBtns);
        $(document).on('onBeforeSlide.lg', removeVideoButtons);
-       $(document).on('click tap', '.donor[data-id]', openPanel);
+       $(document).on('click tap', '.donor[data-id]', animateBubble);
        $(document).on('click tap', '.gallery-item', featureImg);
-       $(document).on('click tap', '#all-donors-btn', closePanel);
+       $(document).on('click tap', '#all-donors-btn', resetPanel);
        $(document).on('click tap', '.slick-slide[data-id]', openPanel);
        $(document).on('swipe', '#relationships', Utilities.resetTimeout);
    }

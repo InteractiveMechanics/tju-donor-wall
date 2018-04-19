@@ -104,12 +104,15 @@ Search = (function() {
 
 
     var resetSelect = function() {
-        River.resetRiver();
-        Data.resetData();
-        $("#donor-colleges").val('default');
-        $("#donor-colleges").selectpicker("refresh");
-        $('#search-er').addClass('fadeOut hidden').removeClass('fadeIn flex-container');
-        closeSearch();
+        $('#reset').addClass('active-reset');
+        setTimeout(function() {
+            River.resetRiver();
+            Data.resetData();
+            $("#donor-colleges").val('default');
+            $("#donor-colleges").selectpicker("refresh");
+            $('#search-er').addClass('fadeOut hidden').removeClass('fadeIn flex-container');
+            closeSearch();
+        }, 1250);
     }
 
     var closeKeyboards = function() {
@@ -128,17 +131,27 @@ Search = (function() {
 
 
     var closeSearch = function() {
-        $('#right-panel').removeClass('slideInRight').addClass('fadeOutRight');
-        //River.tweenRiverMain.resume();
-        //$('#search').removeClass('fadeIn').addClass('hidden fadeOutRight');
-        setTimeout(function(){ $('#search').addClass('hidden'); }, 750);
-        setTimeout(function(){ $('#give-panel').addClass('hidden');}, 750);
-        $('#search-btn').removeClass('fadeOut').addClass('fadeIn');
-        $('#search-close').removeClass('fadeIn').addClass('fadeOut').css('display', 'none');
-        $('#search-er').addClass('hidden');
-        closeKeyboards();
-
+            $('#right-panel').removeClass('slideInRight').addClass('fadeOutRight');
+            //River.tweenRiverMain.resume();
+            //$('#search').removeClass('fadeIn').addClass('hidden fadeOutRight');
+            setTimeout(function(){ $('#search').addClass('hidden'); }, 750);
+            setTimeout(function(){ $('#give-panel').addClass('hidden');}, 750);
+            $('#search-btn').removeClass('fadeOut').addClass('fadeIn');
+            $('#search-close').removeClass('fadeIn pulse active-search-close').addClass('fadeOut').css('display', 'none');
+            $('#search-er').addClass('hidden');
+            closeKeyboards();
     }
+
+    var resetSearch = function() {
+         $('#search-close').addClass('pulse active-search-close');
+         setTimeout(function() { closeSearch(); }, 1250)
+    }
+
+    // var animateSearch = function(event) {
+    //     event.preventDefault();
+    //     $('#submit').addClass('active-search');
+    //     setTimeout(function(){ River.getResults}, 1250);
+    // }
 
    
 
@@ -146,11 +159,12 @@ Search = (function() {
 
     var bindEvents = function() {
     	$(document).on('click tap', '#search-btn', openSearch);
-        $(document).on('click tap', '#search-close', closeSearch);
+        $(document).on('click tap', '#search-close', resetSearch);
         $(document).on('focus', '#donor-name', openKeyboard);
         $(document).on('focus', '#donor-year', openYearKeyboard);
         $(document).on('focus', '#donor-year-max', openYearMaxKeyboard);
         $(document).on('click tap', '#reset', resetSelect);
+        $(document).on('click tap', '#reset-search-btn', River.resetRiver);
         $(document).on('submit', River.getResults);
         $(document).ready(testingKeyboard);
     }

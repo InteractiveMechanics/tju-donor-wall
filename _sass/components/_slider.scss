@@ -82,6 +82,12 @@
 
 }
 
+.zoom-active {
+	animation-play-state: paused;
+	animation: bubblePulse 1s 1 ease-in-out;
+	background-color: rgba(30, 38, 85, 0.87);
+}
+
 @keyframes pulse {
   0% {
   	opacity: 1.0;

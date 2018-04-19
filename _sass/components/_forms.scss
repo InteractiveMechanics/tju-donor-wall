@@ -46,17 +46,46 @@ label {
 		color: white;
 		background: $beige;
 		line-height: 1;
-		border-color: $beige; 
+		border-color: $beige;
+		transition: all 0.25s linear; 
 	}
 
 	button[type="submit"] {
+		position: relative;
+		z-index: 100;
 		width: calc(59% - 25px);
 		display: inline-flex;
     	justify-content: space-between;
 		color: white; 
 		line-height: 1;
 		background: linear-gradient(to right, rgba(30,38,85,1) 43%,rgba(86,155,202,1) 100%);
+			&:before {
+			    border-radius: inherit;
+			    background-image: linear-gradient(to right, rgba(30,38,85,1) 43%,rgba(30,38,85,1) 100%);
+			    content: '';    
+			    display: block;
+			    height: 100%;
+			    position: absolute;
+			    top: 0; left: 0;
+			    opacity: 0;
+			    width: 100%;
+			    z-index: -100;
+			    transition: opacity 0.25s linear;
+	  	}
+
+		
 	}
+}
+
+
+button[type="submit"].active-search {
+	&:before {	
+		opacity: 1 !important;
+	}
+}
+
+input[type="reset"].active-reset {
+	background: darken( $beige, 30%) !important;
 }
 
 
