@@ -320,11 +320,11 @@ River = (function() {
         } 
 
         if (donorYear) {
-            year = '[education_0_graduation_year > ' + donorYear + ']';
+            year = '[education_0_graduation_year >= ' + donorYear + ']';
         } 
 
         if (donorYearMax) {
-            yearMax = '[education_0_graduation_year < ' + donorYearMax + ']';
+            yearMax = '[education_0_graduation_year <= ' + donorYearMax + ']';
         }
 
         if (donorCollege != "All Colleges") {
