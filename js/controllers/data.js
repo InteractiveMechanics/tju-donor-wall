@@ -21,6 +21,7 @@ Data = (function() {
                 var arrayImgs;
                 var arrayLeds;
                 var arrayGallery;
+                var givingAmount;
                 
 
                
@@ -70,6 +71,11 @@ Data = (function() {
                     arrayLeds = [];
                 }
 
+                if (value.acf.giving_amount) {
+                    var n = parseInt(value.acf.giving_amount);
+                    givingAmount = n.toLocaleString('en-US');
+                }
+
 
 
                 var dataToAdd = {};
@@ -84,7 +90,7 @@ Data = (function() {
                 dataToAdd["suffix"] = value.acf.suffix;
                 dataToAdd["honorific"] = value.acf.honorific;
                 dataToAdd["giving_level"] = value.acf.giving_level;
-                dataToAdd["giving_amount"] = value.acf.giving_amount;
+                dataToAdd["giving_amount"] = givingAmount;
                 dataToAdd["bio"] = value.acf.biography;
                 dataToAdd["tribute_heading"] = value.acf.tribute_heading;
                 dataToAdd["tribute_message"] = value.acf.tribute_message;

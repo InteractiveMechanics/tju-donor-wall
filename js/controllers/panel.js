@@ -156,6 +156,7 @@ Panel = (function() {
         
     }
 
+    
 
     
     //$("#panel").html($.templates("#panel-template").render(data.donors[id]));
