@@ -17,47 +17,17 @@ Panel = (function() {
         }
     }
 
-    var myCenterMode = function() {
-        if ($(".slider .slick-slide").length > 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    var mySlidesToShow = function() {
-        var numToShow;
-        if ($('.slick-slide').length > 1) {
-            numToShow = 2;
-        } else {
-            numToShow = 1;
-        }
-        return numToShow
-    }
-
-    var sliderNav = $('.slider-nav');
-    var maxItems = 2;
-    var myCenterMode = true;
-    if(sliderNav.children('div').length < 3) {
-        maxItems = 1;
-        myCenterMode = false;
-    }
-
-  
-    $('#relationships').on('edge', function(event, slick, direction){
-  alert('edge was hit')
-});
 
 
     var enableRelSlider = function() {
-        $('#relationships').slick({
-            dots: false,
-            arrows: false,
-            infinite: false,
-            edgeFriction: 0.5, //default is 0.15
-            centerMode: myCenterMode,
-            slidesToShow: maxItems
-        })
+
+        $('#relationships').flickity({
+          // options
+          cellAlign: 'left',
+          contain: true,
+          pageDots: false,
+          prevNextButtons: false
+        });
     }
 
 

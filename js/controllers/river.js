@@ -338,7 +338,11 @@ River = (function() {
         }
 
         if (donorCollege != "All Colleges") {
-            college = '[contains(education_0_college, "' + donorCollege + '")]';  
+            if (donorCollege == "Jefferson Medical College" || donorCollege == "Sidney Kimmel Medical College") {
+                college = '[contains(education_0_college, "Medical")]';
+            } else {
+                college = '[contains(education_0_college, "' + donorCollege + '")]'; 
+            } 
         }
 
         if (!donorName && !donorYear && !donorYearMax && donorCollege == "All Colleges") {
