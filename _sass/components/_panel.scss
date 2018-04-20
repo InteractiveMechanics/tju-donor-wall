@@ -93,8 +93,14 @@
 #relationships {
 	margin-top: 0px !important; //original: 30px
 	margin-bottom: 10px !important;
-	.slick-list {
-		padding: 0px;
+	&:after {
+		content: '';
+		height: 100%;
+		width: 50px;
+		position: absolute;
+		top: 0;
+		right: 0;
+		box-shadow: inset -29px 0px 29px 0px rgba(255,255,255,0.7);
 	}
 }
 

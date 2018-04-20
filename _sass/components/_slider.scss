@@ -11,6 +11,10 @@
 	left: 18px;
 }
 
+.flickity-enabled.is-draggable .flickity-viewport {
+	overflow: visible;
+}
+
 
 #gallery-lg {
 	position: relative;
