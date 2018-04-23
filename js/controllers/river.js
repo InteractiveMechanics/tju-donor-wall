@@ -392,7 +392,6 @@ River = (function() {
                 //velocity = 300;
                 //timing = getWidth(results) / velocity;
                 tweenRiverMain = new TweenMax.to("#river", 0, {x: 0, ease: Power1.easeInOut, yoyo: true, repeat: -1});
-                $
                 Search.closeSearch();
 
             }, 500);

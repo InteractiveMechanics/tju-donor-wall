@@ -112,7 +112,7 @@ Leds = (function() {
             } else {
                 //if the led is not in the aray, add it
                 ledArray.push({id: ledsToAdd[i], lumos: 0, state: 'up'});
-                console.log(ledArray);
+                //console.log(ledArray);
             }
         }
     }
