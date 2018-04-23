@@ -24,7 +24,7 @@ River = (function() {
             type:"x",
             edgeResistance:0.25,
             zIndexBoost:false,
-            bounds:{width:getRiverWidth()},
+            bounds: {minX:getNegWidth(), maxX:getWidth()}, //{width:getRiverWidth()}
             //lockAxis:true,
             throwProps:true,
             onDragStart:  function(){
@@ -78,25 +78,28 @@ River = (function() {
 
    
 
-    var getWidth = function(datatoload) {
-        var numBubbles = datatoload.length;
-        var riverWidth = numBubbles * 150;
+    var getWidth = function() {
+        var numBubbles = $('.circle-wrapper').length;
+        var riverWidth = numBubbles * 75;
         var windowWidth = $(window).width();
-        if (riverWidth < windowWidth) {
+        if (riverWidth == windowWidth) {
             return windowWidth;
         } else {
-            return riverWidth
+            console.log(riverWidth);
+            return riverWidth;
         }
         
     }
 
-    var getNegWidth = function(datatoload) {
-        var myWidth = getWidth(datatoload);
+    var getNegWidth = function() {
+        console.log('getNegWidth is running');
+        var myWidth = $('.circle-wrapper').length;
+        var riverWidth = myWidth * 75;
         var windowWidth = $( window ).width();
         if (myWidth < windowWidth) {
             return -windowWidth;
         } else {
-            return -(getWidth(datatoload));
+            return -(getWidth());
         }
     }
 
@@ -108,7 +111,7 @@ River = (function() {
 
     var getRiverWidth = function() {
         var numBubbles = $('.circle-wrapper').length;
-        var riverWidth = numBubbles * 100;
+        var riverWidth = numBubbles * 60;
         return riverWidth; 
     }
 
