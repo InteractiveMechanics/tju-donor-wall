@@ -365,6 +365,10 @@ River = (function() {
 
     }
 
+    
+
+
+
 
     
     var updateRiver = function(results) {
@@ -376,8 +380,11 @@ River = (function() {
             $('#search-er').addClass('hidden fadeOut').removeClass('flex-container');
             $('.reset-search-wrapper').removeClass('hidden fadeOut').addClass('animated fadeIn flex-container');
             $('#river').html('');
-            setTimeout(function() { 
+            setTimeout(function() {
+                Leds.resetLeds(); 
                 loadData(results);
+                var updatedLedsToDisplay = getUpdatedLedsToDisplay(results);
+                Leds.checkLedArray(updatedLedsToDisplay);
                 tweenRiverMain.kill();
                 //velocity = 300;
                 //timing = getWidth(results) / velocity;
@@ -389,6 +396,21 @@ River = (function() {
             //setTimeout(function() { Data.init(results); }, 750);
         }
         //playRiver();
+    }
+
+    var getUpdatedLedsToDisplay = function(results) {
+        var donorLeds = [];
+        for (var i = 0; i<results.length; i++) {
+            if (results[i].ledstodisplay.length > 0) {
+                var donorLedArray = results[i].ledstodisplay;
+                for (var j = 0; j<donorLedArray.length; j++) {
+                   donorLeds.push(donorLedArray[j]);
+                }
+               
+            } 
+        }
+        console.log('ledstodisplay: ' + donorLeds);
+        return donorLeds;
     }
 
 
@@ -469,10 +491,10 @@ River = (function() {
         //d3.selectAll("svg").remove(); //d3.selectAll("svg > *").remove();
         //Data.resetData(); //Data.resetData();
         setTimeout(function() { loadData(data.donors); }, 750);
+        Leds.resetLeds(); 
         velocity = 100;
         timing = getWidth(data.donors) / velocity;
         tweenRiverMain = new TweenMax.to("#river", 22, {x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
-     
         tweenRiverMain.resume();
         $('.reset-search-wrapper').addClass('animated fadeOut hidden').removeClass('flex-container');
         $('#submit').removeClass('active-search');

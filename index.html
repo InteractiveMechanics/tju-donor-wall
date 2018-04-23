@@ -109,26 +109,33 @@
             <article>
                 <h1>{{:first_name}} {{:middle}} {{:last_name}}{{if suffix}} ,{{:suffix}}{{/if}}{{if honorific}}, {{:honorific}}{{/if}}</h1>
                 <section>
-                    {{if giving_amount}}
-                    <div>
-                        <h5>Giving Level</h5>
-                        <h2 id="giving-amount">${{:giving_amount}}</h2>
-                    </div>
-                    {{/if}}
 
                     {{if education_0_degree}}
                     <div>
-                        <h5>Degree</h5>
-                        <h2>{{:education_0_degree}}</h2>
+                    <h5>Degree</h5>
+                    {{/if}}
+
+                    
+                    {{for education}}
+                    <h2>{{:degree}}</h2>
+                    {{/for}}
+                   
+
+                    {{if education_0_degree}}
                     </div>
                     {{/if}}
 
-                    {{if education_0_graduation_year}}
+                    
+
+                    {{if education}}
                     <div>
                         <h5>College, Graduation Year</h5>
-                        <h2>{{if education_0_college}} {{:education_0_college}}, {{/if}} {{:education_0_graduation_year}}</h2>
+                        {{for education}}
+                        <h2>{{if college.length}} {{:college}},{{/if}} {{:graduation_year}}</h2>
+                        {{/for}}
                     </div>
                     {{/if}}
+
                 </section>
 
                {{if rels && rels.length}}

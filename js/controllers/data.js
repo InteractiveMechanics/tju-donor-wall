@@ -21,7 +21,6 @@ Data = (function() {
                 var arrayImgs;
                 var arrayLeds;
                 var arrayGallery;
-                var givingAmount;
                 
 
                
@@ -71,11 +70,7 @@ Data = (function() {
                     arrayLeds = [];
                 }
 
-                if (value.acf.giving_amount) {
-                    var n = parseInt(value.acf.giving_amount);
-                    givingAmount = n.toLocaleString('en-US');
-                }
-
+                
 
 
                 var dataToAdd = {};
@@ -83,14 +78,12 @@ Data = (function() {
             
                 dataToAdd["ID"] = value.id;
                 dataToAdd["bubble_type"] = "donor";
-                dataToAdd["prefix"] = value.acf.prefix;
                 dataToAdd["first_name"] = value.acf.first_name;
                 dataToAdd["middle"] = value.acf.middle;
                 dataToAdd["last_name"] = value.acf.last_name;
                 dataToAdd["suffix"] = value.acf.suffix;
                 dataToAdd["honorific"] = value.acf.honorific;
                 dataToAdd["giving_level"] = value.acf.giving_level;
-                dataToAdd["giving_amount"] = givingAmount;
                 dataToAdd["bio"] = value.acf.biography;
                 dataToAdd["tribute_heading"] = value.acf.tribute_heading;
                 dataToAdd["tribute_message"] = value.acf.tribute_message;
@@ -98,6 +91,7 @@ Data = (function() {
                 dataToAdd["education_0_degree"] = value.acf.education[0].degree; //value.education_0_degree
                 dataToAdd["education_0_college"] = value.acf.education[0].college; //value.education_0_college
                 dataToAdd["education_0_graduation_year"] = value.acf.education[0].graduation_year; //value.education_0_graduation_year
+                dataToAdd["education"] = value.acf.education;
                 dataToAdd["primary_img"] = value.acf.primary_img; //
                 dataToAdd["galleryArray"] = arrayGallery; //galleryArray
                 dataToAdd["video"] = value.acf.video;
