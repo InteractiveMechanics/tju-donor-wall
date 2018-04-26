@@ -7,7 +7,10 @@ River = (function() {
         tweenRiverMain,
         timing,
         results,
-        myDraggable;
+        bezPoints,
+        myDraggable,
+        mytl,
+        screenLedInterval;
 
 
     var getSeconds = function(datatoload) {
@@ -25,7 +28,6 @@ River = (function() {
             edgeResistance:0.25,
             zIndexBoost:false,
             bounds: {minX:getNegWidth(), maxX:getWidth()}, //{width:getRiverWidth()}
-            //lockAxis:true,
             throwProps:true,
             onDragStart:  function(){
                Utilities.resetTimeout();
@@ -62,7 +64,8 @@ River = (function() {
         river = document.getElementById('river');
         velocity = .005;
         timing = getWidth(data.donors) * velocity;
-        tweenRiverMain = new TweenMax.to("#river", 0, {x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+       
+        tweenRiverMain = new TweenMax.to("#river", 0,{x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
         initDraggable();
         // Draggable.create("#river", {
         //     type:"x",
@@ -329,7 +332,7 @@ River = (function() {
         console.log("donor name: " + donorName + " donor year: " + donorYear + " donor year max: " + donorYearMax + " donor college: " + donorCollege);
 
         if (donorName.length) {
-            name = '[contains(first_name, "' +  donorName + '") or contains(last_name, "' +  donorName + '")]';
+            name = '[contains(legacy_name, "' +  donorName + '") or contains(last_name, "' +  donorName + '") or contains(first_name, "' +  donorName + '")] ';
         } 
 
         if (donorYear) {
@@ -400,6 +403,7 @@ River = (function() {
         //playRiver();
     }
 
+    //change name to getSearchResultsLeds
     var getUpdatedLedsToDisplay = function(results) {
         var donorLeds = [];
         for (var i = 0; i<results.length; i++) {
@@ -415,7 +419,16 @@ River = (function() {
         return donorLeds;
     }
 
+    var addLedsToArray = function(obj) {
+        if (obj.ledstodisplay.length > 0) {
+            var donorLedArray = obj.ledstodisplay;
+            for (var j = 0; j<donorLedArray.length; j++) {
+                donorLeds.push(donorLedArray[j]);
+            }
+        }
+    }
 
+   
     var prepareForSwipes = function(event) {
         console.log("prepareForSwipes");
 
@@ -484,10 +497,31 @@ River = (function() {
     var playRiver = function() {
          if (!TweenMax.isTweening( '#river') ) {
             tweenRiverMain.play();
+            screenLedInterval = setInterval(function() {
+                Leds.resetLeds();
+                Leds.checkLedArray(Leds.getLedsOnScreen(data.donors));
+            }, 1000);
         } 
     }
 
     
+    var circleTimeline = function() {
+        var circle = document.getElementsByClassName('circle');
+        console.log(circle.length);
+        for (i=0; i<circle.length; i++) {
+            console.log('this is a circle');
+            console.log(circle[i]);
+            var mytl = new TimelineMax({delay: i * 0.25, repeat: -1, yoyo: true});
+            bezPoints = [{y:-50}, {y:100}, {y:-50}, {y:100}];
+            mytl.from (circle[i], 22, {bezier: {values: bezPoints, autorotate: true}});
+            mytl.timeScale(1.5);
+        }
+       
+    }    
+
+
+
+
 
     var resetRiver = function() {
         //d3.selectAll("svg").remove(); //d3.selectAll("svg > *").remove();
@@ -496,11 +530,29 @@ River = (function() {
         Leds.resetLeds(); 
         velocity = 100;
         timing = getWidth(data.donors) / velocity;
-        tweenRiverMain = new TweenMax.to("#river", 22, {x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+        //bezPoints = [{x:-1920, y:0}, {x: 0, y:600}, {x:1200, y:00}, {x:1920, y:600}];
+        //Attempt1
+        //tweenRiverTry = new TweenMax.to(".donor", 22, {bezier:{values: bezPoints, autorotate: true}, x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+        
+        //Attempt2
+        //rivertl = new TimelineMax({x: getMyWidth(data.donors), repeat: -1, yoyo: true, ease: Power1.easeInOut});
+        //rivertl.to("#river",5,{bezier:{autoRotate:true,curviness:2,values:bezPoints}},"");
+
+        setTimeout(function() { circleTimeline(); }, 1500);
+
+        screenLedInterval = setInterval(function() {
+                Leds.resetLeds();
+                Leds.checkLedArray(Leds.getLedsOnScreen(data.donors));
+        }, 1000);
+
+
+        tweenRiverMain = new TweenMax.to("#river", 32, {x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
         tweenRiverMain.resume();
         $('.reset-search-wrapper').addClass('animated fadeOut hidden').removeClass('flex-container');
         $('#submit').removeClass('active-search');
         $('#all-donors-btn').removeClass('active-all-donors');
+
+        
     }
 
     var testingDrag = function() {
@@ -524,6 +576,7 @@ River = (function() {
         resetRiver: resetRiver,
         playRiver: playRiver,
         tweenRiverMain: tweenRiverMain,
+        addLedsToArray: addLedsToArray,
         results: results
 
     }

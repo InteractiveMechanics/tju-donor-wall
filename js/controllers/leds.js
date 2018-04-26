@@ -91,6 +91,29 @@ Leds = (function() {
 
     var animate = function() {
         setInterval(writeFrame, 60);
+        //setTimeout(function() { getLedsOnScreen(data.donors) }, 1000);
+        
+
+    }
+
+    //this needs to run every second, not just as reset
+    var getLedsOnScreen = function(data) {
+        var OnScreenLedsArray = [];
+        for (var i=0; i<data.length; i++) {
+            var thisId = data[i].ID;
+            var thisEl = document.querySelector('[data-id="'+ thisId + '"]');
+            if (checkVisible(thisEl)) {
+                //code is same as River.addLedsToArray, but when called here as River.addLedsToArray(data[i]), gets an error -- cannot get length of undefined
+                if (data[i].ledstodisplay) {
+                    var donorLedArray = data[i].ledstodisplay;
+                    for (j = 0; j<donorLedArray.length; j++) {
+                         OnScreenLedsArray.push(donorLedArray[j]);
+                    }
+                }
+            } 
+        }
+        console.log(OnScreenLedsArray);
+        return OnScreenLedsArray;
     }
 
     var resetLeds = function() {
@@ -123,8 +146,16 @@ Leds = (function() {
         }); 
     }
 
-    var bindEvents = function() {
 
+    function checkVisible(elm) {
+        var rect = elm.getBoundingClientRect();
+        var viewWidth = Math.max(document.documentElement.clientWidth, window.innerWidth);
+        // if x is greater than zero or less than the client width, it is on the screen, so return true
+        return (rect.x > 0 && rect.x <= viewWidth);
+    }
+
+
+    var bindEvents = function() {
     }
 
     return {
@@ -132,7 +163,8 @@ Leds = (function() {
         writeFrame: writeFrame,
         resetLeds: resetLeds,
         checkLedArray: checkLedArray,
-        ledArray: ledArray
+        ledArray: ledArray,
+        getLedsOnScreen: getLedsOnScreen
 
     }
 

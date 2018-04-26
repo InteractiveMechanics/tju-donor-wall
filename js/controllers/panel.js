@@ -154,7 +154,7 @@ Panel = (function() {
         $('.all-donors-wrapper').removeClass('hidden').addClass('animated fadeIn flex-container');
         getRels(id);
         enableRelSlider();
-        $("#relationships").slick("refresh");
+        //$("#relationships").slick("refresh");
 
 
         //console.log(getFeatImgURL(id));

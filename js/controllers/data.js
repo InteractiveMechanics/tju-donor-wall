@@ -83,6 +83,7 @@ Data = (function() {
                 dataToAdd["last_name"] = value.acf.last_name;
                 dataToAdd["suffix"] = value.acf.suffix;
                 dataToAdd["honorific"] = value.acf.honorific;
+                dataToAdd["legacy_name"] = value.acf.legacy_name;
                 dataToAdd["giving_level"] = value.acf.giving_level;
                 dataToAdd["bio"] = value.acf.biography;
                 dataToAdd["tribute_heading"] = value.acf.tribute_heading;

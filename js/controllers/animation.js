@@ -23,7 +23,7 @@ Animation = (function() {
 
         anim.play();
         anim.addEventListener('complete', hideText);
-        console.log('my Animation');
+       // console.log('my Animation');
 
     }
 
