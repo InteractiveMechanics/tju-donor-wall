@@ -132,8 +132,6 @@ Search = (function() {
 
     var closeSearch = function() {
             $('#right-panel').removeClass('slideInRight').addClass('fadeOutRight');
-            //River.tweenRiverMain.resume();
-            //$('#search').removeClass('fadeIn').addClass('hidden fadeOutRight');
             setTimeout(function(){ $('#search').addClass('hidden'); }, 750);
             setTimeout(function(){ $('#give-panel').addClass('hidden');}, 750);
             $('#search-btn').removeClass('fadeOut').addClass('fadeIn');

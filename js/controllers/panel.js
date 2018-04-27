@@ -130,8 +130,6 @@ Panel = (function() {
 
     
 
-    
-    //$("#panel").html($.templates("#panel-template").render(data.donors[id]));
     var openPanel = function(id) {
         //var id = $(this).attr('data-id');
 

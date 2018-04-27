@@ -1,7 +1,7 @@
 River = (function() {
 
     
-    var width = 6500,
+    var width,
         height = 1000,
         river,
         tweenRiverMain,
@@ -23,17 +23,18 @@ River = (function() {
 
 
     var initDraggable = function() {
-        myDraggable = Draggable.create("#river", {
-            type:"x",
-            edgeResistance:0.25,
-            zIndexBoost:false,
-            bounds: {minX:getNegWidth(), maxX:getWidth()}, //{width:getRiverWidth()}
-            throwProps:true,
-            onDragStart:  function(){
-               Utilities.resetTimeout();
-            }
-        });
-
+            myDraggable = Draggable.create("#river", {
+                type:"x",
+                edgeResistance:0.25,
+                zIndexBoost:false,
+                bounds: {minX:-6000, maxX:0}, // {minX:getNegWidth(), maxX:getWidth()}
+                throwProps:true,
+                onDragStart:  function(){
+                   Utilities.resetTimeout();
+                }
+            });
+    
+    
     }
 
 
@@ -47,15 +48,6 @@ River = (function() {
     tlR.from('#myreset', 2.5, {opacity: 0.3, ease: Power4.easeInOut});
     tlR.staggerFrom(mySplitTextReset.chars, 2.5, {opacity: 0.3,  ease: Power4.easeInOut}, 0.25, 0.25);
    
-   //TweenMax.from('#mysearch', 2.5, {opacity: 0.7, ease: Power4.easeInOut, repeat: -1, yoyo: true});
-
-    // var river = document.getElementById('river');
-    // var tweenRiverMain = new TweenMax.to("#river", riverSeconds, {x: "5000px", ease: Power0.easeNone, repeat: -1});
-    
-
-    //dead variables 
-    // var nodes;
-    // var format = d3.format(" ,d");
 
     
     
@@ -67,14 +59,7 @@ River = (function() {
        
         tweenRiverMain = new TweenMax.to("#river", 0,{x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
         initDraggable();
-        // Draggable.create("#river", {
-        //     type:"x",
-        //     edgeResistance:0.25,
-        //     zIndexBoost:false,
-        //     bounds:{width:getRiverWidth()},
-        //     //lockAxis:true,
-        //     throwProps:true
-        // });
+       
      
     }
 
@@ -178,13 +163,8 @@ River = (function() {
             results = JSON.search(data,  '//*' + name + year + yearMax + college); 
         }
 
-
-
-        //results = JSON.search(data,  '//*' + name + year + yearMax + college);
         console.log("LOOK AT ME ", results);
-        console.log(donorCollege);
-        
-       
+      
         updateRiver(results);
         }, 1250);
 
@@ -250,70 +230,8 @@ River = (function() {
     }
 
    
-    var prepareForSwipes = function(event) {
-        console.log("prepareForSwipes");
-
-        var swipeOptions = { dragLockToAxis: true, dragBlockHorizonal: true};
-
-        function dragEl(event) {
-            var elToDrag = event.target;
-            eltoDrag.style.left = event.deltaX + "px";
-        }
-
-        function swipeRightEl(event) {
-            // var elToSwipe = event.target;
-            // console.log(event);
-            var eDelta = event.deltaX;
-            var eVelocity = event.overallVelocity;
-            var distance = eDelta * eVelocity;
-            console.log(event.deltaX);
-            $('#river').animate({left: "+=" + distance}, "swing");
-
-            $('#instructions').html('');
-        }
-
-        function swipeLeftEl(event) {
-            // var elToSwipe = event.target;
-            // console.log(event);
-            var eDelta = event.deltaX;
-            var eVelocity = event.overallVelocity / 2;
-            var distance = eDelta * eVelocity;
-            console.log(event.deltaX);
-            $('#river').animate({left: "-=" + distance}, "swing");
-            $('#instructions').html('');
-        
-        }
-
-        function releaseEl(event) {
-            event.gesture.stopDetect();
-        }
-
-        function initTouchListeners(touchableEl) {
-            var touchControl = new Hammer(touchableEl, swipeOptions);
-            touchControl.on("dragright", dragEl)
-                .on("swiperight", swipeRightEl)
-                .on("swipeleft", swipeLeftEl)
-                .on("release", releaseEl);
-        };
 
 
-        var river = document.getElementById('river');
-        initTouchListeners(river);
-
-
-
-    }
-    
-
-   
-
-
-    var pauseRiver = function() {
-        if (TweenMax.isTweening( '#river') ) {
-            tweenRiverMain.pause();
-        }
-
-    }
 
     var playRiver = function() {
          if (!TweenMax.isTweening( '#river') ) {
@@ -322,52 +240,58 @@ River = (function() {
                 Leds.resetLeds();
                 Leds.checkLedArray(Leds.getLedsOnScreen(data.donors));
             }, 1000);
+            mytl.play();
         } 
     }
 
     
     var circleTimeline = function() {
         var circle = document.getElementsByClassName('circle');
-        console.log(circle.length);
         for (i=0; i<circle.length; i++) {
-            console.log('this is a circle');
-            console.log(circle[i]);
-            var mytl = new TimelineMax({delay: i * 0.25, repeat: -1, yoyo: true});
-            bezPoints = [{y:-50}, {y:100}, {y:-50}, {y:100}];
-            mytl.from (circle[i], 22, {bezier: {values: bezPoints, autorotate: true}});
+            mytl = new TimelineMax({delay: i * 0.25, repeat: -1, yoyo: true});
+            bezPoints = [{y:-50}, {y:160}, {y:-50}, {y:160}];
+            mytl.from (circle[i], 30, {bezier: {values: bezPoints, autorotate: true}});
             mytl.timeScale(1.5);
         }
        
-    }    
+    }
+
+    var killCircleTimeline = function() {
+        mytl.kill();
+    }  
+
+
+     var pauseRiver = function() {
+        alert('pauseRiver');
+        // if (TweenMax.isTweening( '#river') ) {
+        //     tweenRiverMain.pause();
+        // }
+    }  
+
+
 
 
 
 
 
     var resetRiver = function() {
-        //d3.selectAll("svg").remove(); //d3.selectAll("svg > *").remove();
-        //Data.resetData(); //Data.resetData();
         setTimeout(function() { loadData(data.donors); }, 750);
         Leds.resetLeds(); 
         velocity = 100;
+        delayedWidth = getWidth(data.donors);
         timing = getWidth(data.donors) / velocity;
-        //bezPoints = [{x:-1920, y:0}, {x: 0, y:600}, {x:1200, y:00}, {x:1920, y:600}];
-        //Attempt1
-        //tweenRiverTry = new TweenMax.to(".donor", 22, {bezier:{values: bezPoints, autorotate: true}, x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
-        
-        //Attempt2
-        //rivertl = new TimelineMax({x: getMyWidth(data.donors), repeat: -1, yoyo: true, ease: Power1.easeInOut});
-        //rivertl.to("#river",5,{bezier:{autoRotate:true,curviness:2,values:bezPoints}},"");
 
-        setTimeout(function() { circleTimeline(); }, 1500);
+        
+
+        //setTimeout(function() { circleTimeline(); }, 1500);
+
 
         screenLedInterval = setInterval(function() {
                 Leds.resetLeds();
                 Leds.checkLedArray(Leds.getLedsOnScreen(data.donors));
         }, 1000);
 
-
-        tweenRiverMain = new TweenMax.to("#river", 32, {x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+        tweenRiverMain = new TweenMax.to("#river", 40, {x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
         tweenRiverMain.resume();
         $('.reset-search-wrapper').addClass('animated fadeOut hidden').removeClass('flex-container');
         $('#submit').removeClass('active-search');
@@ -383,10 +307,7 @@ River = (function() {
 
 
     var bindEvents = function() {
-        //$(document).ready(resetRiver);
-        //$(document).ready(loadData(data.donors));
-        //$(document).ready(prepareForSwipes);
-        $(document).on('click tap', '#river', pauseRiver);
+        $(document).on('click tap', '#river', killCircleTimeline);
     }
 
 
@@ -399,7 +320,6 @@ River = (function() {
         tweenRiverMain: tweenRiverMain,
         addLedsToArray: addLedsToArray,
         results: results
-
     }
 
 })();

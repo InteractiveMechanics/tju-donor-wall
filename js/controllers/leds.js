@@ -112,12 +112,12 @@ Leds = (function() {
                 }
             } 
         }
-        console.log(OnScreenLedsArray);
+       // console.log(OnScreenLedsArray);
         return OnScreenLedsArray;
     }
 
     var resetLeds = function() {
-        console.log('resetLeds');
+        //console.log('resetLeds');
         for (var i = 0; i<ledArray.length; i++) {
             ledArray[i].state = "down";
         }

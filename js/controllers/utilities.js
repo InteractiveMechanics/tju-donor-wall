@@ -20,7 +20,6 @@ Utilities = (function() {
         $('#instructions-wrapper').html('');
         $('#instruction-text').addClass('fadeOut hidden');
         clearInterval(myInterval);
-        console.log('resetTimeout');
     }
 
     var resetInteractive = function() {
@@ -30,7 +29,6 @@ Utilities = (function() {
         if ($('.zoom').data('lightGallery')) {
             $('.zoom').data('lightGallery').destroy();
         }
-        //$('#river').css('left', 'initial');
         $('#river').animate({left: "0"}, "swing");
 
     	//Animation.myAnimation();
