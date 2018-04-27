@@ -189,6 +189,15 @@ https://github.com/silviomoreto/bootstrap-select/issues/1135
     border-left: 8px solid transparent;
 }
 
+
+.bootstrap-select.btn-group .dropdown-menu {
+	border-radius: 0px;
+}
+
+.bootstrap-select.btn-group .dropdown-menu.inner {
+	max-height: 259px !important;
+}
+
 #search-er {
 	background-color: $red;
 	border-radius: 6px;

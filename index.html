@@ -243,16 +243,22 @@
                             <label for="donor-colleges">College</label>
                             <select class="selectpicker" id="donor-colleges">
                                 <option>All Colleges</option>
-                                <option>Jefferson Medical College</option>
                                 <option>Sidney Kimmel Medical College</option>
-                                <option>Kanbar College of Design Engineering and Commerce</option>
+                                <option>Jefferson Medical College</option>
+                                <option>Jefferson College of Biomedical Sciences</option>
+                                <option>Jefferson College of Health Professions</option>
+                                <option>Jefferson College of Population Health</option>
+                                <option>Jefferson College of Allied Health Sciences</option>
+                                <option>Jefferson College of Graduate Studies</option>
+                                <option>Jefferson College of Nursing</option>
+                                <option>Jefferson Medical College Hospital School of Nursing</option>
+                                <option>Thomas Jefferson University Hospital</option>
                                 <option>College of Architecture and the Built Environment</option>
-                                <option>College of Biomedical Sciences</option>
-                                <option>College of Health Professions</option>
-                                <option>College of Nursing</option>
-                                <option>College of Pharmacy</option>
-                                <option>College of Population Health</option>
+                                <option>Jefferson College of Pharmacy</option>
                                 <option>College of Science, Health and the Liberal Arts</option>
+                                <option>Kanbar College of Design, Engineering and Commerce</option>
+                                <option>School of Continuing and Professional Studies</opition>
+                                <option>Institute of Emerging Health Professions</option>
                             </select>
                         </div>
 
@@ -415,11 +421,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
 
      <script>
-        var plainData = "http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/posts/?per_page=100";
+        var plainData = "http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/posts/?per_page=100&orderby=title&order=asc";
         var jsonData = 'http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/rest-routes/v2/donors';
         var givingData = 'http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/rest-routes/v2/giving';
     </script>
-   
+   <!--?per_page=100 -->
 
 </body>
 </html>
