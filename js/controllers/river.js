@@ -73,7 +73,7 @@ River = (function() {
         if (riverWidth == windowWidth) {
             return windowWidth;
         } else {
-            console.log(riverWidth);
+            //console.log(riverWidth);
             return riverWidth;
         }
         
@@ -244,20 +244,40 @@ River = (function() {
         } 
     }
 
+
+    var randomIntFromInterval = function(min,max) {
+    
+        return Math.random()*(max-min)+min;
+    
+    }
+
     
     var circleTimeline = function() {
         var circle = document.getElementsByClassName('circle');
         for (i=0; i<circle.length; i++) {
-            mytl = new TimelineMax({delay: i * 0.25, repeat: -1, yoyo: true});
-            bezPoints = [{y:-50}, {y:160}, {y:-50}, {y:160}];
-            mytl.from (circle[i], 30, {bezier: {values: bezPoints, autorotate: true}});
-            mytl.timeScale(1.5);
+            
+            var animationDelay = randomIntFromInterval(0.18, 0.25);
+            
+            var bezXPoint1 = randomIntFromInterval(10, 20);
+            var bezXPoint2 = randomIntFromInterval(10, 20);
+            var bezXPoint3 = randomIntFromInterval(10, 20);
+            var bezXPoint4 = randomIntFromInterval(10, 20);
+            var bezYPoint1 = randomIntFromInterval(15, 25);
+            var bezYPoint2 = randomIntFromInterval(15, 25);
+            var bezYPoint3 = randomIntFromInterval(15, 25);
+            var bezYPoint4 = randomIntFromInterval(15, 25);
+
+            mytl = new TimelineMax({delay: i * animationDelay, repeat: -1, yoyo: true});
+            
+            bezPoints = [{x: 0, y: 0}, {x: bezXPoint1, y: bezYPoint1},  {x: bezXPoint2, y: -bezYPoint2}, {x: -bezXPoint3, y: -bezYPoint3}, {x: -bezXPoint4, y: bezYPoint4}, {x: 0, y: 0}];
+            mytl.from (circle[i], 15, {bezier: {values: bezPoints}});
         }
        
     }
 
-    var killCircleTimeline = function() {
-        mytl.kill();
+    var pauseAllTweens = function(event) {
+        TweenMax.pauseAll();
+        
     }  
 
 
@@ -283,7 +303,7 @@ River = (function() {
 
         
 
-        //setTimeout(function() { circleTimeline(); }, 1500);
+        setTimeout(function() { circleTimeline(); }, 1500);
 
 
         screenLedInterval = setInterval(function() {
@@ -291,7 +311,7 @@ River = (function() {
                 Leds.checkLedArray(Leds.getLedsOnScreen(data.donors));
         }, 1000);
 
-        tweenRiverMain = new TweenMax.to("#river", 40, {x: getMyWidth(data.donors), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+        tweenRiverMain = new TweenMax.to("#river", 120, {x: getMyWidth(data.donors), ease: Sine.easeInOut, yoyo: true, repeat: -1});
         tweenRiverMain.resume();
         $('.reset-search-wrapper').addClass('animated fadeOut hidden').removeClass('flex-container');
         $('#submit').removeClass('active-search');
@@ -307,7 +327,7 @@ River = (function() {
 
 
     var bindEvents = function() {
-        $(document).on('click tap', '#river', killCircleTimeline);
+        $(document).on('click tap', '#river', pauseAllTweens);
     }
 
 

@@ -111,7 +111,7 @@ Panel = (function() {
         
         var FeatureImgUrl;
 
-        if (panelData[0].primary_img){
+        if (panelData[0].primary_img.length != 0){
                 var primaryImgID = data[id].primary_img;
                 console.log(data[id].primary_img);
                 $.getJSON("http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + primaryImgID, function(d) {
@@ -157,7 +157,7 @@ Panel = (function() {
 
         //console.log(getFeatImgURL(id));
         setTimeout(function() { enableGallery(id); }, 1000);
-        if (panelData[0].giving_level == 10000) {
+        if (panelData[0].giving_level == 10000 && panelData[0].primary_img.length != 0) {
             $('#gallery-wrapper').removeClass('hidden');
             $('#close').css('width', 'calc(100vw - 1300px');
         }  else {

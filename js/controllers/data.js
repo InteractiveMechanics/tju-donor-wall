@@ -21,6 +21,10 @@ Data = (function() {
                 var arrayImgs;
                 var arrayLeds;
                 var arrayGallery;
+                var donorsFirstDegree;
+                var donorsFirstCollege;
+                var donorsFirstGradYear;
+                var primary_img;
                 
 
                
@@ -45,6 +49,12 @@ Data = (function() {
                 //     arrayRels = [];
                 // }
             
+
+                if (value.acf.primary_img != false) {
+                    primary_img = value.acf.primary_img;
+                } else {
+                    primary_img = '';
+                }
                 
 
                 if (value.gallery) {
@@ -70,6 +80,18 @@ Data = (function() {
                     arrayLeds = [];
                 }
 
+                if (value.acf.education) {
+                    donorsFirstDegree = value.acf.education[0].degree;
+                    donorsFirstCollege = value.acf.education[0].college;
+                    donorsFirstGradYear = value.acf.education[0].graduation_year;
+                } else {
+                    donorsFirstDegree = '';
+                    donorsFirstCollege = '';
+                    donorsFirstGradYear = '';
+                }
+
+
+
                 
 
 
@@ -89,11 +111,11 @@ Data = (function() {
                 dataToAdd["tribute_heading"] = value.acf.tribute_heading;
                 dataToAdd["tribute_message"] = value.acf.tribute_message;
                 dataToAdd["rels"] = value.acf.relationships; //relsArray
-                dataToAdd["education_0_degree"] = value.acf.education[0].degree; //value.education_0_degree
-                dataToAdd["education_0_college"] = value.acf.education[0].college; //value.education_0_college
-                dataToAdd["education_0_graduation_year"] = value.acf.education[0].graduation_year; //value.education_0_graduation_year
+                dataToAdd["education_0_degree"] = donorsFirstDegree; //value.education_0_degree
+                dataToAdd["education_0_college"] = donorsFirstCollege; //value.education_0_college
+                dataToAdd["education_0_graduation_year"] = donorsFirstGradYear; //value.education_0_graduation_year
                 dataToAdd["education"] = value.acf.education;
-                dataToAdd["primary_img"] = value.acf.primary_img; //
+                dataToAdd["primary_img"] = primary_img; //
                 dataToAdd["galleryArray"] = arrayGallery; //galleryArray
                 dataToAdd["video"] = value.acf.video;
                 dataToAdd["video_poster"] = value.acf.video_poster;
