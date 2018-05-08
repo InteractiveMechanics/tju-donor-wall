@@ -3,63 +3,91 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width"/>
-	<title>LED Test</title>
+	<title>Digital Donor Wall Mapping Tool</title>
 
     <style>
         html, 
         body {
             margin: 20px;
             padding: 0;
+            background: #212323;
         }
 
         #connectionStatus {
             margin-bottom: 15px;
             display: inline-block;
+            color: gray;
+            font-family: sans-serif;
         }
         #activeLeds {
             display: inline-block;
+            color: white;
+            font-family: sans-serif;
         }
         #wall {
             display: block;
-            border: 1px solid gray;
+            background: rgba(238, 253, 255, 0.9);
         }
         #wall .panel {
-            border-right: 1px solid gray;
-            display: inline-block;
-            padding: 2px 8px 8px;
-        }
-        #wall .panel:last-of-type {
-            border: none;
+            display: block;
+            text-align: center;
+            padding: 20px 0 30px;
         }
         #wall .panel:not(.no-leds) .panel-row {
             height: 15px;
         }
+        #wall .panel-row-label {
+            display: inline-block;
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-right: 10px;
+            font-family: sans-serif;
+            letter-spacing: 1px;
+            text-align: left;
+            width: 60px;
+        }
+
         
         label {
             text-align: center;
-            display: block;
+            display: inline-block;
             font-family: sans-serif;
             font-size: 14px;
             text-transform: uppercase;
             line-height: 2;
-            margin: 0 -8px 4px;
-            border-bottom: 1px solid gray;
+            letter-spacing: 1px;
+            margin: 0 10px 0 0;
         }
 
         input[type="checkbox"] {
-            width: 10px;
-            height: 10px;
             margin: 0 2px 0 0;
         }
+
+        select {
+            vertical-align: text-bottom;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            color: white;
+            font-family: sans-serif;
+            margin: 30px 0 5px;
+        }
+        p {
+            color: white;
+            font-family: sans-serif;
+        }
+
     </style>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript">
 
         $(function() {
+            var ledArray = [];
 
             $('.panel:not(.no-leds)').each(function( index ) {
                 for (i = 0; i < 29; i++) {
-                    $(this).append('<div class="panel-row"></div>');
+                    $(this).append('<div class="panel-row"><div class="panel-row-label">Row ' + (i + 1) + ' </div></div>');
                 }
             });
             $('.panel-row').each(function( index ) {
@@ -73,19 +101,28 @@
 
 
             $('input').on('change', function() {
-                var ledArray = [];
+                ledArray.push(parseInt($(this).attr('value')));
+                writeFrame(ledArray);
+                outputLedArray(ledArray);
+            });
+
+            $('select').on('change', function() {
+                var val = $(this).val();
+                var count = $('input').length;
+
                 $('input').each(function( index ) {
-                    if ($(this).is(':checked')) {
-                        ledArray.push(parseInt($(this).attr('value')));
-                    }
+                    $(this).prop('checked', false);
+                    $(this).val(parseInt(val) * count + index);
                 });
+
+                ledArray = [];
                 writeFrame(ledArray);
                 outputLedArray(ledArray);
             });
         });
 
         function outputLedArray(ledArray) {
-            $('#activeLeds').text(' - Active LEDs: ' + ledArray);
+            $('#activeLeds').text('Active LEDs: ' + ledArray);
         }
 
 		// Set pixels to a given color
@@ -145,17 +182,30 @@
 
         // Put some connection status text in the corner of the screen
         $('#connectionStatus').text('Connecting to fcserver...');
-        socket.onclose = function(event) { $('#connectionStatus').text('Not connected to LED server'); }
-        socket.onopen = function(event) { $('#connectionStatus').text('Connected to LED server'); }
+        socket.onclose = function(event) { $('#connectionStatus').text('Not connected to LED server - '); }
+        socket.onopen = function(event) { $('#connectionStatus').text('Connected to LED server - '); }
 
     </script>
 </head>
 <body>
-    <div id="connectionStatus"></div>
-    <div id="activeLeds"></div>
+    <div style="width: 980px; margin: 0 auto;">
+        <div id="connectionStatus"></div>
+        <div id="activeLeds"></div>
     
-    <div id="wall">
-        <div class="panel"><label>Panel 1</label></div>
+        <div id="wall">
+            <div class="panel">
+                <select>
+                    <option value="0" selected="selected">Panel 1</option>
+                    <option value="1">Panel 3</option>
+                    <option value="2">Panel 4</option>
+                    <option value="3">Panel 5</option>
+                    <option value="4">Panel 6</option>
+                </select>
+            </div>
+        </div>
+
+        <h4>How to use this tool</h4>
+        <p>This tool allows you to more easily map the LEDs for an individual's name to their respective place on the wall. Begin by identifying the panel from the dropdown, then check the boxes on and off for each LED you'd like to light up. As you turn LEDs on and off on the wall, the number of the LEDs will be updated above to allow you to copy/paste directly into the content management system for that individual benefactor's record.</p>
     </div>
 </body>
 </html>
