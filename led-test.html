@@ -84,14 +84,16 @@
 
         $(function() {
             var ledArray = [];
+            var strips = 29;
+            var ledsPerStrip = 60;
 
             $('.panel:not(.no-leds)').each(function( index ) {
-                for (i = 0; i < 29; i++) {
+                for (i = 0; i < strips; i++) {
                     $(this).append('<div class="panel-row"><div class="panel-row-label">Row ' + (i + 1) + ' </div></div>');
                 }
             });
             $('.panel-row').each(function( index ) {
-                for (i = 0; i < 60; i++) {
+                for (i = 0; i < ledsPerStrip; i++) {
                     $(this).append('<input type="checkbox" />');
                 }
             });
@@ -101,7 +103,13 @@
 
 
             $('input').on('change', function() {
-                ledArray.push(parseInt($(this).attr('value')));
+                ledArray = [];
+                $('input').each(function( index ) {
+                    if ($(this).is(':checked')) {
+                        ledArray.push(parseInt($(this).attr('value')));
+                    }
+                });
+
                 writeFrame(ledArray);
                 outputLedArray(ledArray);
             });
@@ -127,8 +135,6 @@
 
 		// Set pixels to a given color
 		function writeFrame(ledArray) {
-            var strips = 7;
-            var ledsPerStrip = 60;
 
     		var r = 0;
     		var g = 0;
