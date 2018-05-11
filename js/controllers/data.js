@@ -133,29 +133,17 @@ Data = (function() {
                 
 
 
-                // if (value.primary_img) {
-                //     $.getJSON("http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + value.primary_img, function(d) {
-                //         if (d.source_url) {
-                //             data["donors"][index]["primary_img"] = d.source_url;
-                //         }
-                //     });
-                // }
 
-                // if (value.video) {
-                //      $.getJSON("http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + value.video, function(d) {
-                //         if (d.source_url) {
-                //             data["donors"][index]["video"] = d.source_url;
-                //         }
-                //     });
-                // }
+                if (value.primary_img) {
+                    $.getJSON(mediaPath + value.primary_img, function(d) {
+                        if (d.source_url) {
+                            data["donors"][index]["primary_img"] = d.source_url;
+                        }
+                    });
+                }
 
-                // if (value.video_poster) {
-                //     $.getJSON("http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + value.video_poster, function(d) {
-                //         if (d.source_url) {
-                //             data["donors"][index]["video_poster"] = d.source_url;
-                //         }
-                //     }); 
-                // }
+                
+
 
                
                 if (arrayImgs.length != 0) {
@@ -165,7 +153,7 @@ Data = (function() {
                 		var newStr;
                 		str = arrayImgs[i];
                 		newStr = str.replace(/"([^"]+(?="))"/g, '$1');
-                		$.getJSON("http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + newStr, function(d) {
+                		$.getJSON(mediaPath + newStr, function(d) {
                             if (d.source_url) {
                                 newImgURL = d.source_url;
                                 galleryArray.push(newImgURL);
