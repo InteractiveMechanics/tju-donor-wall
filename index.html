@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="user-scalable=no,width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="user-scalable=no,width=device-width, initial-scale=1, maximum-scale=1" user-scalable=no>
 
     <title>Thomas Jefferson University Donor Wall</title>
 
@@ -16,6 +16,9 @@
     <link rel="stylesheet" type="text/css" href="js/lib/lightslider/dist/css/lightslider.css">
     <link rel="stylesheet" type="text/css" href="js/lib/bootstrap_select/css/bootstrap-select.min.css">
     <link rel="stylesheet" type="text/css" href="js/lib/keyboard/css/keyboard.min.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+
     <link href="./dist/css/main.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
@@ -25,6 +28,43 @@
 </head>
 <body>
     <main>
+
+        <!-- river template -->
+        <script id="river-template" type="text/x-jsrender">
+
+           
+                {{if giving_level == 10000}}
+                <div class="circle-wrapper">
+                    {{if primary_img}}
+                    <div data-id="{{:ID}}" class="circle donor large" style="background-image: linear-gradient(rgba(46, 57, 86, 0.58) 0%,rgba(61, 73, 107, 0.51) 49.2%,rgba(76, 90, 129, 0.7) 100%), url('{{:primary_img}}');">
+                    {{else}}
+                      <div data-id="{{:ID}}" class="circle donor large large-no-img">
+                    {{/if}}
+
+                        <p>{{:first_name}} {{:middle}} {{:last_name}}{{if honorific}}, {{:honorific}}{{/if}}</p>
+                        <p>{{:education_0_graduation_year}}</p>
+                    </div>
+                </div>
+                {{else giving_level == 9999}}
+                <div class="circle-wrapper">
+                    <div data-id="{{:ID}}" class="circle donor sm">
+                        <p>{{:first_name}} {{:middle}} {{:last_name}}{{if honorific}}, {{:honorific}}{{/if}}</p>
+                        <p>{{:education_0_graduation_year}}</p>
+                    </div>
+                </div>
+                {{else}}
+                 <div class="circle-wrapper">
+                    <div data-id="{{:ID}}" class="circle give {{:bubble_type}}">
+                        <p>Would you like to see your name here?</p>
+                        <h4>Give Now</h4>
+                    </div> 
+                </div>
+                {{/if}}
+
+
+            
+        </script>
+
         <!-- donor panel template -->
         <script id="panel-template" type="text/x-jsrender">
             <article id="gallery-wrapper" class="hidden" data-donor={{:ID}}>
@@ -37,49 +77,67 @@
 
                     {{if galleryArray}}
                         {{for galleryArray}}
-
+                            
                             <div class="gallery-item" data-src="{{>}}"><img src="{{>}}"></div>
+                            
 
                         {{/for}}
                     {{/if}}
+
+                    {{if video}}
+                            <div class="gallery-item gallery-item-video" data-poster="{{:video_poster}}" data-html="#video2" ><img src="{{:video_poster}}"></div>
+                    {{/if}}
                 </section>
 
-                  <div style="display:none;" id="video2">
+                {{if video}}
+                    {{for video}}
+                <div style="display:none;" id="video2">
                     <video class="lg-video-object lg-html5" muted preload="none">
-                        <source src="assets/sample-images/leds.mp4" type="video/mp4">
-                    </video>
+                        <source src="{{>}}" type="video/mp4">
+                        </video>
                 </div>
+                {{/for}}
+                        
                 <div id="video-controls" class="hidden">
                     <button id="video-play" class="hidden"><img src="assets/icons/icon-video-play.svg"></button>
                     <button id="video-pause"><img src="assets/icons/icon-video-pause.svg"></button>
                     <button id="video-replay"><img src="assets/icons/icon-video-replay.svg"></button>
                 </div>
+                {{/if}}
+                   
             </article>
 
 
             <article>
-                <h1>{{:prefix}} {{:first_name}} {{:middle}} {{:last_name}} {{:suffix}} {{:honorific}}</h1>
+                <h1>{{:first_name}} {{:middle}} {{:last_name}}{{if suffix}} ,{{:suffix}}{{/if}}{{if honorific}}, {{:honorific}}{{/if}}</h1>
                 <section>
-                    {{if giving_amount}}
-                    <div>
-                        <h5>Giving Level</h5>
-                        <h2>${{:giving_amount}}</h2>
-                    </div>
-                    {{/if}}
 
                     {{if education_0_degree}}
                     <div>
-                        <h5>Degree</h5>
-                        <h2>{{:education_0_degree}}</h2>
+                    <h5>Degree</h5>
+                    {{/if}}
+
+                    
+                    {{for education}}
+                    <h2>{{:degree}}</h2>
+                    {{/for}}
+                   
+
+                    {{if education_0_degree}}
                     </div>
                     {{/if}}
 
-                    {{if education_0_graduation_year}}
+                    
+
+                    {{if education}}
                     <div>
                         <h5>College, Graduation Year</h5>
-                        <h2>{{if education_0_college}} {{:education_0_college}}, {{/if}} {{:education_0_graduation_year}}</h2>
+                        {{for education}}
+                        <h2>{{if college.length}} {{:college}},{{/if}} {{:graduation_year}}</h2>
+                        {{/for}}
                     </div>
                     {{/if}}
+
                 </section>
 
                {{if rels && rels.length}}
@@ -139,7 +197,12 @@
 
 
 
-        <div id="instructions"></div>
+        <div id="instructions-wrapper">
+            <div id="instructions"></div>
+            <div id="instructions-text" class="hidden animated">
+                <h3>Swipe left and right</br> to view more benefactors</h3>
+            </div>
+        </div>
         
         <div id="river">
         <!-- <div class="circle donor large" style="background-color: rgba(0,0,0, 0.5); background-image: url('assets/sample-images/sample-thumbnail@2x.jpg');">
@@ -160,33 +223,42 @@
 
         <div id="right-panel" class="hidden">
             <article id="search" class="hidden">
-                 <h1>Search all donors</h1>
+                 <h1>Search All Benefactors</h1>
                  <form class="flex-container">
                     <div class="form-wrapper">
                         <div class="form-group">
                             <label for="donor-name">Name</label>
-                            <input type="text" class="form-control" id="donor-name" placeholder="All donors">
+                            <input type="text" class="form-control" id="donor-name" placeholder="e.g. James or Smith">
                         </div>
 
                          <div class="form-group donor-year-wrapper">
-                            <label for="donor-year">Years</label>
-                            <input type="text" class="form-control" id="donor-year" placeholder="1910">
-                            <input type="text" class="form-control" id="donor-year-max" placeholder="2010">
+                            <label for="donor-year">Graduation Year(s)</label>
+                            <div class="year-input-wrapper">
+                                <input type="text" class="form-control" id="donor-year" placeholder="1910">
+                                <input type="text" class="form-control" id="donor-year-max" placeholder="2010">
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="donor-colleges">Colleges</label>
+                            <label for="donor-colleges">College</label>
                             <select class="selectpicker" id="donor-colleges">
                                 <option>All Colleges</option>
                                 <option>Sidney Kimmel Medical College</option>
-                                <option>Kanbar College of Design Engineering and Commerce</option>
+                                <option>Jefferson Medical College</option>
+                                <option>Jefferson College of Biomedical Sciences</option>
+                                <option>Jefferson College of Health Professions</option>
+                                <option>Jefferson College of Population Health</option>
+                                <option>Jefferson College of Allied Health Sciences</option>
+                                <option>Jefferson College of Graduate Studies</option>
+                                <option>Jefferson College of Nursing</option>
+                                <option>Jefferson Medical College Hospital School of Nursing</option>
+                                <option>Thomas Jefferson University Hospital</option>
                                 <option>College of Architecture and the Built Environment</option>
-                                <option>College of Biomedical Sciences</option>
-                                <option>College of Health Professions</option>
-                                <option>College of Nursing</option>
-                                <option>College of Pharmacy</option>
-                                <option>College of Population Health</option>
+                                <option>Jefferson College of Pharmacy</option>
                                 <option>College of Science, Health and the Liberal Arts</option>
+                                <option>Kanbar College of Design, Engineering and Commerce</option>
+                                <option>School of Continuing and Professional Studies</opition>
+                                <option>Institute of Emerging Health Professions</option>
                             </select>
                         </div>
 
@@ -197,7 +269,9 @@
 
                     <div class="form-group">
                         <input class="btn btn-primary" id="reset" type="reset" value="Reset">
-                        <input class="btn btn-primary" id="submit" type="submit" value="Submit">
+                        <button class="btn btn-primary" id="submit" type="submit" value="Search">
+                            Submit <img src="assets/icons/icon-right-arrow.svg">
+                        </button>
                     </div>
 
 
@@ -222,19 +296,7 @@
         </div>
         <div class="all-donors-wrapper hidden">
             <button id="all-donors-btn" class="btn btn-link">
-                <img src="assets/icons/icon-back.svg" alt="right arrow">
-                <h4>Back to All Donors</h4>
-            </button>
-        </div>
-        <div class="search-btn-wrapper">
-            
-            <button class="btn btn-link" id="search-btn">
-                <img src="assets/icons/icon-search.svg" alt="search">
-                <h4>Search Donors</h4>
-            </button>
-            
-            <button class="btn btn-link" id="search-close">
-                <svg version="1.1"
+                 <svg version="1.1"
                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
                      x="0px" y="0px" width="31.7px" height="31.7px" viewBox="0 0 31.7 31.7" style="enable-background:new 0 0 31.7 31.7;"
                      xml:space="preserve">
@@ -258,6 +320,70 @@
                 <h4>Close</h4>
             </button>
         </div>
+
+        <div class="search-btns-container">
+            <div class="reset-search-wrapper hidden">
+                <button id="reset-search-btn" class="btn btn-link">
+                     <svg id="myreset" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+                         x="0px" y="0px" width="31.7px" height="31.7px" viewBox="0 0 31.7 31.7" style="enable-background:new 0 0 31.7 31.7;"
+                         xml:space="preserve">
+                    <style type="text/css">
+                        .st0{fill:#569BCA;}
+                        .st1{fill:#FFFFFF;}
+                    </style>
+                    <defs>
+                    </defs>
+                    <g>
+                        <g>
+                            <g>
+                                <path class="st0" d="M15.9,0L15.9,0C7.1,0,0,7.1,0,15.9v0c0,8.8,7.1,15.9,15.9,15.9h0c8.8,0,15.9-7.1,15.9-15.9v0
+                                    C31.7,7.1,24.6,0,15.9,0z"/>
+                            </g>
+                            <polygon class="st1" points="21.8,19.9 17.9,16 17.4,15.6 17.9,15.1 21.8,11.2 20.2,9.6 16.3,13.5 15.9,14 15.4,13.5 11.5,9.6 
+                                10,11.2 13.9,15.1 14.3,15.6 13.9,16 10,19.9 11.5,21.5 15.4,17.6 15.9,17.1 16.3,17.6 20.2,21.5       "/>
+                        </g>
+                    </g>
+                    </svg>
+                    <h4 id="text-to-split-reset">Show All Benefactors</h4>
+                </button>
+            </div>
+
+
+            <div class="search-btn-wrapper">
+                
+                <button class="btn btn-link" id="search-btn">
+                    <img id="mysearch" src="assets/icons/icon-search.svg" alt="search">
+                    <h4 id="text-to-split">Search Benefactors</h4>
+                </button>
+
+                
+                <button class="btn btn-link" id="search-close">
+                    <svg version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+                         x="0px" y="0px" width="31.7px" height="31.7px" viewBox="0 0 31.7 31.7" style="enable-background:new 0 0 31.7 31.7;"
+                         xml:space="preserve">
+                    <style type="text/css">
+                        .st0{fill:#569BCA;}
+                        .st1{fill:#FFFFFF;}
+                    </style>
+                    <defs>
+                    </defs>
+                    <g>
+                        <g>
+                            <g>
+                                <path class="st0" d="M15.9,0L15.9,0C7.1,0,0,7.1,0,15.9v0c0,8.8,7.1,15.9,15.9,15.9h0c8.8,0,15.9-7.1,15.9-15.9v0
+                                    C31.7,7.1,24.6,0,15.9,0z"/>
+                            </g>
+                            <polygon class="st1" points="21.8,19.9 17.9,16 17.4,15.6 17.9,15.1 21.8,11.2 20.2,9.6 16.3,13.5 15.9,14 15.4,13.5 11.5,9.6 
+                                10,11.2 13.9,15.1 14.3,15.6 13.9,16 10,19.9 11.5,21.5 15.4,17.6 15.9,17.1 16.3,17.6 20.2,21.5       "/>
+                        </g>
+                    </g>
+                    </svg>
+                    <h4>Close</h4>
+                </button>
+            </div>
+        </div>
     </footer>
 
 
@@ -265,8 +391,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="https://unpkg.com/popper.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="js/lib/slick/slick.min.js"></script>
+    <!--<script src="js/lib/slick/slick.js"></script> replaced by flickity --> 
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
     <script src="js/lib/keyboard/js/jquery.keyboard.min.js"></script>
+    <script src="js/lib/keyboard/js/jquery.keyboard.extension-typing.min.js"></script>
     <script src="js/lib/lightGallery/src/js/lightgallery.js"></script>
     <script src="js/lib/lightslider/dist/js/lightslider.min.js"></script>
     <script src="js/lib/lg-video/lg-video.js"></script>
@@ -276,6 +404,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/utils/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/plugins/CSSPlugin.min.js"></script>
+    <script src="js/lib/SplitText.js"></script>
+    <script src="js/lib/ThrowPropsPlugin.min.js"></script>
     <script src="js/lib/lottie.js"></script>
     <script src="js/lib/bootstrap_select/js/bootstrap-select.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -286,14 +416,12 @@
     <script src="js/controllers/animation.js"></script>
     <script src="js/controllers/search.js"></script>
     <script src="js/controllers/data.js"></script>
+    <script src="js/controllers/leds.js"></script>
     <script src="js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
 
-     <script>
-        var jsonData = 'http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/rest-routes/v2/donors';
-        var givingData = 'http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/rest-routes/v2/giving';
-    </script>
-   
+    <script src="variables.js"></script> 
+  
 
 </body>
 </html>

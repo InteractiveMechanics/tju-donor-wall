@@ -17,44 +17,17 @@ Panel = (function() {
         }
     }
 
-    var myCenterMode = function() {
-        if ($(".slider .slick-slide").length > 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    var mySlidesToShow = function() {
-        var numToShow;
-        if ($('.slick-slide').length > 1) {
-            numToShow = 2;
-        } else {
-            numToShow = 1;
-        }
-        return numToShow
-    }
-
-    var sliderNav = $('.slider-nav');
-    var maxItems = 2;
-    var myCenterMode = true;
-    if(sliderNav.children('div').length < 3) {
-        maxItems = 1;
-        myCenterMode = false;
-    }
-
-  
-
-
 
 
     var enableRelSlider = function() {
-        $('#relationships').slick({
-            dots: false,
-            arrows: false,
-            centerMode: myCenterMode,
-            slidesToShow: maxItems
-        })
+
+        $('#relationships').flickity({
+          // options
+          cellAlign: 'left',
+          contain: true,
+          pageDots: false,
+          prevNextButtons: false
+        });
     }
 
 
@@ -79,11 +52,11 @@ Panel = (function() {
             var relId = newRelsArray[i];
             var originalId = getRelsArray[i];
             if (data.donors[relId].giving_level == 10000 && data.donors[relId].primary_img) {
-                $('#relationships').append(' <div class="circle rel donor large" data-donor="'+ relId + '" data-id="'+ originalId + '" style="background-color: rgba(0,0,0, 0.5); background-image: url('+ data.donors[relId].primary_img + ');"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
+                $('#relationships').append(' <div class="circle rel donor large" data-donor="'+ relId + '" data-id="'+ originalId + '" style="width: 155px; background-image: linear-gradient(rgba(46, 57, 86, 0.58) 0%,rgba(61, 73, 107, 0.51) 49.2%,rgba(76, 90, 129, 0.7) 100%), url('+ data.donors[relId].primary_img + ');"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
             } else if (data.donors[relId].givinglevel == 10000)  {
-                 $('#relationships').append(' <div class="circle rel donor large" data-donor="'+ relId + '" data-id="'+ originalId + '"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
+                 $('#relationships').append(' <div class="circle rel donor large" data-donor="'+ relId + '" data-id="'+ originalId + '" style="width: 155px;"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
             } else {
-                $('#relationships').append(' <div class="circle rel donor"  data-donor="'+ relId + '" data-id="'+ originalId + '"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
+                $('#relationships').append(' <div class="circle rel donor"  data-donor="'+ relId + '" data-id="'+ originalId + '" style="width: 155px;"><p>' + data.donors[relId].first_name + ' ' + data.donors[relId].last_name + '</p><p>' + data.donors[relId].education_0_graduation_year + '</p>');
             }
         }
 
@@ -99,11 +72,12 @@ Panel = (function() {
 
        
         if (active) {
-
-            $('#gallery-lg').append(active + '<div class="zoom" data-id=' + id + '><img src="assets/icons/icon-zoom.svg"></div>');
+            $('#gallery-lg').html('');
+            $('#gallery-lg').append(active + '<div class="zoom" data-id=' + id + '><img src="assets/icons/icon-zoom.svg"><h3>View Larger</h3></div>');
+            
 
         } else {
-            $( ".gallery-item" ).first().addClass('active');
+           $( ".gallery-item" ).first().addClass('active');
             enableGallery();
         }
 
@@ -121,11 +95,13 @@ Panel = (function() {
             });
         });
 
-        var $this = $(this);
-        $('#gallery-lg').html('');
-        $('.gallery-item').removeClass('active');
-        $this.addClass('active');
-        enableGallery();  
+            var $this = $(this);
+            $('#gallery-lg').html('');
+            $('.gallery-item').removeClass('active');
+            $this.addClass('active');
+            enableGallery(); 
+
+    
     }
 
     
@@ -135,7 +111,7 @@ Panel = (function() {
         
         var FeatureImgUrl;
 
-        if (panelData[0].primary_img){
+        if (panelData[0].primary_img.length != 0){
                 var primaryImgID = data[id].primary_img;
                 console.log(data[id].primary_img);
                 $.getJSON("http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + primaryImgID, function(d) {
@@ -152,16 +128,22 @@ Panel = (function() {
         
     }
 
-
     
-    //$("#panel").html($.templates("#panel-template").render(data.donors[id]));
-    var openPanel = function(event) {
-        var id = $(this).attr('data-id');
+
+    var openPanel = function(id) {
+        //var id = $(this).attr('data-id');
 
         console.log(id);
 
         var panelData = JSON.search(data, '//*[ID=' + id + ']');
         console.log(panelData);
+        if (panelData[0].ledstodisplay) {
+            donorLeds = panelData[0].ledstodisplay;
+            //console.log(donorLeds);
+            Leds.resetLeds();
+            //Leds.writeFrame(donorLeds);
+            Leds.checkLedArray(donorLeds);
+        }
 
         //River.tweenRiverMain.pause();
         $('#panel').html('');
@@ -170,10 +152,12 @@ Panel = (function() {
         $('.all-donors-wrapper').removeClass('hidden').addClass('animated fadeIn flex-container');
         getRels(id);
         enableRelSlider();
+        //$("#relationships").slick("refresh");
+
 
         //console.log(getFeatImgURL(id));
         setTimeout(function() { enableGallery(id); }, 1000);
-        if (panelData[0].giving_level == 10000) {
+        if (panelData[0].giving_level == 10000 && panelData[0].primary_img.length != 0) {
             $('#gallery-wrapper').removeClass('hidden');
             $('#close').css('width', 'calc(100vw - 1300px');
         }  else {
@@ -190,11 +174,18 @@ Panel = (function() {
 
 
     var openGive = function() {
-        var id = $(this).attr('data-donor');
+        id = $(this).attr('data-id');
+        var idType = typeof(id);
+        if (idType != "string") {
+            var panelData = JSON.search(data, '//*[ID=' + id + ']');
+            $("#give-panel").html($.templates("#give-template").render(panelData));
+        } else {
+            $("#give-panel").html($.templates("#give-template").render(data.donors[10]))
+        }
+     
         $('#right-panel').removeClass('hidden fadeOutRight').addClass('animated slideInRight flex-container'); 
         $('#search').addClass('hidden'); 
         $('#give-panel').removeClass('hidden');
-        $("#give-panel").html($.templates("#give-template").render(data.donors[id]));
         $('#search-btn').addClass('animated fadeOut');
 
         setTimeout(function(){ $('#search-close').addClass('animated fadeIn').removeClass('fadeOut').css('display', 'flex'); }, 750);
@@ -206,21 +197,44 @@ Panel = (function() {
     
     var closePanel = function() {
         //River.tweenRiverMain.resume();
-        $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
-        $('#close').removeClass('fadeIn').addClass('hidden');
-        $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
-        $('#gallery-wrapper').addClass('hidden');
+            $('.donor').removeClass('animated pulse active-bubble');
+            Leds.resetLeds(); 
+            $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
+            $('#close').removeClass('fadeIn').addClass('hidden');
+            $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
+            $('#gallery-wrapper').addClass('hidden');
+            Leds.writeFrame([]);
+        
+    }
 
+    var resetPanel = function() {
+       $('#reset').removeClass('active-reset');
+        $('#all-donors-btn').addClass('animated pulse active-all-donors');
+
+        setTimeout(function() {
+            $('.donor').removeClass('animated pulse active-bubble');
+            Leds.resetLeds(); 
+            $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
+            $('#close').removeClass('fadeIn').addClass('hidden');
+            $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
+            $('#gallery-wrapper').addClass('hidden');
+            Leds.writeFrame([]);
+        }, 1250); 
     }
 
 
-    var createLightGallery = function() {
-        var id = $(this).attr('data-id');
+    var createLightGallery = function(id) {
+        //var id = $(this).attr('data-id');
+        $('.zoom').removeClass('zoom-active animated tada');
         var panelData = JSON.search(data, '//*[ID=' + id + ']');
        
         var lgArray = [];
         var imgArray = panelData[0].galleryArray;
         var primaryImgLg = panelData[0].primary_img;
+        var myVideoLg = panelData[0].video;
+        console.log(myVideoLg);
+        var videoPoster = panelData[0].video_poster;
+        var myVideoOb = {};
 
         if (primaryImgLg.length != 0) {
             var primaryImgOb = {};
@@ -229,8 +243,7 @@ Panel = (function() {
             lgArray.push(primaryImgOb);
         }
 
-
-
+        
         for (i = 0; i < imgArray.length; i ++) {
             var fileName = panelData[0].galleryArray[i];
             var fileExtension = fileName.split('.').pop();
@@ -238,15 +251,18 @@ Panel = (function() {
                 var lgImg = {};
                 lgImg.src = fileName;
                 lgImg.thumb = fileName;
+                lgImg.type = "image";
                 lgArray.push(lgImg);
-            } else {
-                var lgVid = {};
-                lgVid.html = '#video2';
-                lgVid.thumb = fileName;
-                lgVid.post = fileName;
-                lgArray.push(lgVid);
-            }
+            } 
 
+        }
+
+         if (myVideoLg) {
+            //myVideoOb.html = "#html2";
+            myVideoOb.html = '<video class="lg-video-object lg-html5" preload="none"><source src="' + myVideoLg  + '" type="video/mp4">Your browser does not support HTML5 video</video>';
+            myVideoOb.poster = videoPoster;
+            myVideoOb.thumb = videoPoster;
+            lgArray.push(myVideoOb);
         }
         
         console.log(lgArray);
@@ -271,6 +287,7 @@ Panel = (function() {
             dynamicEl: lgArray,
             download: false,
             counter: false,
+            hideBarsDelay: 90000,
             autoplayFirstVideo: false,
             index: myIndex
 
@@ -281,6 +298,12 @@ Panel = (function() {
        //$('.zoom').data('lightGallery').slide(index);
 
 
+    }
+
+    var animateZoom = function() {
+        var id = $(this).attr('data-id');
+        $('.zoom').addClass('zoom-active ');
+        setTimeout(function() { createLightGallery(id) }, 1250);
     }
 
 
@@ -335,12 +358,12 @@ Panel = (function() {
       
     }
     
-    var testing = function() {
+    var toggleVideoBtns = function() {
         var myTarget = event.target;
         var myTargetClass = $(event.target).attr('class');
         var myTargetId = $(event.target).attr('id');
-        //console.log(myTarget);
-        //console.log(myTargetId);
+        console.log(myTarget);
+        console.log(myTargetId);
         if (myTargetClass != 'lg-img-wrap' && myTargetId != 'video-replay') {
             if ( !checkForVideoButtons() ) {
                 $('.lg-video-cont').append('<div class="video-buttons"><button id="video-pause"></button><button id="video-play" class="hidden"></button></button><button id="video-replay"></button></div>');
@@ -369,6 +392,7 @@ Panel = (function() {
     }
 
     var removeVideoButtons = function() {
+        console.log('removeVideoButtons');
         $('.video-buttons').remove();
     }
 
@@ -390,20 +414,28 @@ Panel = (function() {
     var openTheClose = function() {
         $('#close').removeClass('hidden').addClass('animated fadeIn');
     }
+
+    var animateBubble = function() {
+        $(this).addClass('animated pulse active-bubble');
+        $('#all-donors-btn').removeClass('animated pulse active-all-donors');
+        var id = $(this).attr('data-id');
+        setTimeout(function() {  openPanel(id); }, 1500);
+    }
     
     
 
 
     var bindEvents = function() {
        $(document).on('click tap', '#close', closePanel);
-       $(document).on('click tap', '.give[data-donor]', openGive);
-       $(document).on('click tap', '.zoom[data-id]', createLightGallery);
-       $(document).on('onSlideClick.lg', testing);
+       $(document).on('click tap', '.give', openGive);
+       $(document).on('click tap', '.zoom[data-id]', animateZoom);
+       $(document).on('onSlideClick.lg', toggleVideoBtns);
        $(document).on('onBeforeSlide.lg', removeVideoButtons);
-       $(document).on('click tap', '.donor[data-id]', openPanel);
+       $(document).on('click tap', '.donor[data-id]', animateBubble);
        $(document).on('click tap', '.gallery-item', featureImg);
-       $(document).on('click tap', '#all-donors-btn', closePanel);
+       $(document).on('click tap', '#all-donors-btn', resetPanel);
        $(document).on('click tap', '.slick-slide[data-id]', openPanel);
+       $(document).on('swipe', '#relationships', Utilities.resetTimeout);
    }
 
 

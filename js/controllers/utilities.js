@@ -1,6 +1,6 @@
 Utilities = (function() {
 	var timeout = [];
-	var duration = 90000; //90000
+	var duration = 150000; //90000
     var longduration = 1800000;
     var myInterval;
 
@@ -17,7 +17,8 @@ Utilities = (function() {
         }
         timeout.push(setTimeout(resetInteractive, duration));
         //timeout.push(setTimeout(resetBrowser, longduration));
-        $('#instructions').html('');
+        $('#instructions-wrapper').html('');
+        $('#instruction-text').addClass('fadeOut hidden');
         clearInterval(myInterval);
     }
 
@@ -25,10 +26,16 @@ Utilities = (function() {
     	Panel.closePanel();
     	Search.closeSearch();
         River.resetRiver();
-        //$('#river').css('left', 'initial');
+        if ($('.zoom').data('lightGallery')) {
+            $('.zoom').data('lightGallery').destroy();
+        }
         $('#river').animate({left: "0"}, "swing");
+
     	//Animation.myAnimation();
-    	myInterval = setInterval(function(){ Animation.myAnimation(); }, 23000);
+    	myInterval = setInterval(function(){ 
+            Animation.myAnimation(); 
+            $('#instructions-text').removeClass('hidden fadeOut').addClass('fadeIn');
+        }, 23000);
     	
     }
 
@@ -38,17 +45,28 @@ Utilities = (function() {
         location.reload();
     }
 
+    var disableZoom = function(e) {
+        e.preventDefault();
+    }
 
+
+
+
+    //callBack functions that call resetTimeout on each keyboard change in the search keyboards are in search.js
+    //callback function that calls resetTimeout on the start of each drag of the river is in river.js
+    //event that calls resetTimeout on each swipe of relationship slider is in panel.js
     var bindEvents = function() {
-         $(document).on('click tap drag swipeleft swiperight', resetTimeout);
+         $(document).on('click tap drag', resetTimeout); 
          $(document).ready(resetInteractive);
+        
     }
 
 
 
 
   	return {
-        init: init
+        init: init,
+        resetTimeout: resetTimeout
     }
 
 })();

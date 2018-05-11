@@ -1,9 +1,5 @@
 Search = (function() {
 
-    // per keyboard demo
-    var availableTags = ["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure",
-    "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript",
-    "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme" ];
 
 	 var init = function() {
         bindEvents();
@@ -25,16 +21,19 @@ Search = (function() {
 
     var openKeyboard = function() {
         $('#donor-name')
+            .bind('keyboardChange', function (e, keyboard, el) {
+                Utilities.resetTimeout();
+            })
             .keyboard({ 
                 layout: 'custom',
+                autoAccept : true,
                 usePreview: false,
                 customLayout: {
                     'normal': [
-                        '1 2 3 4 5 6 7 8 9 0 {b}',
-                        'Q W E R T Y U I O P',
+                        'Q W E R T Y U I O P {b}',
                         'A S D F G H J K L {accept:Accept}',
                         'Z X C V B N M , . \'',
-                        '{accept:Accept} {space} {left} {right} {undo:Undo} {redo:Redo} -'
+                        '{space} {left} {right} {undo:Undo} {redo:Redo} -'
                     ]
                 },
                 display: {
@@ -44,15 +43,17 @@ Search = (function() {
                     'space' : 'SPACE'
 
                 }
-            })
-
-            .addTyping();
+            });
     }
 
     var openYearKeyboard = function() {
         $('#donor-year')
+        .bind('keyboardChange', function (e, keyboard, el) {
+                Utilities.resetTimeout();
+        })
         .keyboard({
             layout : 'custom',
+            usePreview: false,
             restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
             preventPaste : true,  // prevent ctrl-v and right click
             autoAccept : true,
@@ -75,8 +76,12 @@ Search = (function() {
 
     var openYearMaxKeyboard = function() {
         $('#donor-year-max')
+        .bind('keyboardChange', function (e, keyboard, el) {
+                Utilities.resetTimeout();
+        })
         .keyboard({
             layout : 'custom',
+            usePreview: false,
             restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
             preventPaste : true,  // prevent ctrl-v and right click
             autoAccept : true,
@@ -94,45 +99,72 @@ Search = (function() {
                 'accept' : 'DONE'
             }
 
-        })
-        .addTyping();
+        });
     }
 
 
     var resetSelect = function() {
-        River.resetRiver();
-        Data.resetData();
-        $("#donor-colleges").val('default');
-        $("#donor-colleges").selectpicker("refresh");
-        $('#search-er').addClass('fadeOut hidden').removeClass('fadeIn flex-container');
-        closeSearch();
-
+        $('#reset').addClass('active-reset');
+        setTimeout(function() {
+            River.resetRiver();
+            Data.resetData();
+            $("#donor-colleges").val('default');
+            $("#donor-colleges").selectpicker("refresh");
+            $('#search-er').addClass('fadeOut hidden').removeClass('fadeIn flex-container');
+            closeSearch();
+        }, 1250);
     }
 
-    
+    var closeKeyboards = function() {
+        var donorYearKeyboard = $('#donor-year').keyboard().getkeyboard();
+        donorYearKeyboard.destroy();
+
+        var donorYearMaxKeyboard = $('#donor-year-max').keyboard().getkeyboard();
+        donorYearMaxKeyboard.destroy();
+
+        var donorNameKeyboard = $('#donor-name').keyboard().getkeyboard();
+        donorNameKeyboard.destroy();
+    }
+
+
+   
 
 
     var closeSearch = function() {
-        $('#right-panel').removeClass('slideInRight').addClass('fadeOutRight');
-        //River.tweenRiverMain.resume();
-        //$('#search').removeClass('fadeIn').addClass('hidden fadeOutRight');
-        setTimeout(function(){ $('#search').addClass('hidden'); }, 750);
-        setTimeout(function(){ $('#give-panel').addClass('hidden');}, 750);
-        $('#search-btn').removeClass('fadeOut').addClass('fadeIn');
-        $('#search-close').removeClass('fadeIn').addClass('fadeOut').css('display', 'none');
-        $('#search-er').addClass('hidden');
+            $('#right-panel').removeClass('slideInRight').addClass('fadeOutRight');
+            setTimeout(function(){ $('#search').addClass('hidden'); }, 750);
+            setTimeout(function(){ $('#give-panel').addClass('hidden');}, 750);
+            $('#search-btn').removeClass('fadeOut').addClass('fadeIn');
+            $('#search-close').removeClass('fadeIn pulse active-search-close').addClass('fadeOut').css('display', 'none');
+            $('#search-er').addClass('hidden');
+            closeKeyboards();
     }
+
+    var resetSearch = function() {
+         $('#search-close').addClass('pulse active-search-close');
+         setTimeout(function() { closeSearch(); }, 1250)
+    }
+
+    // var animateSearch = function(event) {
+    //     event.preventDefault();
+    //     $('#submit').addClass('active-search');
+    //     setTimeout(function(){ River.getResults}, 1250);
+    // }
+
+   
 
 
 
     var bindEvents = function() {
     	$(document).on('click tap', '#search-btn', openSearch);
-        $(document).on('click tap', '#search-close', closeSearch);
-        $(document).on('click tap', '#donor-name', openKeyboard);
-        $(document).on('click tap', '#donor-year', openYearKeyboard);
-        $(document).on('click tap', '#donor-year-max', openYearMaxKeyboard);
+        $(document).on('click tap', '#search-close', resetSearch);
+        $(document).on('focus', '#donor-name', openKeyboard);
+        $(document).on('focus', '#donor-year', openYearKeyboard);
+        $(document).on('focus', '#donor-year-max', openYearMaxKeyboard);
         $(document).on('click tap', '#reset', resetSelect);
+        $(document).on('click tap', '#reset-search-btn', River.resetRiver);
         $(document).on('submit', River.getResults);
+        $(document).ready(testingKeyboard);
     }
 
 
