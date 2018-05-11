@@ -1,3 +1,56 @@
+@font-face {
+  font-family: 'MuseoSans-100';
+  src: url('../../assets/fonts/MuseoSans-100.otf');
+}
+
+@font-face {
+  font-family: 'MuseoSans-100Italic';
+  src: url('../../assets/fonts/MuseoSans-100Italic.otf');
+}
+
+@font-face {
+  font-family: 'MuseoSans-300';
+  src: url('../../assets/fonts/MuseoSans-300.otf');
+}
+
+@font-face {
+  font-family: 'MuseoSans-300Italic';
+  src: url('../../assets/fonts/MuseoSans-300Italic.otf');
+}
+
+@font-face {
+  font-family: 'MuseoSans-500';
+  src: url('../../assets/fonts/MuseoSans_500.otf');
+}
+
+@font-face {
+  font-family: 'MuseoSans-500Italic';
+  src: url('../../assets/fonts/MuseoSans_500Italic.otf');
+}
+
+@font-face {
+  font-family: 'MuseoSans-700';
+  src: url('../../assets/fonts/MuseoSans_700.otf');
+}
+
+@font-face {
+  font-family: 'MuseoSans-700Italic';
+  src: url('../../assets/fonts/MuseoSans-700Italic.otf');
+}
+
+@font-face {
+  font-family: 'MuseoSans-900';
+  src: url('../../assets/fonts/MuseoSans_900.otf');
+}
+
+@font-face {
+  font-family: 'MuseoSans-900Italic';
+  src: url('../../assets/fonts/MuseoSans-900Italic.otf');
+}
+
+
+
+
 @import "base/variables";
 @import "base/helpers";
 @import "base/typography";
@@ -6,5 +59,11 @@
 @import "components/layout";
 @import "components/header";
 @import "components/footer";
+@import "components/circles";
+@import "components/slider";
+@import "components/panel";
+@import "components/forms";
+@import "components/keyboard";
+@import "components/gallery";
 
 @import "pages/index";

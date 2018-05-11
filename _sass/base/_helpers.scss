@@ -18,9 +18,36 @@
   100%  { opacity: 1; } 
 }
 
+* {
+  user-select: none;
+}
+
+:focus {
+  outline: none;
+}
+
+
+
 .fade-in {
     -webkit-animation: fadeIn 1s 1 forwards;                // A sample helper that fades something in, nice for page animations onLoad
     -moz-animation: fadeIn 1s 1 forwards;
     -o-animation: fadeIn 1s 1 forwards;
     animation: fadeIn 1s 1 forwards; 
 }
+
+.hidden {
+  display: none;
+}
+
+.no-border {
+  border-bottom: none !important;
+}
+
+.r-margin {
+  margin-right: 45px;
+}
+
+.flex-container {
+  display: flex;
+}
+

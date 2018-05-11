@@ -1,0 +1,26 @@
+{"nodes":[
+		{
+		  "id": 1,
+		  "name":"Sheeja Abaham, MD",
+		  "headshot": "assets/sample-images/sample-thumbnail@2x.jpg", 
+		  "year":"1996",
+		  "giving": 10000
+		 },
+
+		 {
+		 "id": 2,	
+		 "name":"Samuel D. Gross, MD",
+		  "year":"1828",
+		  "giving": 5000
+		 },
+
+		 {
+		  "id": 3,	
+		  "name":"Meredith Grey, MD",
+		  "headshot": "assets/sample-images/sample-thumbnail@2x.jpg",
+		  "year":"2001",
+		  "giving": 10000
+
+		 }
+	]
+}
