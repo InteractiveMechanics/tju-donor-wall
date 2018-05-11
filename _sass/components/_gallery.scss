@@ -1,25 +1,27 @@
 .lg-backdrop.in {
-	opacity: 0.9 !important;
+	opacity: 0.75 !important;
 	z-index: 10040;
 }
 
 .lg-actions .lg-next {
-	right: 12%;
+	right:  5%;;
 	background-color: transparent;
 
 	&:before {
 		content: url('../../../assets/icons/icon-gallery-arrow-next.svg');
+		filter: drop-shadow(-1px 1px 8px rgba(0,0,0,0.56));
 	}
 
 
 }
 
 .lg-actions .lg-prev {
-	left: 12%;
+	left: 5%;
 	background-color: transparent;
 
 	&:after {
 		content: url('../../../assets/icons/icon-gallery-arrow-prev.svg');
+		filter: drop-shadow(-1px 1px 8px rgba(0,0,0,0.56));
 	}
 }
 
@@ -31,34 +33,47 @@
 .lg-outer .lg-video
 {
 	background-color: black;
-    top: 10%;
-    bottom: 10%;
-    left: 15%;
-    width: 70%;
-    height: 80%;
+    top: 7.5%;
+    bottom: 7.5%;
+    left: 7.5%;
+    width: 85%;
+    height: 85%;
 }
+
+.lg-outer .lg-video {
+	height: 100%;
+	top: 0%;
+}
+
 
 .lg-outer .lg-video-cont {
 	background-color: black;
-	left: 15%;
-	width: 70%;
+	left: 7.5%;
+	width: 85%;
+	height: 85%; //
 	max-width: initial !important;
 }
 
 
+.lg-outer .lg-image {
+	height: 100% !important;
+}
 
+.lg-outer .lg-video {
+	padding-bottom: initial;  //
+}
 
 .lg-toolbar {
 	background-color: transparent;
-    width: 70%;
-    left: 15%;
+    width: 85%;
+    left: 7.5%;
     top: 85%;
 }
 
 #video-pause {
 	position: relative;
-    left: -50%;
-    top: 43px;
+    left: -43%; //original: -50%
+    top: -120px;
     width: 80px;
     height: 87px;
     background: transparent;
@@ -78,8 +93,8 @@
 
 #video-play {
 	position: relative;
-    left: -50%;
-    top: 43px;
+    left: -43%; //original: -50%
+    top: -120px;
     width: 80px;
     height: 87px;
     background: transparent;
@@ -95,8 +110,8 @@
 
 #video-replay {
 	position: relative;
-    left: -49%;
-    top: 43px;
+    left: -42%;
+    top: -120px;
     width: 80px;
     height: 87px;
     background: transparent;
@@ -116,5 +131,6 @@
 .lg-toolbar .lg-close {
 	&:after {
 		content: url('../../../assets/icons/icon-gallery-close.svg');
+		filter: drop-shadow(-1px 1px 8px rgba(0,0,0,0.56));
 	}
 }

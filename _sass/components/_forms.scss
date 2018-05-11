@@ -1,7 +1,7 @@
 // includes inputs and buttons
 
 form {
-	padding: 0px 45px;
+	padding: 30px 45px;
 	flex-direction: column;
     justify-content: space-between;
     height: 100%;
@@ -11,7 +11,15 @@ form {
 
 label {
 	@extend h5;
-	display: block;
+	display: inline-block;
+}
+
+.form-group {
+	margin-bottom: 30px;
+}
+
+.form-control::-webkit-input-placeholder {
+  color: $light_grey;
 }
 
 #search {
@@ -20,12 +28,13 @@ label {
 		overflow: hidden;
 	}
 
-	input {
+	input, button {
 		height: 70px;
 
 		padding: 20px;
 
 		font-size: 24px;
+		text-align: left;
 
 		border-color: $light_grey;
 		border-radius: 0px;
@@ -37,21 +46,52 @@ label {
 		color: white;
 		background: $beige;
 		line-height: 1;
-		border-color: $beige; 
+		border-color: $beige;
+		transition: all 0.25s linear; 
 	}
 
-	input[type="submit"] {
+	button[type="submit"] {
+		position: relative;
+		z-index: 100;
 		width: calc(59% - 25px);
+		display: inline-flex;
+    	justify-content: space-between;
 		color: white; 
 		line-height: 1;
-		background: linear-gradient(to right, rgba(30,38,85,1) 43%,rgba(86,155,202,1) 100%); 
+		background: linear-gradient(to right, rgba(30,38,85,1) 43%,rgba(86,155,202,1) 100%);
+			&:before {
+			    border-radius: inherit;
+			    background-image: linear-gradient(to right, rgba(30,38,85,1) 43%,rgba(30,38,85,1) 100%);
+			    content: '';    
+			    display: block;
+			    height: 100%;
+			    position: absolute;
+			    top: 0; left: 0;
+			    opacity: 0;
+			    width: 100%;
+			    z-index: -100;
+			    transition: opacity 0.25s linear;
+	  	}
+
+		
 	}
+}
+
+
+button[type="submit"].active-search {
+	&:before {	
+		opacity: 1 !important;
+	}
+}
+
+input[type="reset"].active-reset {
+	background: darken( $beige, 30%) !important;
 }
 
 
 .donor-year-wrapper {
 	label {
-		display: block;
+		display: inline-block;
 	}
 
 	input {
@@ -147,6 +187,15 @@ https://github.com/silviomoreto/bootstrap-select/issues/1135
 	border-right: 8px solid transparent;
     border-bottom: 16px solid;
     border-left: 8px solid transparent;
+}
+
+
+.bootstrap-select.btn-group .dropdown-menu {
+	border-radius: 0px;
+}
+
+.bootstrap-select.btn-group .dropdown-menu.inner {
+	max-height: 259px !important;
 }
 
 #search-er {
