@@ -12,6 +12,7 @@ Data = (function() {
                 var galleryArray = [];
                 var relsArray = [];
                 var ledArray = [];
+                var ledString = "";
                 var rawRels;
                 var rawImgs;
                 var objRels;
@@ -74,8 +75,10 @@ Data = (function() {
                 }
 
                 if (value.acf.leds_to_display) {
-                    ledObject = value.acf.leds_to_display;
-                    arrayLeds = ledObject.map(function(a) {return a.led_num;});
+                    //ledObject = value.acf.leds_to_display;
+                    ledString = value.acf.leds_to_display;
+                    arrayLeds = ledString.split(',');
+                    //arrayLeds = ledObject.map(function(a) {return a.led_num;});
                 } else {
                     arrayLeds = [];
                 }
@@ -125,7 +128,7 @@ Data = (function() {
                 dataToAdd["panel_text"] = '';
                 dataToAdd["panel_phone"] = '';
                 dataToAdd["panel_email"] = '';
-                dataToAdd["ledstodisplay"] = ledArray; 
+                dataToAdd["ledstodisplay"] = ledArray; //ledArray
 
         
                 data["donors"].push(dataToAdd);
