@@ -81,12 +81,11 @@
     </style>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript">
+        var ledArray = [];
+        var strips = 32;
+        var ledsPerStrip = 60;
 
         $(function() {
-            var ledArray = [];
-            var strips = 29;
-            var ledsPerStrip = 60;
-
             $('.panel:not(.no-leds)').each(function( index ) {
                 for (i = 0; i < strips; i++) {
                     $(this).append('<div class="panel-row"><div class="panel-row-label">Row ' + (i + 1) + ' </div></div>');
