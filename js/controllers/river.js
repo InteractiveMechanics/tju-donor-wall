@@ -96,7 +96,7 @@ River = (function() {
         var donorYear = $('#donor-year').val();
         var donorYearMax = $('#donor-year-max').val();
         var donorCollege = $("#donor-colleges").find("option:selected").val(); 
-        console.log("donor name: " + donorName + " donor year: " + donorYear + " donor year max: " + donorYearMax + " donor college: " + donorCollege);
+        //console.log("donor name: " + donorName + " donor year: " + donorYear + " donor year max: " + donorYearMax + " donor college: " + donorCollege);
 
         if (donorName.length) {
             name = '[contains(legacy_name, "' +  donorName + '") or contains(last_name, "' +  donorName + '") or contains(first_name, "' +  donorName + '")] ';
@@ -160,7 +160,7 @@ River = (function() {
                 loadData(results);
                 var updatedLedsToDisplay = getUpdatedLedsToDisplay(results);
                 Leds.checkLedArray(updatedLedsToDisplay);
-                console.log(updatedLedsToDisplay);
+                //console.log(updatedLedsToDisplay);
 
                 tweenRiverMain.kill();
                 tweenRiverMain = new TweenMax.to("#river", 0, {x: 0, ease: Power1.easeInOut, yoyo: true, repeat: -1});
@@ -188,7 +188,7 @@ River = (function() {
                
             } 
         }
-        console.log('ledstodisplay: ' + donorLeds);
+        //console.log('ledstodisplay: ' + donorLeds);
         return donorLeds;
     }
 

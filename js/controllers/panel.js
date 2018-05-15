@@ -37,7 +37,7 @@ Panel = (function() {
         
 
         var getRelsArray = panelData[0].rels;
-        console.log(getRelsArray);
+        //console.log(getRelsArray);
         var newRelsArray = [];
         if (getRelsArray.length != 0) {
             for (i = 0; i < getRelsArray.length; i++) {
@@ -113,7 +113,7 @@ Panel = (function() {
 
         if (panelData[0].primary_img.length != 0){
                 var primaryImgID = data[id].primary_img;
-                console.log(data[id].primary_img);
+                //console.log(data[id].primary_img);
                 $.getJSON("http://dev.interactivemechanics.com/tju-donor-wall-cms/index.php/wp-json/wp/v2/media/" + primaryImgID, function(d) {
                     if (d.source_url) {
                         // console.log(index, d.source_url, value.post_title);
@@ -136,7 +136,7 @@ Panel = (function() {
         Leds.isPaused = true;
 
         var panelData = JSON.search(data, '//*[ID=' + id + ']');
-        console.log(panelData);
+        //console.log(panelData);
         if (panelData[0].ledstodisplay) {
             donorLeds = panelData[0].ledstodisplay;
             Leds.resetLeds();
@@ -237,7 +237,7 @@ Panel = (function() {
         var imgArray = panelData[0].galleryArray;
         var primaryImgLg = panelData[0].primary_img;
         var myVideoLg = panelData[0].video;
-        console.log(myVideoLg);
+        //console.log(myVideoLg);
         var videoPoster = panelData[0].video_poster;
         var myVideoOb = {};
 
@@ -270,7 +270,7 @@ Panel = (function() {
             lgArray.push(myVideoOb);
         }
         
-        console.log(lgArray);
+        //console.log(lgArray);
 
 
         var activeItem = $('.active').attr('data-src');
@@ -299,7 +299,7 @@ Panel = (function() {
         });
 
        
-       console.log(myIndex);      
+       //console.log(myIndex);      
        
     }
 
@@ -365,8 +365,8 @@ Panel = (function() {
         var myTarget = event.target;
         var myTargetClass = $(event.target).attr('class');
         var myTargetId = $(event.target).attr('id');
-        console.log(myTarget);
-        console.log(myTargetId);
+        //console.log(myTarget);
+        //console.log(myTargetId);
         if (myTargetClass != 'lg-img-wrap' && myTargetId != 'video-replay') {
             if ( !checkForVideoButtons() ) {
                 $('.lg-video-cont').append('<div class="video-buttons"><button id="video-pause"></button><button id="video-play" class="hidden"></button></button><button id="video-replay"></button></div>');
@@ -395,7 +395,7 @@ Panel = (function() {
     }
 
     var removeVideoButtons = function() {
-        console.log('removeVideoButtons');
+        //console.log('removeVideoButtons');
         $('.video-buttons').remove();
     }
 
