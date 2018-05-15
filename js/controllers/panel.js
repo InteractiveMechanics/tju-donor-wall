@@ -133,6 +133,7 @@ Panel = (function() {
     var openPanel = function(id) {
         
         //console.log(id);
+        Leds.isPaused = true;
 
         var panelData = JSON.search(data, '//*[ID=' + id + ']');
         console.log(panelData);
@@ -197,6 +198,8 @@ Panel = (function() {
     
     var closePanel = function() {
         //River.tweenRiverMain.resume();
+            Leds.isPaused = false;
+
             $('.donor').removeClass('animated pulse active-bubble');
             Leds.resetLeds(); 
             $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
@@ -209,10 +212,12 @@ Panel = (function() {
     }
 
     var resetPanel = function() {
-       $('#reset').removeClass('active-reset');
+        $('#reset').removeClass('active-reset');
         $('#all-donors-btn').addClass('animated pulse active-all-donors');
 
         setTimeout(function() {
+            Leds.isPaused = false;
+
             $('.donor').removeClass('animated pulse active-bubble');
             Leds.resetLeds(); 
             $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');

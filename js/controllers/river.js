@@ -136,7 +136,7 @@ River = (function() {
             results = JSON.search(data,  '//*' + name + year + yearMax + college); 
         }
 
-        console.log("LOOK AT ME ", results);
+        //console.log("LOOK AT ME ", results);
       
         updateRiver(results);
         }, 1250);
@@ -161,6 +161,8 @@ River = (function() {
             $('.reset-search-wrapper').removeClass('hidden fadeOut').addClass('animated fadeIn flex-container');
             $('#river').html('');
             setTimeout(function() {
+                Leds.isPaused = true;
+                
                 Leds.resetLeds(); 
                 loadData(results);
                 var updatedLedsToDisplay = getUpdatedLedsToDisplay(results);
@@ -272,7 +274,7 @@ River = (function() {
 
         tweenRiverMain = new TweenMax.to("#river", 120, {x: getMyWidth(data.donors), ease: Sine.easeInOut, yoyo: true, repeat: -1});
         tweenRiverMain.resume();
-
+        myDraggable[0].applyBounds({minX: -getRiverWidth(), maxX:0});
         $('.reset-search-wrapper').addClass('animated fadeOut hidden').removeClass('flex-container');
         $('#submit').removeClass('active-search');
         $('#all-donors-btn').removeClass('active-all-donors');
