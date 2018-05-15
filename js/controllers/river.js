@@ -11,19 +11,7 @@ River = (function() {
         myDraggable,
         mytl;
 
-    var numBubbles = $('.circle-wrapper').length;
-    var riverWidth = -(numBubbles * 75);
-
-
-    var getSeconds = function(datatoload) {
-        var numBubbles = datatoload.length;
-        var riverTiming = (numBubbles / 3) * 2;
-        console.log(numBubbles);
-        console.log(riverTiming);
-        return riverTiming;
-    } 
-
-
+    
     var initDraggable = function() {
             myDraggable = Draggable.create("#river", {
                 type:"x",
@@ -58,7 +46,7 @@ River = (function() {
 	var init = function() {
         bindEvents();
         //tweenRiverMain = new TweenMax.to("#river", 0,{x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
-        setTimeout(function() { initDraggable(); }, 1250);
+        //setTimeout(function() { initDraggable(); }, 1250);
     }
 
 
@@ -68,13 +56,13 @@ River = (function() {
 
     var getMyWidth = function(datatoload) {
         var numBubbles = datatoload.length;
-        var riverWidth = numBubbles * 65;
+        var riverWidth = numBubbles * 67;
         return -riverWidth;
     }
 
     var getRiverWidth = function() {
         var numBubbles = $('.circle-wrapper').length;
-        var riverWidth = numBubbles * 65;
+        var riverWidth = numBubbles * 67;
         return riverWidth; 
     }
 
@@ -148,11 +136,16 @@ River = (function() {
     
 
 
-
-
-    
+    /* gets the search results; if there are no results, shows search error button
+    *  when there are results, it removes the search error button, clears the river, laods the data
+    *  kills the current River tween and creates a new one that doesn't move and resets the bounds of the Draggable based on the new width
+    *  and closes the search panel
+    *  takes the search results as a parameter
+    *  called in River.getResults
+    */ 
     var updateRiver = function(results) {
         if (results.length == 0) {
+            //if there are no results, show search error button
             $('#search-er').removeClass('hidden fadeOut').addClass('flex-container');
         } else {
 
@@ -167,8 +160,9 @@ River = (function() {
                 loadData(results);
                 var updatedLedsToDisplay = getUpdatedLedsToDisplay(results);
                 Leds.checkLedArray(updatedLedsToDisplay);
+                console.log(updatedLedsToDisplay);
+
                 tweenRiverMain.kill();
-                
                 tweenRiverMain = new TweenMax.to("#river", 0, {x: 0, ease: Power1.easeInOut, yoyo: true, repeat: -1});
                 myDraggable[0].applyBounds({minX: -getRiverWidth(), maxX:0});
                 Search.closeSearch();
@@ -180,6 +174,9 @@ River = (function() {
     }
 
     //change name to getSearchResultsLeds
+    /* takes search results as an argument, returns an array of integers that are Leds to display
+    * gets called in updateRiver
+    */
     var getUpdatedLedsToDisplay = function(results) {
         var donorLeds = [];
         for (var i = 0; i<results.length; i++) {
@@ -194,6 +191,7 @@ River = (function() {
         console.log('ledstodisplay: ' + donorLeds);
         return donorLeds;
     }
+
 
     var addLedsToArray = function(obj) {
         if (obj.ledstodisplay.length > 0) {
@@ -244,17 +242,9 @@ River = (function() {
     }  
 
 
-     var pauseRiver = function() {
-        alert('pauseRiver');
-        // if (TweenMax.isTweening( '#river') ) {
-        //     tweenRiverMain.pause();
-        // }
-    }  
-
-
     var screenLedInterval = function() {
         if (!Leds.isPaused) {
-            Leds.resetLeds();
+            Leds.resetLeds();  //<-- so is it resetting the LEDs every second?? 
             Leds.checkLedArray(Leds.getLedsOnScreen(data.donors));
         }
     }
@@ -262,30 +252,35 @@ River = (function() {
 
 
 
-
+    /* 
+    * brings the river back to its starting state, 
+    * shows all donors, initializes all tweens (River, Circles, Draggable), shows only Search Benefactors button
+    * when it is called: Utilities.resetInteractive; on click tap of #reset-search-btn (Show All Benefactors)
+    */
     var resetRiver = function() {
-        setTimeout(function() { loadData(data.donors); }, 750);
-        //Leds.resetLeds(); 
-       
-        setTimeout(function() { circleTimeline(); }, 1500);
-
         Leds.isPaused = false;
+
+        setTimeout(function() { loadData(data.donors); }, 750);
+        
         setInterval(screenLedInterval, 1000);
+        
+        setTimeout(function() { 
+            circleTimeline();
+            initDraggable(); 
+        }, 1500);
+      
+       
 
         tweenRiverMain = new TweenMax.to("#river", 120, {x: getMyWidth(data.donors), ease: Sine.easeInOut, yoyo: true, repeat: -1});
         tweenRiverMain.resume();
-        myDraggable[0].applyBounds({minX: -getRiverWidth(), maxX:0});
+        
+
         $('.reset-search-wrapper').addClass('animated fadeOut hidden').removeClass('flex-container');
         $('#submit').removeClass('active-search');
         $('#all-donors-btn').removeClass('active-all-donors');
 
         
     }
-
-    var testingDrag = function() {
-        console.log('testingDrag');
-    }
-
 
 
     var bindEvents = function() {

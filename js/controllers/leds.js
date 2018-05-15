@@ -106,12 +106,14 @@ Leds = (function() {
         for (var i=0; i<data.length; i++) {
             var thisId = data[i].ID;
             var thisEl = document.querySelector('[data-id="'+ thisId + '"]');
-            if (checkVisible(thisEl)) {
-                //code is same as River.addLedsToArray, but when called here as River.addLedsToArray(data[i]), gets an error -- cannot get length of undefined
-                if (data[i].ledstodisplay) {
-                    var donorLedArray = data[i].ledstodisplay;
-                    for (j = 0; j<donorLedArray.length; j++) {
-                         OnScreenLedsArray.push(donorLedArray[j]);
+            if (thisEl) {
+                if (checkVisible(thisEl)) {
+                    //code is same as River.addLedsToArray, but when called here as River.addLedsToArray(data[i]), gets an error -- cannot get length of undefined
+                    if (data[i].ledstodisplay) {
+                        var donorLedArray = data[i].ledstodisplay;
+                        for (j = 0; j<donorLedArray.length; j++) {
+                             OnScreenLedsArray.push(donorLedArray[j]);
+                        }
                     }
                 }
             } 
