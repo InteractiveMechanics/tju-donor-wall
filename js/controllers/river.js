@@ -9,8 +9,10 @@ River = (function() {
         results,
         bezPoints,
         myDraggable,
-        mytl,
-        screenLedInterval;
+        mytl;
+
+    var numBubbles = $('.circle-wrapper').length;
+    var riverWidth = -(numBubbles * 75);
 
 
     var getSeconds = function(datatoload) {
@@ -27,7 +29,7 @@ River = (function() {
                 type:"x",
                 edgeResistance:0.25,
                 zIndexBoost:false,
-                bounds: {minX:-6000, maxX:0}, // {minX:getNegWidth(), maxX:getWidth()}
+                bounds: {minX: -getRiverWidth(), maxX:0}, // {minX:getNegWidth(), maxX:getWidth()}
                 throwProps:true,
                 onDragStart:  function(){
                    Utilities.resetTimeout();
@@ -38,11 +40,13 @@ River = (function() {
     }
 
 
+    //animation for Search Benefactors button
     var mySplitText = new SplitText("#text-to-split", {type:"chars,words"}),
     tl = new TimelineMax({repeat: -1, yoyo: true, repeatDelay:0});
     tl.from('#mysearch', 2.5, {opacity: 0.3, ease: Power4.easeInOut});
     tl.staggerFrom(mySplitText.chars, 2.5, {opacity: 0.3,  ease: Power4.easeInOut}, 0.25, 0.25);
 
+    //animation for Show All Benefactors button
     var mySplitTextReset = new SplitText("#text-to-split-reset", {type:"chars,words"}),
     tlR = new TimelineMax({repeat: -1, yoyo: true, repeatDelay:0});
     tlR.from('#myreset', 2.5, {opacity: 0.3, ease: Power4.easeInOut});
@@ -53,61 +57,30 @@ River = (function() {
     
 	var init = function() {
         bindEvents();
-        river = document.getElementById('river');
-        velocity = .005;
-        timing = getWidth(data.donors) * velocity;
-       
-        tweenRiverMain = new TweenMax.to("#river", 0,{x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
-        initDraggable();
-       
-     
+        //tweenRiverMain = new TweenMax.to("#river", 0,{x: getRiverWidth(), ease: Power1.easeInOut, yoyo: true, repeat: -1});
+        setTimeout(function() { initDraggable(); }, 1250);
     }
 
 
    
 
-    var getWidth = function() {
-        var numBubbles = $('.circle-wrapper').length;
-        var riverWidth = numBubbles * 75;
-        var windowWidth = $(window).width();
-        if (riverWidth == windowWidth) {
-            return windowWidth;
-        } else {
-            //console.log(riverWidth);
-            return riverWidth;
-        }
-        
-    }
-
-    var getNegWidth = function() {
-        console.log('getNegWidth is running');
-        var myWidth = $('.circle-wrapper').length;
-        var riverWidth = myWidth * 75;
-        var windowWidth = $( window ).width();
-        if (myWidth < windowWidth) {
-            return -windowWidth;
-        } else {
-            return -(getWidth());
-        }
-    }
+   
 
     var getMyWidth = function(datatoload) {
         var numBubbles = datatoload.length;
-        var riverWidth = numBubbles * 75;
+        var riverWidth = numBubbles * 65;
         return -riverWidth;
     }
 
     var getRiverWidth = function() {
         var numBubbles = $('.circle-wrapper').length;
-        var riverWidth = numBubbles * 60;
+        var riverWidth = numBubbles * 65;
         return riverWidth; 
     }
 
 
     var loadData = function(datatoload) {
         setTimeout(function() {
-            //var numBubbles = $('.circle-wrapper').length;
-            //var riverWidth = numBubbles * 80;
             $('#river').css('width', getRiverWidth());
         }, 0);
 
@@ -193,15 +166,15 @@ River = (function() {
                 var updatedLedsToDisplay = getUpdatedLedsToDisplay(results);
                 Leds.checkLedArray(updatedLedsToDisplay);
                 tweenRiverMain.kill();
-                //velocity = 300;
-                //timing = getWidth(results) / velocity;
+                
                 tweenRiverMain = new TweenMax.to("#river", 0, {x: 0, ease: Power1.easeInOut, yoyo: true, repeat: -1});
+                myDraggable[0].applyBounds({minX: -getRiverWidth(), maxX:0});
                 Search.closeSearch();
 
             }, 500);
-            //setTimeout(function() { Data.init(results); }, 750);
+            
         }
-        //playRiver();
+       
     }
 
     //change name to getSearchResultsLeds
@@ -231,18 +204,6 @@ River = (function() {
 
    
 
-
-
-    var playRiver = function() {
-         if (!TweenMax.isTweening( '#river') ) {
-            tweenRiverMain.play();
-            screenLedInterval = setInterval(function() {
-                Leds.resetLeds();
-                Leds.checkLedArray(Leds.getLedsOnScreen(data.donors));
-            }, 1000);
-            mytl.play();
-        } 
-    }
 
 
     var randomIntFromInterval = function(min,max) {
@@ -289,6 +250,12 @@ River = (function() {
     }  
 
 
+    var screenLedInterval = function() {
+        if (!Leds.isPaused) {
+            Leds.resetLeds();
+            Leds.checkLedArray(Leds.getLedsOnScreen(data.donors));
+        }
+    }
 
 
 
@@ -297,22 +264,15 @@ River = (function() {
     var resetRiver = function() {
         setTimeout(function() { loadData(data.donors); }, 750);
         Leds.resetLeds(); 
-        velocity = 100;
-        delayedWidth = getWidth(data.donors);
-        timing = getWidth(data.donors) / velocity;
-
-        
-
+       
         setTimeout(function() { circleTimeline(); }, 1500);
 
 
-        screenLedInterval = setInterval(function() {
-                Leds.resetLeds();
-                Leds.checkLedArray(Leds.getLedsOnScreen(data.donors));
-        }, 1000);
+        setInterval(screenLedInterval, 1000);
 
         tweenRiverMain = new TweenMax.to("#river", 120, {x: getMyWidth(data.donors), ease: Sine.easeInOut, yoyo: true, repeat: -1});
         tweenRiverMain.resume();
+
         $('.reset-search-wrapper').addClass('animated fadeOut hidden').removeClass('flex-container');
         $('#submit').removeClass('active-search');
         $('#all-donors-btn').removeClass('active-all-donors');
@@ -336,7 +296,6 @@ River = (function() {
         getResults: getResults,
         updateRiver: updateRiver,
         resetRiver: resetRiver,
-        playRiver: playRiver,
         tweenRiverMain: tweenRiverMain,
         addLedsToArray: addLedsToArray,
         results: results

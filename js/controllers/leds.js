@@ -1,6 +1,8 @@
 Leds = (function() {
 
     var ledArray = [];
+    var isPaused = false;
+  
 
 	var init = function() {
         animate();
@@ -90,7 +92,9 @@ Leds = (function() {
 
 
     var animate = function() {
-        setInterval(writeFrame, 60);
+       
+            setInterval(writeFrame, 60);
+        
         //setTimeout(function() { getLedsOnScreen(data.donors) }, 1000);
         
 
@@ -123,6 +127,8 @@ Leds = (function() {
         }
     }
 
+  
+
     var checkLedArray = function(ledsToAdd) {
         for (var i = 0; i<ledsToAdd.length; i++) {
             var ledTest = ledExists(ledsToAdd[i], ledArray);
@@ -138,6 +144,7 @@ Leds = (function() {
                 //console.log(ledArray);
             }
         }
+
     }
 
     var ledExists = function(id, arrayToTest) {
@@ -164,7 +171,9 @@ Leds = (function() {
         resetLeds: resetLeds,
         checkLedArray: checkLedArray,
         ledArray: ledArray,
-        getLedsOnScreen: getLedsOnScreen
+        getLedsOnScreen: getLedsOnScreen,
+        isPaused: isPaused
+
 
     }
 
