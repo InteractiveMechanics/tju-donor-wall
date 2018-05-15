@@ -29,7 +29,7 @@ Utilities = (function() {
         if ($('.zoom').data('lightGallery')) {
             $('.zoom').data('lightGallery').destroy();
         }
-        $('#river').animate({left: "0"}, "swing");
+      
 
     	//Animation.myAnimation();
     	myInterval = setInterval(function(){ 
@@ -44,12 +44,6 @@ Utilities = (function() {
     var resetBrowser = function() {
         location.reload();
     }
-
-    // var disableZoom = function(e) {
-    //     e.preventDefault();
-    // }
-
-
 
 
     //callBack functions that call resetTimeout on each keyboard change in the search keyboards are in search.js
