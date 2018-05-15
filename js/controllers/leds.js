@@ -12,7 +12,7 @@ Leds = (function() {
 	// Set pixels to a given color
 	var writeFrame = function() {
         //console.log(ledArray);
-        var strips = 7;
+        var strips = 160;
         var ledsPerStrip = 60;
 
 		var r = 0;

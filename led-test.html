@@ -83,6 +83,7 @@
     <script type="text/javascript">
         var ledArray = [];
         var strips = 32;
+        var totalStrips = 160;
         var ledsPerStrip = 60;
 
         $(function() {
@@ -142,7 +143,7 @@
             var upSpeed = 0.5;
             var downSpeed = 1;
 
-			var packet = new Uint8ClampedArray(4 + (strips * (ledsPerStrip+4)) * 3);
+			var packet = new Uint8ClampedArray(4 + (totalStrips * (ledsPerStrip+4)) * 3);
 
 			if (socket.readyState != 1 /* OPEN */) {
 				// The server connection isn't open. Nothing to do.
@@ -160,7 +161,7 @@
 			// Dest position in our packet. Start right after the header.
 			var dest = 4;
 
-            for (var s = 0; s < strips; s++) {
+            for (var s = 0; s < totalStrips; s++) {
                 for(var p = 0; p < ledsPerStrip; p++) {
 
                     var led = (s * ledsPerStrip) + p;
