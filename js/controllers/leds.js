@@ -19,7 +19,7 @@ Leds = (function() {
 		var g = 0;
 		var b = 0;
 
-        var upSpeed = 2;
+        var upSpeed = 1;
         var downSpeed = 1;
 
 		var packet = new Uint8ClampedArray(4 + (strips * (ledsPerStrip+4)) * 3);
@@ -47,34 +47,29 @@ Leds = (function() {
                 var led = (s * ledsPerStrip) + p;
 
                 if ( ledExists(led, ledArray) ) {
-                    var i = ledArray.findIndex((obj => obj.id == led));
+			var i = ledArray.findIndex((obj => obj.id == led));
+			if (ledArray[i].state == "down" && ledArray[i].lumos == 0) {
+                            packet[dest++] = r;
+                            packet[dest++] = g;
+                    	    packet[dest++] = b;
+			} else {
+			    if (ledArray[i].state == "on") {
+				// Keep it at full lumos
+				ledArray[i].lumos = 117;
+			    } else if (ledArray[i].state == "down" && ledArray[i].lumos > 0) {
+				// Decrease lumos by one
+				ledArray[i].lumos = ledArray[i].lumos - (1 * downSpeed);
+			    } else if (ledArray[i].state == "up" && ledArray[i].lumos < 117) {
+				// Increment lumos up by one
+				ledArray[i].lumos = ledArray[i].lumos + (1 * upSpeed);
+			    } else if (ledArray[i].state == "up" && ledArray[i].lumos >= 117) {
+				ledArray[i].state = "on";
+			    }
 
-                    if (ledArray[i].state == "on") {
-                        // Keep it at full lumos
-                        console.log('state equals on');
-                        ledArray[i].lumos = 117;
-                    } else if (ledArray[i].state == "down" && ledArray[i].lumos > 0) {
-                        // Decrease lumos by one
-                        console.log('state equals down and lumos is greater than zero');
-                        ledArray[i].lumos = ledArray[i].lumos - (1 * downSpeed);
-                    } else if (ledArray[i].state = "up" && ledArray[i].lumos < 117) {
-                        // Increment lumos up by one
-                        console.log('state equals up and lumos is less than 117');
-                        ledArray[i].lumos = ledArray[i].lumos + (1 * upSpeed);
-                    } else if (ledArray[i].state = "up" && ledArray[i].lumos == 117) {
-                        console.log('state equals up and lumos equals 117');
-                        ledArray[i].state == "on";
-                    }
-
-                    packet[dest++] = r + ledArray[i].lumos;
-                    packet[dest++] = g + ledArray[i].lumos;
-                    packet[dest++] = b + ledArray[i].lumos;
-
-                    if (ledArray[i].state == "down" && ledArray[i].lumos == 0) {
-                        // Remove from ledArray
-                        console.log('state equals down and lumos equals zero');
-                        ledArray.splice(ledArray[i], 1);
-                    }
+			    packet[dest++] = r + ledArray[i].lumos;
+			    packet[dest++] = g + ledArray[i].lumos;
+			    packet[dest++] = b + ledArray[i].lumos;
+			}
                 } else {
                     packet[dest++] = r;
                     packet[dest++] = g;
