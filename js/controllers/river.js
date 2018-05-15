@@ -161,8 +161,8 @@ River = (function() {
             $('.reset-search-wrapper').removeClass('hidden fadeOut').addClass('animated fadeIn flex-container');
             $('#river').html('');
             setTimeout(function() {
-                Leds.isPaused = true;
-                
+                Leds.isPaused = false;
+
                 Leds.resetLeds(); 
                 loadData(results);
                 var updatedLedsToDisplay = getUpdatedLedsToDisplay(results);
@@ -265,11 +265,11 @@ River = (function() {
 
     var resetRiver = function() {
         setTimeout(function() { loadData(data.donors); }, 750);
-        Leds.resetLeds(); 
+        //Leds.resetLeds(); 
        
         setTimeout(function() { circleTimeline(); }, 1500);
 
-
+        Leds.isPaused = false;
         setInterval(screenLedInterval, 1000);
 
         tweenRiverMain = new TweenMax.to("#river", 120, {x: getMyWidth(data.donors), ease: Sine.easeInOut, yoyo: true, repeat: -1});
