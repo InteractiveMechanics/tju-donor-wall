@@ -165,7 +165,6 @@ Search = (function() {
         $(document).on('click tap', '#reset', resetSelect);
         $(document).on('click tap', '#reset-search-btn', River.resetRiver);
         $(document).on('submit', River.getResults);
-        $(document).ready(testingKeyboard);
     }
 
 
