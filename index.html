@@ -10,8 +10,6 @@
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
     <link href="./dist/css/animate.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="js/lib/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="js/lib/slick/slick-theme.css">
     <link rel="stylesheet" type="text/css" href="js/lib/lightgallery/src/css/lightGallery.css">
     <link rel="stylesheet" type="text/css" href="js/lib/lightslider/dist/css/lightslider.css">
     <link rel="stylesheet" type="text/css" href="js/lib/bootstrap_select/css/bootstrap-select.min.css">
@@ -48,7 +46,7 @@
                 {{else giving_level == 9999}}
                 <div class="circle-wrapper">
                     <div data-id="{{:ID}}" class="circle donor sm">
-                        <p>{{:first_name}} {{:middle}} {{:last_name}}{{if honorific}}, {{:honorific}}{{/if}}</p>
+                        <p>{{:first_name}} {{:middle}} {{:last_name}}{{if suffix}}, {{:suffix}}{{/if}}{{if honorific}}, {{:honorific}}{{/if}}</p>
                         <p>{{:education_0_graduation_year}}</p>
                     </div>
                 </div>
@@ -109,7 +107,7 @@
 
 
             <article>
-                <h1>{{:first_name}} {{:middle}} {{:last_name}}{{if suffix}} ,{{:suffix}}{{/if}}{{if honorific}}, {{:honorific}}{{/if}}</h1>
+                <h1>{{:first_name}} {{:middle}} {{:last_name}}{{if suffix}}, {{:suffix}}{{/if}}{{if honorific}}, {{:honorific}}{{/if}}</h1>
                 <section>
 
                     {{if education_0_degree}}
@@ -205,18 +203,7 @@
         </div>
         
         <div id="river">
-        <!-- <div class="circle donor large" style="background-color: rgba(0,0,0, 0.5); background-image: url('assets/sample-images/sample-thumbnail@2x.jpg');">
-            <p>Sheeja Abraham, MD</p>
-            <p>1996</p>
-        </div>
-        <div id="testing" class="circle donor sm">
-            <p>Samuel D. Gross, MD</p>
-            <p>1828</p>
-        </div>
-        <div class="circle give">
-            <p>Would you like to see your name here?</p>
-            <h4>Give Now</h4>
-        </div> -->
+      
         </div>
 
         <div id="panel" class="hidden"></div>
@@ -391,7 +378,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
     <script src="https://unpkg.com/popper.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!--<script src="js/lib/slick/slick.js"></script> replaced by flickity --> 
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
     <script src="js/lib/keyboard/js/jquery.keyboard.min.js"></script>
     <script src="js/lib/keyboard/js/jquery.keyboard.extension-typing.min.js"></script>

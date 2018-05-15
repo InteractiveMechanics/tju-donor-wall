@@ -131,21 +131,21 @@ Panel = (function() {
     
 
     var openPanel = function(id) {
-        //var id = $(this).attr('data-id');
-
-        console.log(id);
+        
+        //console.log(id);
 
         var panelData = JSON.search(data, '//*[ID=' + id + ']');
         console.log(panelData);
         if (panelData[0].ledstodisplay) {
             donorLeds = panelData[0].ledstodisplay;
-            //console.log(donorLeds);
             Leds.resetLeds();
             //Leds.writeFrame(donorLeds);
             Leds.checkLedArray(donorLeds);
+
         }
 
-        //River.tweenRiverMain.pause();
+        TweenMax.pauseAll();
+     
         $('#panel').html('');
         $("#panel").html($.templates("#panel-template").render(panelData)); // data.donors[id]
         $('#panel').removeClass('hidden fadeOutLeft').addClass('animated slideInLeft flex-container').attr('data-id', id);
@@ -203,7 +203,8 @@ Panel = (function() {
             $('#close').removeClass('fadeIn').addClass('hidden');
             $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
             $('#gallery-wrapper').addClass('hidden');
-            Leds.writeFrame([]);
+            //Leds.writeFrame([]);
+            Leds.resetLeds();
         
     }
 
@@ -218,7 +219,8 @@ Panel = (function() {
             $('#close').removeClass('fadeIn').addClass('hidden');
             $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
             $('#gallery-wrapper').addClass('hidden');
-            Leds.writeFrame([]);
+            //Leds.writeFrame([]);
+            Leds.resetLeds();
         }, 1250); 
     }
 
@@ -258,7 +260,7 @@ Panel = (function() {
         }
 
          if (myVideoLg) {
-            //myVideoOb.html = "#html2";
+            
             myVideoOb.html = '<video class="lg-video-object lg-html5" preload="none"><source src="' + myVideoLg  + '" type="video/mp4">Your browser does not support HTML5 video</video>';
             myVideoOb.poster = videoPoster;
             myVideoOb.thumb = videoPoster;
@@ -295,9 +297,7 @@ Panel = (function() {
 
        
        console.log(myIndex);      
-       //$('.zoom').data('lightGallery').slide(index);
-
-
+       
     }
 
     var animateZoom = function() {
