@@ -28,7 +28,7 @@ Animation = (function() {
     }
 
     var hideText = function() {
-        console.log('hide text');
+        //console.log('hide text');
         $('#instructions-text').addClass('fadeOut').removeClass('fadeIn');
         setTimeout(function() { $('#instructions-text').addClass('hidden')}, 750);
     }

@@ -6,7 +6,7 @@ Data = (function() {
 
     var init = function(response) {
     	data = {"donors": [] };
-    	console.log(response);
+    	//console.log(response);
         
         $.each(response, function(index, value){
                 var galleryArray = [];
@@ -247,7 +247,7 @@ Data = (function() {
 
 
 
-        console.log(data);
+        //console.log(data);
 
     }
 

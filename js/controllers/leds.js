@@ -51,14 +51,18 @@ Leds = (function() {
 
                     if (ledArray[i].state == "on") {
                         // Keep it at full lumos
+                        console.log('state equals on');
                         ledArray[i].lumos = 117;
                     } else if (ledArray[i].state == "down" && ledArray[i].lumos > 0) {
                         // Decrease lumos by one
+                        console.log('state equals down and lumos is greater than zero');
                         ledArray[i].lumos = ledArray[i].lumos - (1 * downSpeed);
                     } else if (ledArray[i].state = "up" && ledArray[i].lumos < 117) {
                         // Increment lumos up by one
+                        console.log('state equals up and lumos is less than 117');
                         ledArray[i].lumos = ledArray[i].lumos + (1 * upSpeed);
                     } else if (ledArray[i].state = "up" && ledArray[i].lumos == 117) {
+                        console.log('state equals up and lumos equals 117');
                         ledArray[i].state == "on";
                     }
 
@@ -68,6 +72,7 @@ Leds = (function() {
 
                     if (ledArray[i].state == "down" && ledArray[i].lumos == 0) {
                         // Remove from ledArray
+                        console.log('state equals down and lumos equals zero');
                         ledArray.splice(ledArray[i], 1);
                     }
                 } else {
