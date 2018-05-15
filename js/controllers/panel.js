@@ -201,13 +201,12 @@ Panel = (function() {
             Leds.isPaused = false;
 
             $('.donor').removeClass('animated pulse active-bubble');
-            Leds.resetLeds(); 
             $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
             $('#close').removeClass('fadeIn').addClass('hidden');
             $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
             $('#gallery-wrapper').addClass('hidden');
             //Leds.writeFrame([]);
-            Leds.resetLeds();
+            
         
     }
 
@@ -219,13 +218,12 @@ Panel = (function() {
             Leds.isPaused = false;
 
             $('.donor').removeClass('animated pulse active-bubble');
-            Leds.resetLeds(); 
             $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
             $('#close').removeClass('fadeIn').addClass('hidden');
             $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
             $('#gallery-wrapper').addClass('hidden');
-            //Leds.writeFrame([]);
-            Leds.resetLeds();
+            
+            
         }, 1250); 
     }
 
@@ -424,7 +422,7 @@ Panel = (function() {
         $(this).addClass('animated pulse active-bubble');
         $('#all-donors-btn').removeClass('animated pulse active-all-donors');
         var id = $(this).attr('data-id');
-        setTimeout(function() {  openPanel(id); }, 1500);
+        setTimeout(function() {  openPanel(id); }, 1000);
     }
     
     

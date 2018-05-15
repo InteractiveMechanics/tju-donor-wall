@@ -45,9 +45,9 @@ Utilities = (function() {
         location.reload();
     }
 
-    var disableZoom = function(e) {
-        e.preventDefault();
-    }
+    // var disableZoom = function(e) {
+    //     e.preventDefault();
+    // }
 
 
 
