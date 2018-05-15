@@ -16,9 +16,12 @@ River = (function() {
             myDraggable = Draggable.create("#river", {
                 type:"x",
                 edgeResistance:0.25,
+		dragResistance:0.25,
                 zIndexBoost:false,
                 bounds: {minX: -getRiverWidth(), maxX:0}, // {minX:getNegWidth(), maxX:getWidth()}
                 throwProps:true,
+		maxDuration: 1,
+		throwResistance: 2000,
                 onDragStart:  function(){
                    Utilities.resetTimeout();
                 }
@@ -271,7 +274,7 @@ River = (function() {
       
        
 
-        tweenRiverMain = new TweenMax.to("#river", 120, {x: getMyWidth(data.donors), ease: Sine.easeInOut, yoyo: true, repeat: -1});
+        tweenRiverMain = new TweenMax.to("#river", 210, {x: getMyWidth(data.donors), ease: Power0.easeNone, yoyo: true, repeat: -1});
         tweenRiverMain.resume();
         
 
