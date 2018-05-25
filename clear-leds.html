@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+	<title>Reset All LEDs</title>
+
+    <style>
+        html, 
+        body {
+            margin: 20px;
+            padding: 0;
+            background: #212323;
+        }
+
+    </style>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        var ledArray = [];
+        var strips = 32;
+        var totalStrips = 160;
+        var ledsPerStrip = 60;
+
+		// Set pixels to a given color
+		function writeFrame() {
+
+    		var r = 0;
+    		var g = 0;
+    		var b = 0;
+
+			var packet = new Uint8ClampedArray(4 + (totalStrips * (ledsPerStrip+4)) * 3);
+
+			if (socket.readyState != 1 /* OPEN */) {
+				// The server connection isn't open. Nothing to do.
+				return;
+			}
+
+			if (socket.bufferedAmount > packet.length) {
+				// The network is lagging, and we still haven't sent the previous frame.
+				// Don't flood the network, it will just make us laggy.
+				// If fcserver is running on the same computer, it should always be able
+				// to keep up with the frames we send, so we shouldn't reach this point.
+				return;
+			}
+
+			// Dest position in our packet. Start right after the header.
+			var dest = 4;
+
+            for (var s = 0; s < totalStrips; s++) {
+                for(var p = 0; p < ledsPerStrip; p++) {
+
+                    var led = (s * ledsPerStrip) + p;
+
+                    packet[dest++] = r;
+                    packet[dest++] = g;
+                    packet[dest++] = b;
+
+                }
+            }
+
+			socket.send(packet.buffer);
+		}
+        
+        
+        // Connect to a Fadecandy server running on the same computer, on the default port
+        var socket = new WebSocket('ws://127.0.0.1:7890');
+        socket.onclose = function(event) { }
+        socket.onopen = function(event) { }
+
+        writeFrame();
+
+    </script>
+</head>
+<body></body>
+</html>

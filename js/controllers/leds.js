@@ -20,7 +20,7 @@ Leds = (function() {
 		var b = 0;
 
         var upSpeed = 2;
-        var downSpeed = 1;
+        var downSpeed = 2;
 
 		var packet = new Uint8ClampedArray(4 + (strips * (ledsPerStrip+4)) * 3);
 
@@ -41,42 +41,40 @@ Leds = (function() {
 		var dest = 4;
 
 
-        for (var s = 0; s < strips; s++) {
-            for(var p = 0; p < ledsPerStrip; p++) {
+        for (var s = 0, p = 0; s < strips && p < ledsPerStrip; p++, s=(p==ledsPerStrip)?s+1:s, p=(p==ledsPerStrip)?p=0:p) {
 
                 var led = (s * ledsPerStrip) + p;
 
                 if ( ledExists(led, ledArray) ) {
-			var i = ledArray.findIndex((obj => obj.id == led));
-			if (ledArray[i].state == "down" && ledArray[i].lumos == 0) {
+                    var i = ledArray.findIndex((obj => obj.id == led));
+                    if (ledArray[i].state == "down" && ledArray[i].lumos == 0) {
                             packet[dest++] = r;
                             packet[dest++] = g;
                     	    packet[dest++] = b;
-			} else {
-			    if (ledArray[i].state == "on") {
-				// Keep it at full lumos
-				ledArray[i].lumos = 117;
-			    } else if (ledArray[i].state == "down" && ledArray[i].lumos > 0) {
-				// Decrease lumos by one
-				ledArray[i].lumos = ledArray[i].lumos - (1 * downSpeed);
-			    } else if (ledArray[i].state == "up" && ledArray[i].lumos < 117) {
-				// Increment lumos up by one
-				ledArray[i].lumos = ledArray[i].lumos + (1 * upSpeed);
-			    } else if (ledArray[i].state == "up" && ledArray[i].lumos >= 117) {
-				ledArray[i].state = "on";
-			    }
+			        } else {
+        			    if (ledArray[i].state == "on") {
+        				// Keep it at full lumos
+        				    ledArray[i].lumos = 117;
+        			    } else if (ledArray[i].state == "down" && ledArray[i].lumos > 0) {
+        				// Decrease lumos by one
+        				    ledArray[i].lumos = ledArray[i].lumos - (1 * downSpeed);
+        			    } else if (ledArray[i].state == "up" && ledArray[i].lumos < 117) {
+        				// Increment lumos up by one
+        				    ledArray[i].lumos = ledArray[i].lumos + (1 * upSpeed);
+        			    } else if (ledArray[i].state == "up" && ledArray[i].lumos >= 117) {
+        				    ledArray[i].state = "on";
+        			    }
 
-			    packet[dest++] = r + ledArray[i].lumos;
-			    packet[dest++] = g + ledArray[i].lumos;
-			    packet[dest++] = b + ledArray[i].lumos;
-			}
+        			    packet[dest++] = r + ledArray[i].lumos;
+        			    packet[dest++] = g + ledArray[i].lumos;
+        			    packet[dest++] = b + ledArray[i].lumos;
+			        }
                 } else {
                     packet[dest++] = r;
                     packet[dest++] = g;
                     packet[dest++] = b;
                 }
 
-            }
         }
 
 		socket.send(packet.buffer);
@@ -93,10 +91,7 @@ Leds = (function() {
 
     var animate = function() {
        
-            setInterval(writeFrame, 60);
-        
-        //setTimeout(function() { getLedsOnScreen(data.donors) }, 1000);
-        
+        setInterval(writeFrame, 60);        
 
     }
 
@@ -118,7 +113,7 @@ Leds = (function() {
                 }
             } 
         }
-       // console.log(OnScreenLedsArray);
+        // console.log(OnScreenLedsArray);
         return OnScreenLedsArray;
     }
 
