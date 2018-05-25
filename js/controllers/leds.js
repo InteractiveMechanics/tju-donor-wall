@@ -20,7 +20,7 @@ Leds = (function() {
 		var b = 0;
 
         var upSpeed = 2;
-        var downSpeed = 1;
+        var downSpeed = 2;
 
 		var packet = new Uint8ClampedArray(4 + (strips * (ledsPerStrip+4)) * 3);
 
