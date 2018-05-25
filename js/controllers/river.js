@@ -273,9 +273,10 @@ River = (function() {
         }, 1500);
       
        
-
-        tweenRiverMain = new TweenMax.to("#river", 210, {x: getMyWidth(data.donors), ease: Power0.easeNone, yoyo: true, repeat: -1});
-        tweenRiverMain.resume();
+        setTimeout(function() {
+            tweenRiverMain = new TweenMax.to("#river", 210, {x: getMyWidth(data.donors), ease: Power0.easeNone, yoyo: true, repeat: -1});
+            //tweenRiverMain.resume();
+        }, 1750);
         
 
         $('.reset-search-wrapper').addClass('animated fadeOut hidden').removeClass('flex-container');
