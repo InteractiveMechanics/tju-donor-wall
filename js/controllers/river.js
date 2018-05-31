@@ -53,6 +53,15 @@ River = (function() {
     }
 
 
+    var resetTextSplitEls = function() {
+        //resets Search Benefactors button
+        $('#mysearch').css('opacity', 1);
+        $('#text-to-split div').css('opacity', 1);
+
+        //resets Show All Benefactors button
+        $('#myreset').css('opacity', 1);
+        $('#text-to-split-reset div').css('opacity', 1);
+    }
    
 
    
@@ -241,7 +250,19 @@ River = (function() {
 
     var pauseAllTweens = function(event) {
         TweenMax.pauseAll();
-        
+        resetTextSplitEls();
+
+         //animation for Search Benefactors button
+        var mySplitText = new SplitText("#text-to-split", {type:"chars,words"}),
+        tl = new TimelineMax({repeat: -1, yoyo: true, repeatDelay:0});
+        tl.from('#mysearch', 2.5, {opacity: 0.3, ease: Power4.easeInOut});
+        tl.staggerFrom(mySplitText.chars, 2.5, {opacity: 0.3,  ease: Power4.easeInOut}, 0.25, 0.25);
+
+        //animation for Show All Benefactors button
+        var mySplitTextReset = new SplitText("#text-to-split-reset", {type:"chars,words"}),
+        tlR = new TimelineMax({repeat: -1, yoyo: true, repeatDelay:0});
+        tlR.from('#myreset', 2.5, {opacity: 0.3, ease: Power4.easeInOut});
+        tlR.staggerFrom(mySplitTextReset.chars, 2.5, {opacity: 0.3,  ease: Power4.easeInOut}, 0.25, 0.25);
     }  
 
 
@@ -299,7 +320,9 @@ River = (function() {
         resetRiver: resetRiver,
         tweenRiverMain: tweenRiverMain,
         addLedsToArray: addLedsToArray,
-        results: results
+        results: results,
+        resetTextSplitEls: resetTextSplitEls
+
     }
 
 })();

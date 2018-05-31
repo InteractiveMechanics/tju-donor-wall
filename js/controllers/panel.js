@@ -146,6 +146,20 @@ Panel = (function() {
         }
 
         TweenMax.pauseAll();
+        River.resetTextSplitEls();
+
+        //animation for Search Benefactors button
+        var mySplitText = new SplitText("#text-to-split", {type:"chars,words"}),
+        tl = new TimelineMax({repeat: -1, yoyo: true, repeatDelay:0});
+        tl.from('#mysearch', 2.5, {opacity: 0.3, ease: Power4.easeInOut});
+        tl.staggerFrom(mySplitText.chars, 2.5, {opacity: 0.3,  ease: Power4.easeInOut}, 0.25, 0.25);
+
+        //animation for Show All Benefactors button
+        var mySplitTextReset = new SplitText("#text-to-split-reset", {type:"chars,words"}),
+        tlR = new TimelineMax({repeat: -1, yoyo: true, repeatDelay:0});
+        tlR.from('#myreset', 2.5, {opacity: 0.3, ease: Power4.easeInOut});
+        tlR.staggerFrom(mySplitTextReset.chars, 2.5, {opacity: 0.3,  ease: Power4.easeInOut}, 0.25, 0.25);
+
      
         $('#panel').html('');
         $("#panel").html($.templates("#panel-template").render(panelData)); // data.donors[id]
