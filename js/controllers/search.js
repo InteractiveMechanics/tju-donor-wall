@@ -12,9 +12,9 @@ Search = (function() {
         
         $('#right-panel').removeClass('hidden fadeOutRight').addClass('animated slideInRight flex-container');  
         $('#search').removeClass('hidden');
-        $('#search-btn').addClass('animated fadeOut');
+        $('#search-btn').addClass('animated fadeOut hidden').removeClass('flex-container');
 
-        setTimeout(function(){ $('#search-close').addClass('animated fadeIn').removeClass('fadeOut').css('display', 'flex'); }, 750);
+        setTimeout(function(){ $('#search-close').addClass('animated slideInRight').removeClass('fadeOut').css('display', 'flex'); }, 0);
         
         $('main').addClass('close-panel');
 
@@ -135,7 +135,7 @@ Search = (function() {
             $('#right-panel').removeClass('slideInRight').addClass('fadeOutRight');
             setTimeout(function(){ $('#search').addClass('hidden'); }, 750);
             setTimeout(function(){ $('#give-panel').addClass('hidden');}, 750);
-            $('#search-btn').removeClass('fadeOut').addClass('fadeIn');
+            $('#search-btn').removeClass('fadeOut hidden').addClass('fadeIn flex-container');
             $('#search-close').removeClass('fadeIn pulse active-search-close').addClass('fadeOut').css('display', 'none');
             $('#search-er').addClass('hidden');
             closeKeyboards();

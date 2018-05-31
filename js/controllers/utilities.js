@@ -1,6 +1,6 @@
 Utilities = (function() {
 	var timeout = [];
-	var duration = 150000; //90000
+	var duration = 150000; //150000
     var longduration = 1800000;
     var myInterval;
 
