@@ -67,7 +67,7 @@
         socket.onclose = function(event) { }
         socket.onopen = function(event) { }
 
-        writeFrame();
+        setInterval(writeFrame, 1000);
 
     </script>
 </head>
