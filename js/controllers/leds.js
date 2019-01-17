@@ -2,9 +2,10 @@ Leds = (function() {
 
     var ledArray = [];
     var isPaused = false;
-  
+    var socket;
 
 	var init = function() {
+		startServer();
         animate();
         bindEvents();
     }
@@ -78,21 +79,22 @@ Leds = (function() {
         }
 
 		socket.send(packet.buffer);
+		socket.send(packet.buffer);
 	}
-        
-    // Connect to a Fadecandy server running on the same computer, on the default port
-    var socket = new WebSocket('ws://127.0.0.1:7890');
-
-    // Put some connection status text in the corner of the screen
-    $('#connectionStatus').text('Connecting to fcserver...');
-    socket.onclose = function(event) { $('#connectionStatus').text('Not connected to LED server'); }
-    socket.onopen = function(event) { $('#connectionStatus').text('Connected to LED server'); }
-
+    
+    var startServer = function() {
+	    // Connect to a Fadecandy server running on the same computer, on the default port
+	    socket = new WebSocket('ws://127.0.0.1:7890');
+	
+	    // Put some connection status text in the corner of the screen
+	    // $('#connectionStatus').text('Connecting to fcserver...');
+	    socket.onclose = function(event) { 
+			setTimeout(function(){ startServer() }, 5000);
+		}
+    }
 
     var animate = function() {
-       
-        setInterval(writeFrame, 60);        
-
+        setInterval(writeFrame, 120);        
     }
 
     //this needs to run every second, not just as reset
@@ -123,8 +125,6 @@ Leds = (function() {
             ledArray[i].state = "down";
         }
     }
-
-  
 
     var checkLedArray = function(ledsToAdd) {
         for (var i = 0; i<ledsToAdd.length; i++) {
