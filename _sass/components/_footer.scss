@@ -41,13 +41,19 @@
     float: left;
 }
 
+#search-close, #all-donors-btn, #reset-search-btn {
+	display: flex;
+	align-items: center;
+}
+
+#search-btn {
+	align-items: center;
+}
+
 
 
 #search-btn, #search-close, #all-donors-btn, #reset-search-btn {
-	display: flex;
-	align-items: center;
-
-
+	
 	h4 {
 		margin-bottom: 0px;
 		color: $light_blue;

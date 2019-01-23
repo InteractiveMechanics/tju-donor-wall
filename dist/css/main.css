@@ -174,21 +174,25 @@ footer {
 .all-donors-wrapper {
   float: left; }
 
-#search-btn, #search-close, #all-donors-btn, #reset-search-btn {
+#search-close, #all-donors-btn, #reset-search-btn {
   display: flex;
   align-items: center; }
-  #search-btn h4, #search-close h4, #all-donors-btn h4, #reset-search-btn h4 {
-    margin-bottom: 0px;
-    color: #569bca;
-    line-height: 1;
-    font-size: 27px; }
-  #search-btn img, #search-close img, #all-donors-btn img, #reset-search-btn img {
-    margin-right: 10px;
-    width: 24px; }
-  #search-btn svg, #search-close svg, #all-donors-btn svg, #reset-search-btn svg {
-    margin-right: 10px; }
-  #search-btn:hover, #search-close:hover, #all-donors-btn:hover, #reset-search-btn:hover {
-    text-decoration: none; }
+
+#search-btn {
+  align-items: center; }
+
+#search-btn h4, #search-close h4, #all-donors-btn h4, #reset-search-btn h4 {
+  margin-bottom: 0px;
+  color: #569bca;
+  line-height: 1;
+  font-size: 27px; }
+#search-btn img, #search-close img, #all-donors-btn img, #reset-search-btn img {
+  margin-right: 10px;
+  width: 24px; }
+#search-btn svg, #search-close svg, #all-donors-btn svg, #reset-search-btn svg {
+  margin-right: 10px; }
+#search-btn:hover, #search-close:hover, #all-donors-btn:hover, #reset-search-btn:hover {
+  text-decoration: none; }
 
 #all-donors-btn.active-all-donors h4,
 #search-close.active-search-close h4 {
