@@ -37,8 +37,8 @@ Panel = (function() {
         
 
         var getRelsArray = panelData[0].rels;
-        //console.log(getRelsArray);
         var newRelsArray = [];
+        
         if (getRelsArray.length != 0) {
             for (i = 0; i < getRelsArray.length; i++) {
                 var index = data.donors.findIndex(function(j) {
@@ -132,15 +132,12 @@ Panel = (function() {
 
     var openPanel = function(id) {
         
-        //console.log(id);
         Leds.isPaused = true;
 
         var panelData = JSON.search(data, '//*[ID=' + id + ']');
-        //console.log(panelData);
         if (panelData[0].ledstodisplay) {
             donorLeds = panelData[0].ledstodisplay;
             Leds.resetLeds();
-            //Leds.writeFrame(donorLeds);
             Leds.checkLedArray(donorLeds);
 
         }
@@ -167,10 +164,8 @@ Panel = (function() {
         $('.all-donors-wrapper').removeClass('hidden').addClass('animated fadeIn flex-container');
         getRels(id);
         enableRelSlider();
-        //$("#relationships").slick("refresh");
 
 
-        //console.log(getFeatImgURL(id));
         setTimeout(function() { enableGallery(id); }, 1000);
         if (panelData[0].giving_level == 10000 && panelData[0].primary_img.length != 0) {
             $('#gallery-wrapper').removeClass('hidden');
@@ -180,10 +175,8 @@ Panel = (function() {
             $('#close').css('width', 'calc(100vw - 650px');
         }
 
-
         Search.closeSearch();
         setTimeout(function() { openTheClose(); }, 750);
-
 
     }
 
@@ -205,22 +198,18 @@ Panel = (function() {
 
         setTimeout(function(){ $('#search-close').addClass('animated fadeIn').removeClass('fadeOut').css('display', 'flex'); }, 750);
         $('main').addClass('close-panel');
-
     }
 
 
     
     var closePanel = function() {
-        //River.tweenRiverMain.resume();
-            Leds.isPaused = false;
+        Leds.isPaused = false;
 
-            $('.donor').removeClass('animated pulse active-bubble');
-            $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
-            $('#close').removeClass('fadeIn').addClass('hidden');
-            $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
-            $('#gallery-wrapper').addClass('hidden');
-            //Leds.writeFrame([]);
-            
+        $('.donor').removeClass('animated pulse active-bubble');
+        $('#panel').removeClass('slideInLeft').addClass('fadeOutLeft');
+        $('#close').removeClass('fadeIn').addClass('hidden');
+        $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
+        $('#gallery-wrapper').addClass('hidden');            
         
     }
 
@@ -237,13 +226,11 @@ Panel = (function() {
             $('.all-donors-wrapper').removeClass('fadeIn flex-container').addClass('hidden');
             $('#gallery-wrapper').addClass('hidden');
             
-            
         }, 1250); 
     }
 
 
     var createLightGallery = function(id) {
-        //var id = $(this).attr('data-id');
         $('.zoom').removeClass('zoom-active animated tada');
         var panelData = JSON.search(data, '//*[ID=' + id + ']');
        
@@ -251,7 +238,6 @@ Panel = (function() {
         var imgArray = panelData[0].galleryArray;
         var primaryImgLg = panelData[0].primary_img;
         var myVideoLg = panelData[0].video;
-        //console.log(myVideoLg);
         var videoPoster = panelData[0].video_poster;
         var myVideoOb = {};
 
@@ -276,19 +262,15 @@ Panel = (function() {
 
         }
 
-         if (myVideoLg) {
+        if (myVideoLg) {
             
             myVideoOb.html = '<video class="lg-video-object lg-html5" preload="none"><source src="' + myVideoLg  + '" type="video/mp4">Your browser does not support HTML5 video</video>';
             myVideoOb.poster = videoPoster;
             myVideoOb.thumb = videoPoster;
             lgArray.push(myVideoOb);
         }
-        
-        //console.log(lgArray);
-
 
         var activeItem = $('.active').attr('data-src');
-        //console.log(activeItem);
         var findMyIndex = function() {
             if (lgArray.length > 1) {
                 return lgArray.map(function(e) { return e.src; }).indexOf(activeItem);
@@ -296,8 +278,6 @@ Panel = (function() {
                 return 0;
             }
         }
-
-
 
         var myIndex = findMyIndex();
 
@@ -310,10 +290,7 @@ Panel = (function() {
             autoplayFirstVideo: false,
             index: myIndex
 
-        });
-
-       
-       //console.log(myIndex);      
+        });    
        
     }
 
@@ -324,7 +301,7 @@ Panel = (function() {
     }
 
 
-     var playVideo = function() {
+    var playVideo = function() {
          if ($('.lg-current').has('video')) {
             
             var videoElement = $('.lg-current').find('video').get(0);
@@ -379,8 +356,7 @@ Panel = (function() {
         var myTarget = event.target;
         var myTargetClass = $(event.target).attr('class');
         var myTargetId = $(event.target).attr('id');
-        //console.log(myTarget);
-        //console.log(myTargetId);
+
         if (myTargetClass != 'lg-img-wrap' && myTargetId != 'video-replay') {
             if ( !checkForVideoButtons() ) {
                 $('.lg-video-cont').append('<div class="video-buttons"><button id="video-pause"></button><button id="video-play" class="hidden"></button></button><button id="video-replay"></button></div>');
@@ -392,7 +368,6 @@ Panel = (function() {
             if ( checkForVideoButtons() ) {
                 removeVideoButtons();
                 addPauseReplayBts();
-
             }
         }
 
@@ -409,11 +384,8 @@ Panel = (function() {
     }
 
     var removeVideoButtons = function() {
-        //console.log('removeVideoButtons');
         $('.video-buttons').remove();
     }
-
-
 
     var checkForVideoButtons = function() {
         if ($('div').hasClass('video-buttons')) {
@@ -440,8 +412,6 @@ Panel = (function() {
     }
     
     
-
-
     var bindEvents = function() {
        $(document).on('click tap', '#close', closePanel);
        $(document).on('click tap', '.give', openGive);

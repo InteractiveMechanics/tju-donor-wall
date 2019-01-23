@@ -16,12 +16,12 @@ River = (function() {
             myDraggable = Draggable.create("#river", {
                 type:"x",
                 edgeResistance:0.25,
-		dragResistance:0.25,
+				dragResistance:0.25,
                 zIndexBoost:false,
                 bounds: {minX: -getRiverWidth(), maxX:0}, // {minX:getNegWidth(), maxX:getWidth()}
                 throwProps:true,
-		maxDuration: 1,
-		throwResistance: 2000,
+				maxDuration: 1,
+				throwResistance: 2000,
                 onDragStart:  function(){
                    Utilities.resetTimeout();
                 }

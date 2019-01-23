@@ -3,6 +3,7 @@ Leds = (function() {
     var ledArray = [];
     var isPaused = false;
     var socket;
+    var packet;
 
 	var init = function() {
 		startServer();
@@ -23,7 +24,9 @@ Leds = (function() {
         var upSpeed = 2;
         var downSpeed = 2;
 
-		var packet = new Uint8ClampedArray(4 + (strips * (ledsPerStrip+4)) * 3);
+		if (packet.length != 4 + leds * 3) {
+			packet = new Uint8ClampedArray(4 + (strips * (ledsPerStrip)) * 3);
+		}
 
 		if (socket.readyState != 1 /* OPEN */) {
 			// The server connection isn't open. Nothing to do.
@@ -47,7 +50,9 @@ Leds = (function() {
                 var led = (s * ledsPerStrip) + p;
 
                 if ( ledExists(led, ledArray) ) {
+	                /*
                     var i = ledArray.findIndex((obj => obj.id == led));
+                    
                     if (ledArray[i].state == "down" && ledArray[i].lumos == 0) {
                             packet[dest++] = r;
                             packet[dest++] = g;
@@ -70,6 +75,10 @@ Leds = (function() {
         			    packet[dest++] = g + ledArray[i].lumos;
         			    packet[dest++] = b + ledArray[i].lumos;
 			        }
+			        */
+			        packet[dest++] = r + 117;
+                    packet[dest++] = g + 117;
+                    packet[dest++] = b + 117;
                 } else {
                     packet[dest++] = r;
                     packet[dest++] = g;
@@ -78,7 +87,6 @@ Leds = (function() {
 
         }
 
-		socket.send(packet.buffer);
 		socket.send(packet.buffer);
 	}
     
@@ -120,9 +128,9 @@ Leds = (function() {
     }
 
     var resetLeds = function() {
-        //console.log('resetLeds');
         for (var i = 0; i<ledArray.length; i++) {
-            ledArray[i].state = "down";
+            // ledArray[i].state = "down";
+            ledArray.splice(i, 1);
         }
     }
 
@@ -138,7 +146,6 @@ Leds = (function() {
             } else {
                 //if the led is not in the aray, add it
                 ledArray.push({id: ledsToAdd[i], lumos: 0, state: 'up'});
-                //console.log(ledArray);
             }
         }
 
