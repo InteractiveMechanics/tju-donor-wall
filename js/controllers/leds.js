@@ -24,8 +24,11 @@ Leds = (function() {
         var upSpeed = 2;
         var downSpeed = 2;
 
-		if (packet.length != 4 + leds * 3) {
-			packet = new Uint8ClampedArray(4 + (strips * (ledsPerStrip)) * 3);
+		if (!packet){
+			packet = new Uint8ClampedArray(4 + (strips * ledsPerStrip) * 3);
+		}
+		if (packet.length != 4 + (strips * ledsPerStrip) * 3) {
+			packet = new Uint8ClampedArray(4 + (strips * ledsPerStrip) * 3);
 		}
 
 		if (socket.readyState != 1 /* OPEN */) {
@@ -102,7 +105,7 @@ Leds = (function() {
     }
 
     var animate = function() {
-        setInterval(writeFrame, 120);        
+        setInterval(writeFrame, 1000);        
     }
 
     //this needs to run every second, not just as reset
@@ -121,17 +124,18 @@ Leds = (function() {
                         }
                     }
                 }
-            } 
+            }
         }
         // console.log(OnScreenLedsArray);
         return OnScreenLedsArray;
     }
 
     var resetLeds = function() {
-        for (var i = 0; i<ledArray.length; i++) {
+        //for (var i = 0; i<ledArray.length; i++) {
             // ledArray[i].state = "down";
-            ledArray.splice(i, 1);
-        }
+            //ledArray.splice(i, 1);
+        //}
+        ledArray = [];
     }
 
     var checkLedArray = function(ledsToAdd) {
@@ -148,7 +152,6 @@ Leds = (function() {
                 ledArray.push({id: ledsToAdd[i], lumos: 0, state: 'up'});
             }
         }
-
     }
 
     var ledExists = function(id, arrayToTest) {
